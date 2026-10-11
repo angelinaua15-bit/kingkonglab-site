@@ -162,6 +162,47 @@
     });
   }
 
+  if (!reduced) {
+    addEventListener('pointermove', (e) => {
+      document.documentElement.style.setProperty('--mx', e.clientX + 'px');
+      document.documentElement.style.setProperty('--my', e.clientY + 'px');
+    });
+  }
+
+  const core = $('#core');
+  if (core && !reduced) {
+    const fire = () => {
+      core.classList.remove('is-hot');
+      void core.offsetWidth;
+      core.classList.add('is-hot');
+    };
+    if (fine) {
+      core.addEventListener('pointermove', (e) => {
+        const r = core.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5;
+        const y = (e.clientY - r.top) / r.height - .5;
+        core.style.setProperty('--rx', `${(-y * 18).toFixed(2)}deg`);
+        core.style.setProperty('--ry', `${(x * 22).toFixed(2)}deg`);
+        core.style.setProperty('--tx', `${(x * 16).toFixed(1)}px`);
+        core.style.setProperty('--ty', `${(y * 16).toFixed(1)}px`);
+      });
+      core.addEventListener('pointerleave', () => {
+        core.style.setProperty('--rx', '0deg');
+        core.style.setProperty('--ry', '0deg');
+        core.style.setProperty('--tx', '0px');
+        core.style.setProperty('--ty', '0px');
+      });
+    } else if (typeof DeviceOrientationEvent !== 'undefined') {
+      addEventListener('deviceorientation', (e) => {
+        const x = Math.max(-1, Math.min(1, (e.gamma || 0) / 30));
+        const y = Math.max(-1, Math.min(1, (e.beta || 0) / 40));
+        core.style.setProperty('--rx', `${(-y * 10).toFixed(2)}deg`);
+        core.style.setProperty('--ry', `${(x * 12).toFixed(2)}deg`);
+      });
+    }
+    core.addEventListener('click', fire);
+  }
+
   const stage = $('#stage');
   const tilt = $('#stageTilt');
   if (stage && tilt && fine && !reduced) {
