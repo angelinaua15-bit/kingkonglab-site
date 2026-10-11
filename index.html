@@ -37,8 +37,14 @@
   </script>
 </head>
 <body>
+  <div class="atmosphere" aria-hidden="true">
+    <span class="blob blob--1"></span>
+    <span class="blob blob--2"></span>
+    <span class="blob blob--3"></span>
+    <span class="blob blob--4"></span>
+  </div>
   <div class="loader" id="loader" aria-hidden="true">
-    <img src="assets/img/logo.png" alt="" width="88" height="88" />
+    <img class="logo" src="assets/img/logo.png" alt="" width="88" height="88" />
     <div class="loader__bar"><i id="loaderBar"></i></div>
     <b id="loaderNum">00</b>
   </div>
@@ -48,7 +54,7 @@
 
   <header class="nav" id="nav">
     <a class="nav__logo" href="#top" aria-label="King Kong Lab">
-      <img src="assets/img/logo.png" alt="" width="36" height="36" />
+      <img class="logo" src="assets/img/logo.png" alt="" width="42" height="42" />
       <span>King Kong <strong>Lab</strong></span>
     </a>
     <nav class="nav__links" aria-label="Головна навігація">
@@ -140,7 +146,7 @@
             <div class="phone">
               <div class="phone__notch"></div>
               <div class="phone__head">
-                <img src="assets/img/logo.png" alt="" width="26" height="26" />
+                <img class="logo" src="assets/img/logo.png" alt="" width="26" height="26" />
                 <div><b>King Kong Bot</b><small>онлайн</small></div>
               </div>
               <div class="chat" id="chat">
@@ -159,7 +165,24 @@
         </div>
       </div>
 
-      <a class="scroll-hint" href="#solutions">Scroll</a>
+      <a class="scroll-hint" href="#promo">Scroll</a>
+    </section>
+
+    <section class="promo" id="promo" aria-label="Спеціальна пропозиція">
+      <div class="promo__mesh" aria-hidden="true"></div>
+      <div class="promo__shine" aria-hidden="true"></div>
+      <div class="wrap promo__inner">
+        <div class="promo__mark">
+          <img class="logo" src="assets/img/logo.png" alt="" width="88" height="88" />
+        </div>
+        <div class="promo__copy">
+          <span class="promo__tag"><i></i> Limited offer</span>
+          <p class="promo__off">−30%</p>
+          <h2>на перший проєкт під ключ</h2>
+          <p class="promo__lead">Сайт, Telegram-бот або Mini App. Заявка сьогодні — знижка в кошторисі.</p>
+        </div>
+        <a class="btn btn--light btn--lg mag" href="#contact"><span>Забрати знижку</span></a>
+      </div>
     </section>
 
     <div class="ticker" aria-hidden="true">
@@ -238,7 +261,7 @@
           <span class="eyebrow" data-rise>Про компанію</span>
           <h2 data-split>Хто такі <em>King Kong Lab</em></h2>
           <div class="about__logo" data-rise>
-            <img src="assets/img/logo.png" alt="Логотип King Kong Lab" width="280" height="280" />
+            <img class="logo" src="assets/img/logo.png" alt="Логотип King Kong Lab" width="280" height="280" />
           </div>
         </div>
         <div class="about__main">
@@ -468,7 +491,7 @@
     <div class="wrap">
       <div class="foot__top">
         <div class="foot__brand">
-          <a class="nav__logo" href="#top"><img src="assets/img/logo.png" alt="" width="36" height="36" /><span>King Kong <strong>Lab</strong></span></a>
+          <a class="nav__logo" href="#top"><img class="logo" src="assets/img/logo.png" alt="" width="42" height="42" /><span>King Kong <strong>Lab</strong></span></a>
           <p>Комплексні IT-рішення для бізнесу. Від ідеї до результату.</p>
         </div>
         <div class="foot__cols">
