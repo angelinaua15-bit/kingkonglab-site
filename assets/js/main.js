@@ -40,7 +40,7 @@
   });
   $$('#drawer a').forEach((a) => a.addEventListener('click', closeDrawer));
 
-  const sections = ['solutions', 'about', 'work', 'faq', 'contact']
+  const sections = ['solutions', 'about', 'work', 'atlas', 'faq', 'contact']
     .map((id) => document.getElementById(id))
     .filter(Boolean);
   const navLinks = $$('.nav__links a');
@@ -271,7 +271,8 @@
     const words = split(el);
     gsap.from(words, {
       yPercent: 120, duration: .85, ease: 'power4.out', stagger: .03,
-      scrollTrigger: { trigger: el, start: 'top 86%' },
+      immediateRender: false,
+      scrollTrigger: { trigger: el, start: 'top 92%', once: true },
     });
   });
 
@@ -279,7 +280,8 @@
     if (el.closest('.banner')) return;
     gsap.from(el, {
       y: 22, opacity: 0, duration: .7, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 90%' },
+      immediateRender: false,
+      scrollTrigger: { trigger: el, start: 'top 94%', once: true },
     });
   });
 
