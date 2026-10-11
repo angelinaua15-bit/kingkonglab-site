@@ -17,7 +17,7 @@
     toast.textContent = msg;
     toast.classList.add('is-on');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove('is-on'), 4000);
+    toastTimer = setTimeout(() => toast.classList.remove('is-on'), 3600);
   };
 
   const nav = $('#nav');
@@ -49,7 +49,7 @@
     let current = '';
     sections.forEach((s) => { if (s.offsetTop <= y) current = s.id; });
     navLinks.forEach((a) => a.classList.toggle('is-on', a.getAttribute('href') === `#${current}`));
-    nav?.classList.toggle('is-solid', scrollY > 20);
+    nav?.classList.toggle('is-solid', scrollY > 16);
     const bar = $('#scrollProgress');
     if (bar) {
       const max = document.documentElement.scrollHeight - innerHeight;
@@ -68,13 +68,13 @@
       s.classList.toggle('is-on', on);
       s.setAttribute('aria-selected', String(on));
     });
-    if (!labImg || labImg.src.includes(btn.dataset.img.split('/').pop())) return;
+    if (!labImg || !btn.dataset.img || labImg.src.includes(btn.dataset.img.split('/').pop())) return;
     labStage?.classList.add('is-swap');
     setTimeout(() => {
       labImg.src = btn.dataset.img;
       labImg.alt = btn.dataset.alt || '';
       labStage?.classList.remove('is-swap');
-    }, 180);
+    }, 160);
   };
   sols.forEach((btn) => {
     btn.addEventListener('mouseenter', () => { if (fine) activateSol(btn); });
@@ -156,132 +156,55 @@
         const r = el.getBoundingClientRect();
         const dx = e.clientX - (r.left + r.width / 2);
         const dy = e.clientY - (r.top + r.height / 2);
-        el.style.transform = `translate(${dx * .18}px, ${dy * .22}px)`;
+        el.style.transform = `translate(${dx * .16}px, ${dy * .2}px)`;
       });
       el.addEventListener('mouseleave', () => { el.style.transform = ''; });
     });
-  }
-
-  if (!reduced) {
     addEventListener('pointermove', (e) => {
       document.documentElement.style.setProperty('--mx', e.clientX + 'px');
       document.documentElement.style.setProperty('--my', e.clientY + 'px');
     });
   }
 
-  const core = $('#core');
-  if (core && !reduced) {
+  const kong = $('#kong');
+  if (kong && !reduced) {
     const fire = () => {
-      core.classList.remove('is-hot');
-      void core.offsetWidth;
-      core.classList.add('is-hot');
+      kong.classList.remove('is-hot');
+      void kong.offsetWidth;
+      kong.classList.add('is-hot');
     };
     if (fine) {
-      core.addEventListener('pointermove', (e) => {
-        const r = core.getBoundingClientRect();
+      kong.addEventListener('pointermove', (e) => {
+        const r = kong.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width - .5;
         const y = (e.clientY - r.top) / r.height - .5;
-        core.style.setProperty('--rx', `${(-y * 18).toFixed(2)}deg`);
-        core.style.setProperty('--ry', `${(x * 22).toFixed(2)}deg`);
-        core.style.setProperty('--tx', `${(x * 16).toFixed(1)}px`);
-        core.style.setProperty('--ty', `${(y * 16).toFixed(1)}px`);
+        kong.style.setProperty('--rx', `${(-y * 16).toFixed(2)}deg`);
+        kong.style.setProperty('--ry', `${(x * 20).toFixed(2)}deg`);
+        kong.style.setProperty('--tx', `${(x * 14).toFixed(1)}px`);
+        kong.style.setProperty('--ty', `${(y * 14).toFixed(1)}px`);
       });
-      core.addEventListener('pointerleave', () => {
-        core.style.setProperty('--rx', '0deg');
-        core.style.setProperty('--ry', '0deg');
-        core.style.setProperty('--tx', '0px');
-        core.style.setProperty('--ty', '0px');
-      });
-    } else if (typeof DeviceOrientationEvent !== 'undefined') {
-      addEventListener('deviceorientation', (e) => {
-        const x = Math.max(-1, Math.min(1, (e.gamma || 0) / 30));
-        const y = Math.max(-1, Math.min(1, (e.beta || 0) / 40));
-        core.style.setProperty('--rx', `${(-y * 10).toFixed(2)}deg`);
-        core.style.setProperty('--ry', `${(x * 12).toFixed(2)}deg`);
+      kong.addEventListener('pointerleave', () => {
+        kong.style.setProperty('--rx', '0deg');
+        kong.style.setProperty('--ry', '0deg');
+        kong.style.setProperty('--tx', '0px');
+        kong.style.setProperty('--ty', '0px');
       });
     }
-    core.addEventListener('click', fire);
+    kong.addEventListener('click', fire);
   }
-
-  const stage = $('#stage');
-  const tilt = $('#stageTilt');
-  if (stage && tilt && fine && !reduced) {
-    stage.addEventListener('mousemove', (e) => {
-      const r = stage.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - .5;
-      const y = (e.clientY - r.top) / r.height - .5;
-      tilt.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 8}deg)`;
-    });
-    stage.addEventListener('mouseleave', () => { tilt.style.transform = ''; });
-  }
-
-  const canvas = $('#heroFx');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    const dpr = Math.min(devicePixelRatio || 1, 2);
-    let w, h, nodes = [], run = true;
-    const mouse = { x: -9999, y: -9999 };
-    const resize = () => {
-      w = canvas.clientWidth; h = canvas.clientHeight;
-      canvas.width = w * dpr; canvas.height = h * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const n = Math.min(70, Math.floor((w * h) / 22000));
-      nodes = Array.from({ length: n }, () => ({
-        x: Math.random() * w, y: Math.random() * h,
-        vx: (Math.random() - .5) * .28, vy: (Math.random() - .5) * .28,
-        r: Math.random() * 1.6 + .5,
-      }));
-    };
-    resize();
-    addEventListener('resize', resize);
-    canvas.parentElement.addEventListener('mousemove', (e) => {
-      const r = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
-    });
-    const frame = () => {
-      if (!run) return;
-      ctx.clearRect(0, 0, w, h);
-      for (const n of nodes) {
-        n.x += n.vx; n.y += n.vy;
-        if (n.x < 0 || n.x > w) n.vx *= -1;
-        if (n.y < 0 || n.y > h) n.vy *= -1;
-      }
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const a = nodes[i], b = nodes[j];
-          const d = Math.hypot(a.x - b.x, a.y - b.y);
-          if (d < 130) {
-            ctx.strokeStyle = `rgba(39, 0, 238, ${(1 - d / 130) * .18})`;
-            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-          }
-        }
-        ctx.fillStyle = 'rgba(39, 0, 238, .45)';
-        ctx.beginPath(); ctx.arc(nodes[i].x, nodes[i].y, nodes[i].r, 0, Math.PI * 2); ctx.fill();
-      }
-      if (!reduced) requestAnimationFrame(frame);
-    };
-    if (!reduced) frame();
-  }
-
-  const bootCommon = () => {
-    $('#chat')?.classList.add('is-live');
-  };
 
   if (!hasGsap || reduced) {
     document.documentElement.classList.add('no-anim');
     $('#loader')?.classList.add('is-done');
     document.body.classList.remove('is-loading');
-    $$('[data-count]').forEach((el) => { el.textContent = el.dataset.count; });
-    bootCommon();
     return;
   }
 
   gsap.registerPlugin(ScrollTrigger);
   document.body.classList.add('is-loading');
 
-  let lenis = null;
-  if (typeof window.Lenis !== 'undefined') {
-    lenis = new Lenis({ lerp: .1, smoothWheel: true });
+  if (fine && typeof window.Lenis !== 'undefined') {
+    const lenis = new Lenis({ lerp: .1, smoothWheel: true });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((t) => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
@@ -289,20 +212,15 @@
 
   const loader = $('#loader');
   const bar = $('#loaderBar');
-  const num = $('#loaderNum');
-  const loaderTl = gsap.timeline({
-    onComplete: () => {
+  gsap.to({ n: 0 }, {
+    n: 100, duration: .7, ease: 'power2.inOut',
+    onUpdate() {
+      if (bar) bar.style.width = Math.round(this.targets()[0].n) + '%';
+    },
+    onComplete() {
       loader?.classList.add('is-done');
       document.body.classList.remove('is-loading');
       intro();
-    },
-  });
-  loaderTl.to({ n: 0 }, {
-    n: 100, duration: 1.1, ease: 'power2.inOut',
-    onUpdate() {
-      const n = Math.round(this.targets()[0].n);
-      if (bar) bar.style.width = n + '%';
-      if (num) num.textContent = String(n).padStart(2, '0');
     },
   });
 
@@ -344,30 +262,24 @@
   }
 
   function intro() {
-    const lines = $$('.hero__title .line span');
-    gsap.from(lines, { yPercent: 110, duration: 1.05, ease: 'power4.out', stagger: .08 });
-    gsap.from('[data-rise]', { y: 24, opacity: 0, duration: .8, ease: 'power3.out', stagger: .06, delay: .25 });
-    gsap.from('.stage__tilt > *', { y: 40, opacity: 0, duration: 1, ease: 'power3.out', stagger: .08, delay: .2 });
-    bootCommon();
-    if (window.gsap) {
-      const bubbles = $$('#chat .bubble, #chat .chat__btns');
-      gsap.from(bubbles, { opacity: 0, y: 10, duration: .45, stagger: .18, delay: .8 });
-    }
+    gsap.from('.banner__title .line span', { yPercent: 110, duration: 1, ease: 'power4.out', stagger: .08 });
+    gsap.from('.banner [data-rise], .banner__off', { y: 20, opacity: 0, duration: .75, ease: 'power3.out', stagger: .05, delay: .15 });
+    gsap.from('.kong', { scale: .86, opacity: 0, duration: 1, ease: 'power3.out', delay: .15 });
   }
 
   $$('[data-split]').forEach((el) => {
     const words = split(el);
     gsap.from(words, {
-      yPercent: 120, duration: .9, ease: 'power4.out', stagger: .03,
-      scrollTrigger: { trigger: el, start: 'top 84%' },
+      yPercent: 120, duration: .85, ease: 'power4.out', stagger: .03,
+      scrollTrigger: { trigger: el, start: 'top 86%' },
     });
   });
 
   $$('[data-rise]').forEach((el) => {
-    if (el.closest('.hero')) return;
+    if (el.closest('.banner')) return;
     gsap.from(el, {
-      y: 28, opacity: 0, duration: .75, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 88%' },
+      y: 22, opacity: 0, duration: .7, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 90%' },
     });
   });
 
@@ -378,26 +290,12 @@
     const spans = $$('#statement .w');
     ScrollTrigger.create({
       trigger: statement,
-      start: 'top 75%',
-      end: 'bottom 45%',
+      start: 'top 78%',
+      end: 'bottom 48%',
       onUpdate: (self) => {
         const n = Math.round(self.progress * spans.length);
         spans.forEach((s, i) => s.classList.toggle('is-on', i < n));
       },
     });
   }
-
-  $$('[data-count]').forEach((el) => {
-    const end = +el.dataset.count;
-    const obj = { n: 0 };
-    ScrollTrigger.create({
-      trigger: el,
-      start: 'top 90%',
-      once: true,
-      onEnter: () => gsap.to(obj, {
-        n: end, duration: 1.4, ease: 'power2.out',
-        onUpdate: () => { el.textContent = Math.round(obj.n); },
-      }),
-    });
-  });
 })();

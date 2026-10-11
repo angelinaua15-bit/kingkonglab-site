@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>King Kong Lab — Розробка сайтів, Telegram-ботів та Mini Apps під ключ</title>
   <meta name="description" content="IT-агентство King Kong Lab: сайти, Telegram-боти, Mini Apps, SEO, таргет і UI/UX під ключ. -30% на перший проєкт." />
-  <meta name="theme-color" content="#2A1875" />
+  <meta name="theme-color" content="#090614" />
   <link rel="canonical" href="https://kingkonglab.com/uk" />
 
   <meta property="og:type" content="website" />
@@ -41,12 +41,10 @@
     <span class="blob blob--1"></span>
     <span class="blob blob--2"></span>
     <span class="blob blob--3"></span>
-    <span class="blob blob--4"></span>
   </div>
   <div class="loader" id="loader" aria-hidden="true">
-    <img class="logo" src="assets/img/logo.png" alt="" width="88" height="88" />
+    <img class="logo" src="assets/img/logo.png" alt="" width="72" height="72" />
     <div class="loader__bar"><i id="loaderBar"></i></div>
-    <b id="loaderNum">00</b>
   </div>
 
   <div class="spotlight" aria-hidden="true"></div>
@@ -55,17 +53,16 @@
 
   <header class="nav" id="nav">
     <a class="nav__logo" href="#top" aria-label="King Kong Lab">
-      <img class="logo" src="assets/img/logo.png" alt="" width="42" height="42" />
+      <img class="logo" src="assets/img/logo.png" alt="" width="36" height="36" />
       <span>King Kong <strong>Lab</strong></span>
     </a>
     <nav class="nav__links" aria-label="Головна навігація">
       <a href="#solutions">Послуги</a>
-      <a href="#about">Про нас</a>
       <a href="#work">Портфоліо</a>
       <a href="#faq">FAQ</a>
       <a href="#contact">Контакти</a>
     </nav>
-    <a class="btn btn--blue nav__cta mag" href="#contact"><span>Почати проєкт</span></a>
+    <a class="btn btn--blue nav__cta mag" href="#contact"><span>−30% слот</span></a>
     <button class="burger" id="burger" type="button" aria-label="Меню" aria-expanded="false" aria-controls="drawer">
       <i></i><i></i>
     </button>
@@ -74,10 +71,9 @@
   <aside class="drawer" id="drawer" aria-hidden="true">
     <nav>
       <a href="#solutions"><small>01</small>Послуги</a>
-      <a href="#about"><small>02</small>Про нас</a>
-      <a href="#work"><small>03</small>Портфоліо</a>
-      <a href="#faq"><small>04</small>FAQ</a>
-      <a href="#contact"><small>05</small>Контакти</a>
+      <a href="#work"><small>02</small>Портфоліо</a>
+      <a href="#faq"><small>03</small>FAQ</a>
+      <a href="#contact"><small>04</small>Контакти</a>
     </nav>
     <div class="drawer__foot">
       <a href="tel:+380970745767">+380 97 074 57 67</a>
@@ -86,115 +82,50 @@
   </aside>
 
   <main id="top">
-    <section class="hero">
-      <canvas class="hero__fx" id="heroFx" aria-hidden="true"></canvas>
-      <div class="orb orb--a" aria-hidden="true"></div>
-      <div class="orb orb--b" aria-hidden="true"></div>
+    <section class="banner" id="promo" aria-label="King Kong Lab">
+      <div class="banner__bg" aria-hidden="true">
+        <span class="banner__aurora"></span>
+        <span class="banner__grid"></span>
+        <span class="banner__scan"></span>
+      </div>
 
-      <div class="wrap hero__grid">
-        <div class="hero__copy">
-          <a class="chip chip--live" href="#contact" data-rise>
-            <i></i> Знижка <b>−30%</b> для нових клієнтів
-          </a>
-          <h1 class="hero__title">
-            <span class="line"><span>Розробка сайтів,</span></span>
-            <span class="line"><span>Telegram-ботів</span></span>
-            <span class="line"><span>та Mini Apps</span></span>
-            <span class="line line--island"><span>під ключ</span></span>
+      <div class="wrap banner__layout">
+        <div class="banner__copy">
+          <span class="promo__tag" data-rise><i></i> Lab signal · live</span>
+          <p class="banner__off">−30%</p>
+          <h1 class="banner__title">
+            <span class="line"><span>Сайти, боти</span></span>
+            <span class="line"><span>і Mini Apps,</span></span>
+            <span class="line line--island"><span>що продають</span></span>
           </h1>
-          <p class="hero__lead" data-rise>
-            Залиште заявку сьогодні та отримайте <b>−30%</b> на перший проєкт.
-            Сайт, бот або Mini App з сучасним дизайном і маркетинговою логікою.
+          <p class="banner__lead" data-rise>
+            Перший проєкт за правилами Lab. Система під ключ — сайт, бот, трафік.
+            Слот зі знижкою тримаємо до брифу.
           </p>
-          <div class="hero__actions" data-rise>
-            <a class="btn btn--blue btn--lg mag" href="#contact" data-cursor="Go">
-              <span>Залишити заявку</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
-            <a class="btn btn--ghost btn--lg mag" href="#solutions"><span>Наші рішення</span></a>
+          <div class="banner__actions" data-rise>
+            <a class="btn btn--light btn--lg mag" href="#contact" data-cursor="Go"><span>Забрати слот</span></a>
+            <a class="btn btn--ghost btn--lg mag" href="#work"><span>Роботи</span></a>
           </div>
-          <ul class="hero__stats" data-rise>
-            <li><b><span data-count="97">97</span>+</b><small>проєктів</small></li>
-            <li><b><span data-count="5">5</span>+</b><small>років</small></li>
+          <ul class="banner__stats" data-rise>
+            <li><b>97+</b><small>проєктів</small></li>
+            <li><b>5+</b><small>років</small></li>
             <li><b>24/7</b><small>підтримка</small></li>
           </ul>
         </div>
 
-        <div class="stage" id="stage" aria-hidden="true">
-          <div class="stage__tilt" id="stageTilt">
-            <div class="browser">
-              <div class="browser__bar"><i></i><i></i><i></i><span>kingkonglab.com</span></div>
-              <div class="browser__body">
-                <div class="browser__hero">
-                  <em></em><em></em><em class="short"></em>
-                </div>
-                <div class="browser__chart">
-                  <svg viewBox="0 0 280 96" preserveAspectRatio="none">
-                    <defs>
-                      <linearGradient id="area" x1="0" x2="0" y1="0" y2="1">
-                        <stop offset="0" stop-color="#2700EE" stop-opacity=".35"/>
-                        <stop offset="1" stop-color="#2700EE" stop-opacity="0"/>
-                      </linearGradient>
-                    </defs>
-                    <path d="M0,80 C28,76 44,58 68,62 C92,66 108,40 136,44 C164,48 180,22 208,26 C236,30 252,10 280,8 L280,96 L0,96 Z" fill="url(#area)"/>
-                    <path d="M0,80 C28,76 44,58 68,62 C92,66 108,40 136,44 C164,48 180,22 208,26 C236,30 252,10 280,8" fill="none" stroke="#2700EE" stroke-width="2.5" stroke-linecap="round"/>
-                  </svg>
-                  <div class="kpi"><small>Заявки / міс</small><b>20–35</b></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="phone">
-              <div class="phone__notch"></div>
-              <div class="phone__head">
-                <img class="logo" src="assets/img/logo.png" alt="" width="26" height="26" />
-                <div><b>King Kong Bot</b><small>онлайн</small></div>
-              </div>
-              <div class="chat" id="chat">
-                <div class="bubble bot">Привіт! Я бот King Kong Lab 🦍</div>
-                <div class="bubble me">Хочу сайт + бота для бізнесу</div>
-                <div class="bubble bot">Зберемо систему під ключ: сайт, бот, трафік і аналітика</div>
-                <div class="bubble promo">−30% на перший проєкт</div>
-                <div class="chat__btns"><span>Заявка</span><span>Портфоліо</span></div>
-              </div>
-            </div>
-
-            <div class="float float--1"><b>5 000+</b><small>користувачів бота</small></div>
-            <div class="float float--2"><b>SEO + Ads</b><small>трафік під результат</small></div>
-            <div class="float float--3"><b>Mini App</b><small>e-commerce у Telegram</small></div>
+        <div class="kong" id="kong" aria-hidden="true">
+          <span class="kong__glow"></span>
+          <span class="kong__ring kong__ring--a"></span>
+          <span class="kong__ring kong__ring--b"></span>
+          <span class="kong__ring kong__ring--c"></span>
+          <span class="kong__burst"></span>
+          <div class="kong__mark">
+            <img class="logo" src="assets/img/logo.png" alt="" width="220" height="220" />
           </div>
         </div>
       </div>
 
-      <a class="scroll-hint" href="#promo">Scroll</a>
-    </section>
-
-    <section class="reactor" id="promo" aria-label="Спеціальна пропозиція">
-      <div class="reactor__bg" aria-hidden="true">
-        <span class="reactor__aurora"></span>
-        <span class="reactor__grid"></span>
-        <span class="reactor__scan"></span>
-      </div>
-      <div class="wrap reactor__layout">
-        <div class="reactor__copy">
-          <span class="promo__tag"><i></i> Lab signal · live</span>
-          <p class="reactor__off">−30%</p>
-          <h2>Перший проєкт<br>за правилами Lab</h2>
-          <p class="reactor__lead">Сайт + бот + трафік під ключ. Слот зі знижкою тримаємо до брифу — далі ціна повна.</p>
-          <a class="btn btn--light btn--lg mag" href="#contact" data-cursor="Go"><span>Забрати слот</span></a>
-        </div>
-        <div class="core" id="core" aria-hidden="true">
-          <span class="core__ring core__ring--a"></span>
-          <span class="core__ring core__ring--b"></span>
-          <span class="core__ring core__ring--c"></span>
-          <span class="core__burst"></span>
-          <div class="core__orb">
-            <img class="logo" src="assets/img/logo.png" alt="" width="96" height="96" />
-            <small>CORE</small>
-          </div>
-        </div>
-      </div>
-      <div class="reactor__rail" aria-hidden="true">
+      <div class="banner__rail" aria-hidden="true">
         <div class="ticker__track">
           <span>systems that sell</span><i></i><span>−30% first build</span><i></i><span>web · bots · mini apps</span><i></i><span>king kong lab</span><i></i>
           <span>systems that sell</span><i></i><span>−30% first build</span><i></i><span>web · bots · mini apps</span><i></i><span>king kong lab</span><i></i>
@@ -202,19 +133,11 @@
       </div>
     </section>
 
-    <div class="ticker" aria-hidden="true">
-      <div class="ticker__track">
-        <span>Веб-сайти</span><i></i><span>Telegram-боти</span><i></i><span>Mini Apps</span><i></i><span>Веб-додатки</span><i></i><span>SEO</span><i></i><span>Таргет</span><i></i><span>UI/UX</span><i></i><span>Аналітика</span><i></i>
-        <span>Веб-сайти</span><i></i><span>Telegram-боти</span><i></i><span>Mini Apps</span><i></i><span>Веб-додатки</span><i></i><span>SEO</span><i></i><span>Таргет</span><i></i><span>UI/UX</span><i></i><span>Аналітика</span><i></i>
-      </div>
-    </div>
-
     <section class="section" id="solutions">
       <div class="wrap">
         <div class="head">
-          <span class="eyebrow" data-rise>Наші рішення</span>
-          <h2 data-split>Комплексні системи <em>під ключ</em></h2>
-          <p data-rise>Не окремі послуги, а готові системи, які закривають повний цикл роботи з бізнесом.</p>
+          <span class="eyebrow" data-rise>Рішення</span>
+          <h2 data-split>Чотири системи <em>під ключ</em></h2>
         </div>
 
         <div class="lab">
@@ -223,33 +146,32 @@
               <span class="sol__num">01</span>
               <span class="sol__body">
                 <span class="sol__price">від <b>300$</b></span>
-                <strong>Сайт / додаток <em>з залученням клієнтів</em></strong>
-                <span>Повна digital-присутність: сайт, SEO та аналітика, що приводять заявки.</span>
-                <ul><li>Лендінги</li><li>Корпоративні</li><li>E-commerce</li><li>SEO</li></ul>
+                <strong>Сайт / додаток</strong>
+                <span>Присутність, SEO і аналітика, що приводять заявки.</span>
               </span>
             </button>
             <button class="sol" role="tab" aria-selected="false" data-img="assets/img/solution-bot-telegram.jpg" data-alt="Telegram-боти">
               <span class="sol__num">02</span>
               <span class="sol__body">
                 <span class="sol__price">від <b>200$</b></span>
-                <strong>Telegram-боти / Mini Apps <em>з цільовою аудиторією</em></strong>
-                <span>Автоматизація комунікації та продажів прямо в месенджері.</span>
+                <strong>Боти / Mini Apps</strong>
+                <span>Продажі й сервіс прямо в Telegram.</span>
               </span>
             </button>
             <button class="sol" role="tab" aria-selected="false" data-img="assets/img/solution-ads-traffic.jpg" data-alt="Трафік і таргет">
               <span class="sol__num">03</span>
               <span class="sol__body">
                 <span class="sol__price">від <b>500$</b></span>
-                <strong>Трафік / таргет <em>для масштабування</em></strong>
-                <span>Платний трафік під результат, а не під покази.</span>
+                <strong>Трафік / таргет</strong>
+                <span>Платний трафік під результат, не під покази.</span>
               </span>
             </button>
             <button class="sol" role="tab" aria-selected="false" data-img="assets/img/solution-full-cycle.jpg" data-alt="Дизайн та UI/UX">
               <span class="sol__num">04</span>
               <span class="sol__body">
                 <span class="sol__price">від <b>600$</b></span>
-                <strong>Дизайн, UI/UX <em>та візуальна упаковка</em></strong>
-                <span>Продуманий користувацький досвід і фірмовий стиль, який запам'ятовують.</span>
+                <strong>Дизайн / UI/UX</strong>
+                <span>Стиль, який запам'ятовують і який конвертить.</span>
               </span>
             </button>
           </div>
@@ -257,44 +179,23 @@
             <img id="labImg" src="assets/img/solution-web-seo.jpg" alt="Сайт та SEO" width="1024" height="1024" />
           </figure>
         </div>
-
-        <div class="extras" data-rise>
-          <div>
-            <h3>Або окремі послуги</h3>
-            <p>Якщо потрібне конкретне рішення — теж закриємо.</p>
-          </div>
-          <ul class="pills">
-            <li>Веб-сайти</li><li>Веб-додатки</li><li>Telegram-боти</li><li>Mini Apps</li>
-            <li>SEO + контекст</li><li>Таргет</li><li>UI/UX</li><li>Аналітика</li>
-          </ul>
-          <a class="btn btn--blue mag" href="#contact"><span>Дізнатись більше</span></a>
-        </div>
       </div>
     </section>
 
     <section class="section section--tight" id="about">
       <div class="wrap about">
-        <div class="about__side">
-          <span class="eyebrow" data-rise>Про компанію</span>
-          <h2 data-split>Хто такі <em>King Kong Lab</em></h2>
-          <div class="about__logo" data-rise>
-            <img class="logo" src="assets/img/logo.png" alt="Логотип King Kong Lab" width="280" height="280" />
-          </div>
+        <div>
+          <span class="eyebrow" data-rise>Про нас</span>
+          <h2 data-split>Lab, який збирає <em>систему</em></h2>
         </div>
-        <div class="about__main">
+        <div>
           <p class="statement" id="statement">
-            Ми — IT-агентство, яке будує працюючі digital-системи для бізнесу, а не просто окремі інструменти.
-            Підключаємось на рівні задач: розбираємось у цілях, збираємо систему — сайт, бот, реклама, аналітика — і ведемо до вимірюваного результату.
+            Не окремі інструменти — повний цикл: сайт, бот, реклама, аналітика. Підключаємось на рівні задачі і ведемо до вимірюваного результату.
           </p>
           <div class="cases">
-            <article data-rise><b>01</b><p><strong>Школа англійської</strong> — сайт + SEO, що стабільно приводить 20–35 нових заявок щомісяця з органіки.</p></article>
-            <article data-rise><b>02</b><p><strong>Бізнес у Telegram</strong> — бот + канал + трафік, де підписники одразу заходять у воронку.</p></article>
-            <article data-rise><b>03</b><p><strong>Онлайн-сервіси</strong> — запуск продукту з аналітикою і рекламою, щоб з першого місяця було видно, що працює.</p></article>
-          </div>
-          <div class="proof">
-            <div data-rise><b><span data-count="97">0</span>+</b><small>проєктів</small></div>
-            <div data-rise><b><span data-count="5">0</span>+</b><small>років на ринку</small></div>
-            <div data-rise><b>24/7</b><small>підтримка</small></div>
+            <article data-rise><b>01</b><p><strong>Школа англійської</strong> — 20–35 заявок на місяць з органіки.</p></article>
+            <article data-rise><b>02</b><p><strong>Бізнес у Telegram</strong> — бот + канал, де підписник одразу в воронці.</p></article>
+            <article data-rise><b>03</b><p><strong>Онлайн-сервіс</strong> — запуск з аналітикою з першого місяця.</p></article>
           </div>
         </div>
       </div>
@@ -302,20 +203,15 @@
 
     <section class="section process" id="process">
       <div class="wrap">
-        <div class="head head--row">
-          <div>
-            <span class="eyebrow" data-rise>Як ми працюємо</span>
-            <h2 data-split>Шість кроків <em>до результату</em></h2>
-          </div>
-          <p data-rise>Прозорий процес без «магії»: ви завжди бачите, на якому етапі проєкт і що буде далі.</p>
+        <div class="head">
+          <span class="eyebrow" data-rise>Процес</span>
+          <h2 data-split>Чотири кроки. <em>Без магії.</em></h2>
         </div>
         <ol class="steps">
-          <li data-rise><em>01</em><h3>Знайомство</h3><p>Безкоштовна консультація. Аналізуємо бізнес, цілі та поточну ситуацію.</p></li>
-          <li data-rise><em>02</em><h3>Стратегія</h3><p>План дій з чіткими метриками успіху та дедлайнами.</p></li>
-          <li data-rise><em>03</em><h3>Дизайн</h3><p>Візуальна концепція, прототипи — і затвердження з вами.</p></li>
-          <li data-rise><em>04</em><h3>Розробка</h3><p>Технічна реалізація. Прогрес видно в реальному часі.</p></li>
-          <li data-rise><em>05</em><h3>Запуск</h3><p>Тести, оптимізація, публікація. Працює з першого дня.</p></li>
-          <li data-rise><em>06</em><h3>Ріст</h3><p>Аналітика, A/B тести та масштабування системи.</p></li>
+          <li data-rise><em>01</em><h3>Бриф</h3><p>Розбираємо цілі, цифри і де зараз втрачаються заявки.</p></li>
+          <li data-rise><em>02</em><h3>Дизайн</h3><p>Концепт і прототип. Затверджуєте — ідемо далі.</p></li>
+          <li data-rise><em>03</em><h3>Запуск</h3><p>Збірка, тести, публікація. Прогрес видно в реальному часі.</p></li>
+          <li data-rise><em>04</em><h3>Ріст</h3><p>Аналітика, трафік і масштабування вже живої системи.</p></li>
         </ol>
       </div>
     </section>
@@ -325,13 +221,13 @@
         <div class="head head--row">
           <div>
             <span class="eyebrow" data-rise>Портфоліо</span>
-            <h2 data-split>Наші <em>проєкти</em></h2>
+            <h2 data-split>Вибрані <em>проєкти</em></h2>
           </div>
           <div class="filters" role="tablist" aria-label="Фільтр проєктів" data-rise>
             <button class="filter is-on" data-filter="all" aria-selected="true">Всі</button>
-            <button class="filter" data-filter="web" aria-selected="false">Веб-сайти</button>
+            <button class="filter" data-filter="web" aria-selected="false">Веб</button>
             <button class="filter" data-filter="bot" aria-selected="false">Боти</button>
-            <button class="filter" data-filter="app" aria-selected="false">Mini Apps</button>
+            <button class="filter" data-filter="app" aria-selected="false">Apps</button>
           </div>
         </div>
 
@@ -341,7 +237,7 @@
             <div class="case-card__meta">
               <span>Веб-сайт</span>
               <h3>ABV Traffic</h3>
-              <p>Корпоративний сайт для міжнародної компанії з арбітражу трафіку. 3D-елементи та преміальні анімації.</p>
+              <p>Корпоративний сайт з 3D і преміальними анімаціями.</p>
             </div>
           </a>
           <a class="case-card" data-cat="web" href="https://kingkongweb.agency" target="_blank" rel="noopener" data-cursor="Open">
@@ -349,7 +245,7 @@
             <div class="case-card__meta">
               <span>Веб-сайт</span>
               <h3>King Kong Agency</h3>
-              <p>Флагманський сайт агентства з фірмовим стилем, інтерактивом і продуманою UX-структурою.</p>
+              <p>Флагман агентства: фірмовий стиль і продуманий UX.</p>
             </div>
           </a>
           <a class="case-card" data-cat="bot" href="https://t.me/FoodByDrTolstikovaBot" target="_blank" rel="noopener" data-cursor="Open">
@@ -357,7 +253,7 @@
             <div class="case-card__meta">
               <span>Telegram-бот</span>
               <h3>FoodByDrTolstikova</h3>
-              <p>Преміум бот-помічник дієтолога: рецепти, меню, консультації. 5000+ активних користувачів.</p>
+              <p>Бот дієтолога. 5000+ активних користувачів.</p>
             </div>
           </a>
           <a class="case-card" data-cat="app" href="https://t.me/TopTrendShopBot" target="_blank" rel="noopener" data-cursor="Open">
@@ -365,90 +261,56 @@
             <div class="case-card__meta">
               <span>Mini App</span>
               <h3>TopTrendShop</h3>
-              <p>Telegram-магазин трендових товарів з TikTok: каталог, кошик, оплата — усе в месенджері.</p>
+              <p>Магазин у Telegram: каталог, кошик, оплата.</p>
             </div>
           </a>
         </div>
-
-        <a class="more" href="#contact" data-rise>
-          <b>+24</b>
-          <span>Хочете більше? Напишіть — покажемо повне портфоліо.</span>
-          <i class="btn btn--blue"><span>Надіслати заявку</span></i>
-        </a>
       </div>
     </section>
 
-    <div class="ticker ticker--dark" aria-hidden="true">
-      <div class="ticker__track">
-        <span>E-commerce</span><i></i><span>Локальний бізнес</span><i></i><span>Особисті бренди</span><i></i><span>Стартапи</span><i></i><span>B2B</span><i></i><span>Корпоративний</span><i></i>
-        <span>E-commerce</span><i></i><span>Локальний бізнес</span><i></i><span>Особисті бренди</span><i></i><span>Стартапи</span><i></i><span>B2B</span><i></i><span>Корпоративний</span><i></i>
-      </div>
-    </div>
-
     <section class="section reviews" id="reviews">
       <div class="wrap">
-        <div class="head head--center">
+        <div class="head">
           <span class="eyebrow" data-rise>Відгуки</span>
-          <h2 data-split>Що кажуть <em>клієнти</em></h2>
-          <p data-rise>Реальні враження від співпраці.</p>
+          <h2 data-split>Клієнти <em>коротко</em></h2>
         </div>
       </div>
-      <div class="reviews__rail">
-        <div class="ticker ticker--cards">
-          <div class="ticker__track">
-            <figure class="quote"><div>★★★★★</div><blockquote>Думали просто переробити сайт. В підсумку отримали систему, яка реально продає.</blockquote><figcaption><i>О</i><b>Олег</b><small>e-commerce</small></figcaption></figure>
-            <figure class="quote"><div>★★★★★</div><blockquote>Не треба було 10 разів пояснювати одне й те саме. Самі розібрались і запропонували варіант.</blockquote><figcaption><i>М</i><b>Марія</b><small>локальний бізнес</small></figcaption></figure>
-            <figure class="quote"><div>★★★★★</div><blockquote>Закрили все: бот, канал, воронку. Одне тягне інше — і воно працює.</blockquote><figcaption><i>А</i><b>Андрій</b><small>стартап</small></figcaption></figure>
-            <figure class="quote"><div>★★★★★</div><blockquote>Думали просто переробити сайт. В підсумку отримали систему, яка реально продає.</blockquote><figcaption><i>О</i><b>Олег</b><small>e-commerce</small></figcaption></figure>
-            <figure class="quote"><div>★★★★★</div><blockquote>Не треба було 10 разів пояснювати одне й те саме. Самі розібрались і запропонували варіант.</blockquote><figcaption><i>М</i><b>Марія</b><small>локальний бізнес</small></figcaption></figure>
-            <figure class="quote"><div>★★★★★</div><blockquote>Закрили все: бот, канал, воронку. Одне тягне інше — і воно працює.</blockquote><figcaption><i>А</i><b>Андрій</b><small>стартап</small></figcaption></figure>
-          </div>
-        </div>
-        <div class="ticker ticker--cards ticker--rev">
-          <div class="ticker__track">
-            <figure class="quote"><div>★★★★★</div><blockquote>Не було вау з першого дня. Але через пару місяців побачила реальний ріст заявок.</blockquote><figcaption><i>І</i><b>Ірина</b><small>освіта</small></figcaption></figure>
-            <figure class="quote"><div>★★★★★</div><blockquote>Завжди на зв'язку. Швидко реагують. Відчуття, що це твоя команда, а не підрядник.</blockquote><figcaption><i>Д</i><b>Дмитро</b><small>послуги</small></figcaption></figure>
-            <figure class="quote"><div>★★★★★</div><blockquote>Вперше зрозуміла, як це все пов'язано. Просто пояснили — і нарешті працює.</blockquote><figcaption><i>К</i><b>Катерина</b><small>особистий бренд</small></figcaption></figure>
-            <figure class="quote"><div>★★★★★</div><blockquote>Не було вау з першого дня. Але через пару місяців побачила реальний ріст заявок.</blockquote><figcaption><i>І</i><b>Ірина</b><small>освіта</small></figcaption></figure>
-            <figure class="quote"><div>★★★★★</div><blockquote>Завжди на зв'язку. Швидко реагують. Відчуття, що це твоя команда, а не підрядник.</blockquote><figcaption><i>Д</i><b>Дмитро</b><small>послуги</small></figcaption></figure>
-            <figure class="quote"><div>★★★★★</div><blockquote>Вперше зрозуміла, як це все пов'язано. Просто пояснили — і нарешті працює.</blockquote><figcaption><i>К</i><b>Катерина</b><small>особистий бренд</small></figcaption></figure>
-          </div>
+      <div class="ticker ticker--cards">
+        <div class="ticker__track">
+          <figure class="quote"><blockquote>Думали переробити сайт. Отримали систему, яка продає.</blockquote><figcaption><i>О</i><b>Олег</b><small>e-commerce</small></figcaption></figure>
+          <figure class="quote"><blockquote>Не треба було пояснювати десять разів. Самі запропонували варіант.</blockquote><figcaption><i>М</i><b>Марія</b><small>локальний бізнес</small></figcaption></figure>
+          <figure class="quote"><blockquote>Бот, канал, воронка. Одне тягне інше — і працює.</blockquote><figcaption><i>А</i><b>Андрій</b><small>стартап</small></figcaption></figure>
+          <figure class="quote"><blockquote>Через пару місяців побачила реальний ріст заявок.</blockquote><figcaption><i>І</i><b>Ірина</b><small>освіта</small></figcaption></figure>
+          <figure class="quote"><blockquote>Думали переробити сайт. Отримали систему, яка продає.</blockquote><figcaption><i>О</i><b>Олег</b><small>e-commerce</small></figcaption></figure>
+          <figure class="quote"><blockquote>Не треба було пояснювати десять разів. Самі запропонували варіант.</blockquote><figcaption><i>М</i><b>Марія</b><small>локальний бізнес</small></figcaption></figure>
+          <figure class="quote"><blockquote>Бот, канал, воронка. Одне тягне інше — і працює.</blockquote><figcaption><i>А</i><b>Андрій</b><small>стартап</small></figcaption></figure>
+          <figure class="quote"><blockquote>Через пару місяців побачила реальний ріст заявок.</blockquote><figcaption><i>І</i><b>Ірина</b><small>освіта</small></figcaption></figure>
         </div>
       </div>
     </section>
 
     <section class="section" id="faq">
       <div class="wrap faq">
-        <div class="faq__side">
+        <div>
           <span class="eyebrow" data-rise>FAQ</span>
-          <h2 data-split>Питання <em>та відповіді</em></h2>
-          <p data-rise>Не знайшли відповідь? Напишіть — відповімо протягом 24 годин.</p>
-          <a class="btn btn--blue mag" href="#contact" data-rise><span>Поставити питання</span></a>
+          <h2 data-split>Коротко <em>по суті</em></h2>
         </div>
         <div class="acc">
           <details open>
-            <summary>Скільки коштує розробка сайту?</summary>
-            <p>Вартість залежить від складності, функціоналу та дизайну. Після обговорення вимог даємо точну оцінку.</p>
+            <summary>Скільки коштує сайт?</summary>
+            <p>Від 300$. Точну цифру даємо після брифу — залежить від логіки, дизайну і інтеграцій.</p>
           </details>
           <details>
-            <summary>Як зробити зміни?</summary>
-            <p>Вносимо виправлення протягом 14 днів після запуску. Навчаємо роботі з адмін-панеллю і даємо інструкції для самостійного редагування.</p>
+            <summary>Як оплата?</summary>
+            <p>Повністю або етапами. Фіксуємо обсяг до старту, без сюрпризів у кінці.</p>
           </details>
           <details>
-            <summary>Як здійснюється оплата?</summary>
-            <p>Можна оплатити повністю або розбити на етапи. Цінуємо час клієнтів і працюємо на результат.</p>
+            <summary>Які етапи?</summary>
+            <p>Бриф → дизайн → збірка → запуск → ріст. Ви бачите статус на кожному кроці.</p>
           </details>
           <details>
-            <summary>Які етапи розробки сайту?</summary>
-            <p>Аналіз вимог, технічне завдання, дизайн, верстка, програмування, тестування та запуск.</p>
-          </details>
-          <details>
-            <summary>Які технології ви використовуєте?</summary>
-            <p>HTML5, CSS3, JavaScript, React, Python, а також інструменти штучного інтелекту для оптимізації процесів і вартості.</p>
-          </details>
-          <details>
-            <summary>Чи можна замовити редизайн існуючого сайту?</summary>
-            <p>Так. Займаємось редизайном і модернізацією сайтів, щоб покращити функціонал і вигляд.</p>
+            <summary>Можна редизайн існуючого?</summary>
+            <p>Так. Розбираємо, що вже працює, і перезбираємо те, що гальмує заявки.</p>
           </details>
         </div>
       </div>
@@ -456,19 +318,13 @@
 
     <section class="closer" id="contact">
       <div class="wrap closer__grid">
-        <div class="closer__copy">
+        <div>
           <span class="eyebrow eyebrow--light" data-rise>Контакти</span>
-          <h2 data-split>Готові <em>почати?</em></h2>
-          <p data-rise>Залиште заявку — і ми зв'яжемось протягом 24 годин. Нові клієнти отримують <b>−30%</b> на перший проєкт.</p>
+          <h2 data-split>Забрати <em>слот −30%</em></h2>
+          <p data-rise>Відповідаємо протягом 24 годин. Нові клієнти отримують знижку на перший проєкт.</p>
           <div class="direct" data-rise>
-            <a href="tel:+380970745767">
-              <small>Зателефонувати</small>
-              +380 97 074 57 67
-            </a>
-            <a href="mailto:kingkonglab2024@gmail.com">
-              <small>Написати</small>
-              kingkonglab2024@gmail.com
-            </a>
+            <a href="tel:+380970745767"><small>Телефон</small>+380 97 074 57 67</a>
+            <a href="mailto:kingkonglab2024@gmail.com"><small>Пошта</small>kingkonglab2024@gmail.com</a>
           </div>
         </div>
 
@@ -483,20 +339,17 @@
           </div>
           <div class="field">
             <textarea id="fMsg" name="message" rows="3" placeholder=" "></textarea>
-            <label for="fMsg">Яка послуга вас цікавить?</label>
+            <label for="fMsg">Що потрібно зібрати?</label>
           </div>
           <fieldset class="choices">
-            <legend>Що потрібно?</legend>
+            <legend>Тип задачі</legend>
             <label><input type="checkbox" name="service" value="Сайт" /><span>Сайт</span></label>
-            <label><input type="checkbox" name="service" value="Telegram-бот" /><span>Telegram-бот</span></label>
+            <label><input type="checkbox" name="service" value="Telegram-бот" /><span>Бот</span></label>
             <label><input type="checkbox" name="service" value="Mini App" /><span>Mini App</span></label>
-            <label><input type="checkbox" name="service" value="Трафік / SEO" /><span>Трафік / SEO</span></label>
-            <label><input type="checkbox" name="service" value="UI/UX" /><span>UI/UX</span></label>
+            <label><input type="checkbox" name="service" value="Трафік / SEO" /><span>Трафік</span></label>
           </fieldset>
           <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" />
-          <button class="btn btn--blue btn--lg btn--full mag" type="submit">
-            <span>Надіслати заявку</span>
-          </button>
+          <button class="btn btn--blue btn--lg btn--full mag" type="submit"><span>Надіслати заявку</span></button>
           <p class="form__note">Натискаючи кнопку, ви погоджуєтесь з <a href="privacy.html">політикою конфіденційності</a>.</p>
           <div class="form__status" id="formStatus" role="status" aria-live="polite"></div>
         </form>
@@ -507,37 +360,17 @@
   <footer class="foot">
     <div class="wrap">
       <div class="foot__top">
-        <div class="foot__brand">
-          <a class="nav__logo" href="#top"><img class="logo" src="assets/img/logo.png" alt="" width="42" height="42" /><span>King Kong <strong>Lab</strong></span></a>
-          <p>Комплексні IT-рішення для бізнесу. Від ідеї до результату.</p>
-        </div>
+        <a class="nav__logo" href="#top"><img class="logo" src="assets/img/logo.png" alt="" width="36" height="36" /><span>King Kong <strong>Lab</strong></span></a>
         <div class="foot__cols">
-          <div>
-            <h4>Навігація</h4>
-            <a href="#solutions">Послуги</a>
-            <a href="#about">Про нас</a>
-            <a href="#work">Портфоліо</a>
-            <a href="#contact">Контакти</a>
-          </div>
-          <div>
-            <h4>Послуги</h4>
-            <a href="#solutions">Веб-сайти</a>
-            <a href="#solutions">Telegram-боти</a>
-            <a href="#solutions">Mini Apps</a>
-            <a href="#solutions">UI/UX</a>
-          </div>
-          <div>
-            <h4>Контакти</h4>
-            <a href="tel:+380970745767">+380 97 074 57 67</a>
-            <a href="mailto:kingkonglab2024@gmail.com">kingkonglab2024@gmail.com</a>
-          </div>
+          <a href="#solutions">Послуги</a>
+          <a href="#work">Портфоліо</a>
+          <a href="#contact">Контакти</a>
+          <a href="tel:+380970745767">+380 97 074 57 67</a>
         </div>
       </div>
-      <p class="foot__giant" aria-hidden="true">KING KONG LAB</p>
       <div class="foot__bottom">
-        <span>© <span id="year">2026</span> King Kong Lab. Всі права захищені</span>
+        <span>© <span id="year">2026</span> King Kong Lab</span>
         <a href="privacy.html">Політика конфіденційності</a>
-        <a class="to-top" href="#top" aria-label="Нагору">↑</a>
       </div>
     </div>
   </footer>
