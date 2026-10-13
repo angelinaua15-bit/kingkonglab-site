@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>King Kong Lab — сайти, Telegram-боти та Mini Apps під ключ</title>
-  <meta name="description" content="King Kong Lab: сайти, Telegram-боти, Mini Apps, трафік і UI/UX під ключ. Беремо складні проєкти й збираємо їх у систему, що приводить клієнтів." />
-  <meta name="theme-color" content="#1E3BFF" />
+  <title>King Kong Lab — Розробка сайтів, Telegram-ботів та Mini Apps під ключ</title>
+  <meta name="description" content="IT-агентство King Kong Lab: сайти, Telegram-боти, Mini Apps, SEO, таргет і UI/UX під ключ. -30% на перший проєкт." />
+  <meta name="theme-color" content="#F7F5FF" />
   <link rel="canonical" href="https://kingkonglab.com/uk" />
 
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="King Kong Lab — сайти, боти і Mini Apps під ключ" />
-  <meta property="og:description" content="Беремо складні проєкти й збираємо їх у систему, що приводить клієнтів." />
+  <meta property="og:title" content="King Kong Lab — digital-системи, що продають" />
+  <meta property="og:description" content="Сайти, Telegram-боти та Mini Apps під ключ. -30% на перший проєкт." />
   <meta property="og:image" content="assets/img/logo.png" />
   <meta property="og:locale" content="uk_UA" />
 
@@ -19,8 +19,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://images.unsplash.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <script>document.documentElement.classList.add('js');</script>
 
@@ -31,35 +30,42 @@
     "name": "King Kong Lab",
     "url": "https://kingkonglab.com",
     "logo": "https://kingkonglab.com/icon-512.png",
-    "description": "IT agency: websites, Telegram bots, Mini Apps, SEO and advertising.",
+    "description": "IT marketing agency providing websites, Telegram bots, Mini Apps, SEO, and advertising solutions.",
     "address": { "@type": "PostalAddress", "addressCountry": "UA" },
     "contactPoint": { "@type": "ContactPoint", "telephone": "+380970745767", "email": "kingkonglab2024@gmail.com", "contactType": "sales" }
   }
   </script>
 </head>
 <body>
+  <div class="atmosphere" aria-hidden="true">
+    <span class="blob blob--1"></span>
+    <span class="blob blob--2"></span>
+    <span class="blob blob--3"></span>
+    <span class="blob blob--4"></span>
+  </div>
+  <div class="loader" id="loader" aria-hidden="true">
+    <img class="logo" src="assets/img/logo.png" alt="" width="72" height="72" />
+    <div class="loader__bar"><i id="loaderBar"></i></div>
+  </div>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="spotlight" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"><i></i><em></em></div>
   <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
 
-  <!-- HEADER: лого · меню · мова -->
   <header class="nav" id="nav">
     <a class="nav__logo" href="#top" aria-label="King Kong Lab">
-      <img class="logo" src="assets/img/logo.png" alt="" width="38" height="38" />
+      <img class="logo" src="assets/img/logo.png" alt="" width="36" height="36" />
       <span>King Kong <strong>Lab</strong></span>
     </a>
     <nav class="nav__links" aria-label="Головна навігація">
-      <a href="#services" data-i18n="nav.services">Послуги</a>
-      <a href="#work" data-i18n="nav.work">Портфоліо</a>
-      <a href="#approach" data-i18n="nav.approach">Підхід</a>
-      <a href="#stories" data-i18n="nav.stories">Історії</a>
-      <a href="#news" data-i18n="nav.news">Новини</a>
-      <a href="#contact" data-i18n="nav.contact">Контакти</a>
-      <i class="nav__ink" aria-hidden="true"></i>
+      <a href="#solutions">Послуги</a>
+      <a href="#work">Портфоліо</a>
+      <a href="#stories">Історії</a>
+      <a href="#news">Новини</a>
+      <a href="#contact">Контакти</a>
     </nav>
-    <div class="lang" role="group" aria-label="Мова / Language">
-      <button type="button" data-lang="uk" aria-pressed="true">UA</button>
-      <button type="button" data-lang="en" aria-pressed="false">EN</button>
-    </div>
-    <a class="btn btn--blue nav__cta" href="#contact"><span data-i18n="nav.cta">Обговорити проєкт</span></a>
+    <a class="btn btn--blue nav__cta mag" href="#contact"><span>−30% на старт</span></a>
     <button class="burger" id="burger" type="button" aria-label="Меню" aria-expanded="false" aria-controls="drawer">
       <i></i><i></i>
     </button>
@@ -67,12 +73,11 @@
 
   <aside class="drawer" id="drawer" aria-hidden="true">
     <nav>
-      <a href="#services"><small>01</small><span data-i18n="nav.services">Послуги</span></a>
-      <a href="#work"><small>02</small><span data-i18n="nav.work">Портфоліо</span></a>
-      <a href="#approach"><small>03</small><span data-i18n="nav.approach">Підхід</span></a>
-      <a href="#stories"><small>04</small><span data-i18n="nav.stories">Історії</span></a>
-      <a href="#news"><small>05</small><span data-i18n="nav.news">Новини</span></a>
-      <a href="#contact"><small>06</small><span data-i18n="nav.contact">Контакти</span></a>
+      <a href="#solutions"><small>01</small>Послуги</a>
+      <a href="#work"><small>02</small>Портфоліо</a>
+      <a href="#stories"><small>03</small>Історії</a>
+      <a href="#news"><small>04</small>Новини</a>
+      <a href="#contact"><small>05</small>Контакти</a>
     </nav>
     <div class="drawer__foot">
       <a href="tel:+380970745767">+380 97 074 57 67</a>
@@ -81,242 +86,354 @@
   </aside>
 
   <main id="top">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="wrap hero__grid">
-        <div class="hero__copy">
-          <span class="pill" data-rise><i></i><span data-i18n="hero.tag">−30% на перший проєкт</span></span>
-          <h1 class="hero__title">
-            <span class="line"><span data-i18n="hero.t1">Сайти, боти</span></span>
-            <span class="line"><span data-i18n="hero.t2">і Mini Apps,</span></span>
-            <span class="line"><span class="accent" data-i18n="hero.t3">що продають</span></span>
+    <section class="banner" id="promo" aria-label="King Kong Lab">
+      <div class="banner__bg" aria-hidden="true">
+        <span class="banner__aurora"></span>
+        <span class="banner__grid"></span>
+        <span class="banner__shine"></span>
+        <span class="spark spark--1"></span>
+        <span class="spark spark--2"></span>
+        <span class="spark spark--3"></span>
+        <b class="frame" aria-hidden="true"><i></i><i></i><i></i><i></i></b>
+      </div>
+
+      <div class="wrap banner__layout">
+        <div class="banner__copy">
+          <span class="promo__tag" data-rise><i></i> Перший проєкт</span>
+          <p class="banner__off">−30%</p>
+          <h1 class="banner__title">
+            <span class="line"><span>Сайти, боти</span></span>
+            <span class="line"><span>і Mini Apps,</span></span>
+            <span class="line line--island"><span>що продають</span></span>
           </h1>
-          <p class="hero__lead" data-rise data-i18n="hero.lead">Беремо складні задачі й збираємо сайт, бота, трафік і аналітику в одну систему, яка приводить клієнтів.</p>
-          <div class="hero__actions" data-rise>
-            <a class="btn btn--blue btn--lg" href="#contact"><span data-i18n="hero.cta1">Обговорити проєкт</span></a>
-            <a class="btn btn--ghost btn--lg" href="#work"><span data-i18n="hero.cta2">Дивитись роботи</span></a>
+          <p class="banner__lead" data-rise>
+            Сайт, бот і трафік в одній системі під ключ.
+          </p>
+          <div class="banner__actions" data-rise>
+            <a class="btn btn--blue btn--lg mag" href="#contact" data-cursor="Go"><span>Обговорити проєкт</span></a>
+            <a class="btn btn--ghost btn--lg mag" href="#work"><span>Роботи</span></a>
           </div>
+          <ul class="banner__stats" data-rise>
+            <li><b>97+</b><small>проєктів</small></li>
+            <li><b>5+</b><small>років</small></li>
+            <li><b>24/7</b><small>підтримка</small></li>
+          </ul>
         </div>
-        <figure class="hero__photo" data-rise>
-          <img src="https://images.unsplash.com/photo-1627599936744-51d288f89af4?w=1100&q=70&auto=format&fit=crop" alt="Команда працює над проєктом" width="1100" height="1240" fetchpriority="high" />
-          <figcaption class="hero__badge">
-            <img class="logo" src="assets/img/logo.png" alt="" width="44" height="44" />
-            <span><b>97+</b> <span data-i18n="hero.badge">запущених проєктів</span></span>
-          </figcaption>
-        </figure>
+
+        <div class="kong" id="kong" aria-hidden="true">
+          <span class="kong__glow"></span>
+          <span class="kong__ring kong__ring--a"></span>
+          <span class="kong__ring kong__ring--b"></span>
+          <span class="kong__ring kong__ring--c"></span>
+          <span class="kong__burst"></span>
+          <div class="kong__mark">
+            <img class="logo" src="assets/img/logo.png" alt="" width="220" height="220" />
+          </div>
+          <small class="kong__cap">King Kong</small>
+        </div>
+      </div>
+
+      <div class="banner__rail" aria-hidden="true">
+        <div class="ticker__track">
+          <span>systems that sell</span><i></i><span>−30% first build</span><i></i><span>web · bots · mini apps</span><i></i><span>king kong lab</span><i></i>
+          <span>systems that sell</span><i></i><span>−30% first build</span><i></i><span>web · bots · mini apps</span><i></i><span>king kong lab</span><i></i>
+        </div>
       </div>
     </section>
 
-    <!-- ПОСЛУГИ (скорочено) -->
-    <section class="section" id="services">
+    <section class="section" id="solutions">
       <div class="wrap">
         <div class="head">
-          <span class="eyebrow" data-i18n="svc.eyebrow">Послуги</span>
-          <h2 data-split data-i18n-html="svc.title">Що ми <em>робимо</em></h2>
+          <span class="eyebrow" data-rise>Рішення</span>
+          <h2 data-split>Чотири системи <em>під ключ</em></h2>
         </div>
-        <div class="services">
-          <article class="svc">
-            <img src="https://images.unsplash.com/photo-1600132806608-231446b2e7af?w=700&q=70&auto=format&fit=crop" alt="" loading="lazy" width="700" height="520" />
-            <div><h3 data-i18n="svc.1">Сайти</h3><p data-i18n="svc.1p">Лендінги, корпоративні, SEO</p><b data-i18n="svc.1price">від 300$</b></div>
-          </article>
-          <article class="svc">
-            <img src="https://images.unsplash.com/photo-1526045612212-70caf35c14df?w=700&q=70&auto=format&fit=crop" alt="" loading="lazy" width="700" height="520" />
-            <div><h3 data-i18n="svc.2">Боти і Mini Apps</h3><p data-i18n="svc.2p">Продажі й сервіс у Telegram</p><b data-i18n="svc.2price">від 200$</b></div>
-          </article>
-          <article class="svc">
-            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&q=70&auto=format&fit=crop" alt="" loading="lazy" width="700" height="520" />
-            <div><h3 data-i18n="svc.3">Трафік</h3><p data-i18n="svc.3p">Таргет і реклама під заявки</p><b data-i18n="svc.3price">від 500$</b></div>
-          </article>
-          <article class="svc">
-            <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=700&q=70&auto=format&fit=crop" alt="" loading="lazy" width="700" height="520" />
-            <div><h3 data-i18n="svc.4">Дизайн / UX</h3><p data-i18n="svc.4p">Стиль, що конвертить</p><b data-i18n="svc.4price">від 600$</b></div>
-          </article>
+
+        <div class="lab">
+          <div class="lab__list" role="tablist" aria-label="Рішення">
+            <button class="sol is-on" role="tab" aria-selected="true" data-img="https://images.unsplash.com/photo-1600132806608-231446b2e7af?w=1000&q=70&auto=format&fit=crop" data-alt="Сайт та SEO">
+              <span class="sol__num">01</span>
+              <span class="sol__body">
+                <span class="sol__price">від <b>300$</b></span>
+                <strong>Сайт / додаток</strong>
+                <span>Присутність, SEO і аналітика, що приводять заявки.</span>
+              </span>
+            </button>
+            <button class="sol" role="tab" aria-selected="false" data-img="https://images.unsplash.com/photo-1526045612212-70caf35c14df?w=1000&q=70&auto=format&fit=crop" data-alt="Telegram-боти">
+              <span class="sol__num">02</span>
+              <span class="sol__body">
+                <span class="sol__price">від <b>200$</b></span>
+                <strong>Боти / Mini Apps</strong>
+                <span>Продажі й сервіс прямо в Telegram.</span>
+              </span>
+            </button>
+            <button class="sol" role="tab" aria-selected="false" data-img="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1000&q=70&auto=format&fit=crop" data-alt="Трафік і таргет">
+              <span class="sol__num">03</span>
+              <span class="sol__body">
+                <span class="sol__price">від <b>500$</b></span>
+                <strong>Трафік / таргет</strong>
+                <span>Платний трафік під результат, не під покази.</span>
+              </span>
+            </button>
+            <button class="sol" role="tab" aria-selected="false" data-img="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=1000&q=70&auto=format&fit=crop" data-alt="Дизайн та UI/UX">
+              <span class="sol__num">04</span>
+              <span class="sol__body">
+                <span class="sol__price">від <b>600$</b></span>
+                <strong>Дизайн / UI/UX</strong>
+                <span>Стиль, який запам'ятовують і який конвертить.</span>
+              </span>
+            </button>
+          </div>
+          <figure class="lab__stage">
+            <img id="labImg" src="https://images.unsplash.com/photo-1600132806608-231446b2e7af?w=1000&q=70&auto=format&fit=crop" alt="Сайт та SEO" width="1024" height="1024" />
+          </figure>
         </div>
       </div>
     </section>
 
-    <!-- ПРО НАС: менше тексту, факти випливають справа наліво -->
-    <section class="about" id="about">
-      <div class="wrap">
-        <span class="eyebrow" data-i18n="about.eyebrow">Про нас</span>
-        <p class="about__line" data-split data-i18n-html="about.line">Невелика команда, яка <em>доводить до результату</em> — від ідеї до перших заявок.</p>
+    <section class="section section--tight" id="about">
+      <div class="wrap about">
+        <div>
+          <span class="eyebrow" data-rise>Про нас</span>
+          <h2 data-split>Lab, який збирає <em>систему</em></h2>
+        </div>
+        <div>
+          <p class="statement" data-rise>Невелика команда, яка доводить проєкт до перших заявок — без зайвих посередників.</p>
+        </div>
       </div>
       <div class="facts" aria-label="Коротко про нас">
         <div class="facts__track">
-          <div class="fact"><b>97+</b><span data-i18n="about.f1">проєктів</span></div>
-          <div class="fact"><b>5+</b><span data-i18n="about.f2">років досвіду</span></div>
-          <div class="fact"><b>≤ 24 год</b><span data-i18n="about.f3">на відповідь</span></div>
-          <div class="fact"><b>UA · EN</b><span data-i18n="about.f4">мови роботи</span></div>
-          <div class="fact"><b>UA · EU · US</b><span data-i18n="about.f5">клієнти</span></div>
-          <div class="fact"><b>NDA</b><span data-i18n="about.f6">за запитом</span></div>
+          <div class="fact"><b>97+</b><span>проєктів</span></div>
+          <div class="fact"><b>5+</b><span>років</span></div>
+          <div class="fact"><b>≤ 24 год</b><span>відповідь</span></div>
+          <div class="fact"><b>UA · EU · US</b><span>клієнти</span></div>
+          <div class="fact"><b>UA · EN</b><span>мови</span></div>
+          <div class="fact"><b>NDA</b><span>за запитом</span></div>
         </div>
       </div>
     </section>
 
-    <!-- ПОРТФОЛІО -->
+    <section class="section process" id="process">
+      <div class="wrap">
+        <div class="head">
+          <span class="eyebrow" data-rise>Як ми працюємо</span>
+          <h2 data-split>Складні проєкти — <em>наша територія</em></h2>
+          <p class="approach__lead" data-rise>Інтеграції з CRM і оплатами, боти з тисячами користувачів, магазини всередині Telegram. Починаємо не з дизайну, а з того, як гроші рухаються від кліку до оплати.</p>
+        </div>
+        <ol class="steps">
+          <li data-rise><em>01</em><h3>Розбір</h3><p>Цифри, воронка, де губляться заявки. Обсяг і ціну фіксуємо до старту.</p></li>
+          <li data-rise><em>02</em><h3>Прототип</h3><p>Логіка й екрани до дизайну. Велике ділимо на етапи з окремим запуском.</p></li>
+          <li data-rise><em>03</em><h3>Збірка і тести</h3><p>Інтеграції, оплати, навантаження. Прогрес видно на кожному етапі.</p></li>
+          <li data-rise><em>04</em><h3>Ріст</h3><p>Аналітика з першого дня, трафік і доопрацювання живої системи.</p></li>
+        </ol>
+        <div class="trick" data-rise>
+          <small>Наша фішка</small>
+          <p>Система, а не сторінка. Сайт, бот, реклама й аналітика працюють як один контур — і ви бачите, звідки прийшов кожен клієнт.</p>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="work">
       <div class="wrap">
         <div class="head head--row">
           <div>
-            <span class="eyebrow" data-i18n="work.eyebrow">Портфоліо</span>
-            <h2 data-split data-i18n-html="work.title">Живі <em>проєкти</em></h2>
+            <span class="eyebrow" data-rise>Портфоліо</span>
+            <h2 data-split>Вибрані <em>проєкти</em></h2>
           </div>
-          <div class="filters" role="tablist" aria-label="Фільтр проєктів">
-            <button class="filter is-on" data-filter="all" aria-selected="true" data-i18n="work.all">Всі</button>
-            <button class="filter" data-filter="web" aria-selected="false" data-i18n="work.web">Сайти</button>
-            <button class="filter" data-filter="tg" aria-selected="false">Telegram</button>
+          <div class="filters" role="tablist" aria-label="Фільтр проєктів" data-rise>
+            <button class="filter is-on" data-filter="all" aria-selected="true">Всі</button>
+            <button class="filter" data-filter="web" aria-selected="false">Веб</button>
+            <button class="filter" data-filter="bot" aria-selected="false">Боти</button>
+            <button class="filter" data-filter="app" aria-selected="false">Apps</button>
           </div>
         </div>
 
         <div class="work">
-          <a class="case" data-cat="web" href="https://www.abv-traffic.com" target="_blank" rel="noopener">
-            <div class="case__shot">
-              <span class="case__bar"><i></i><i></i><i></i><em>abv-traffic.com</em></span>
-              <img src="https://image.thum.io/get/width/1000/crop/700/noanimate/https://www.abv-traffic.com" data-fallback="assets/img/abvtraffic.jpg" alt="Скріншот сайту ABV Traffic" loading="lazy" width="1000" height="700" />
+          <a class="case-card" data-cat="web" href="https://www.abv-traffic.com" target="_blank" rel="noopener" data-cursor="Open">
+            <div class="case-card__media"><img src="https://image.thum.io/get/width/1000/crop/1000/noanimate/https://www.abv-traffic.com" data-fallback="assets/img/abvtraffic.jpg" alt="Сайт ABV Traffic" width="1000" height="1000" loading="lazy" /></div>
+            <div class="case-card__meta">
+              <span>Веб-сайт</span>
+              <h3>ABV Traffic</h3>
+              <p>Корпоративний сайт з 3D і преміальними анімаціями.</p>
             </div>
-            <div class="case__meta"><span data-i18n="work.tWeb">Сайт</span><h3>ABV Traffic</h3><p data-i18n="work.p1">Корпоративний сайт з 3D і анімаціями.</p></div>
           </a>
-          <a class="case" data-cat="web" href="https://kingkongweb.agency" target="_blank" rel="noopener">
-            <div class="case__shot">
-              <span class="case__bar"><i></i><i></i><i></i><em>kingkongweb.agency</em></span>
-              <img src="https://image.thum.io/get/width/1000/crop/700/noanimate/https://kingkongweb.agency" data-fallback="assets/img/kingkongagency.jpg" alt="Скріншот сайту King Kong Agency" loading="lazy" width="1000" height="700" />
+          <a class="case-card" data-cat="web" href="https://kingkongweb.agency" target="_blank" rel="noopener" data-cursor="Open">
+            <div class="case-card__media"><img src="https://image.thum.io/get/width/1000/crop/1000/noanimate/https://kingkongweb.agency" data-fallback="assets/img/kingkongagency.jpg" alt="Сайт King Kong Agency" width="1000" height="1000" loading="lazy" /></div>
+            <div class="case-card__meta">
+              <span>Веб-сайт</span>
+              <h3>King Kong Agency</h3>
+              <p>Флагман агентства: фірмовий стиль і продуманий UX.</p>
             </div>
-            <div class="case__meta"><span data-i18n="work.tWeb">Сайт</span><h3>King Kong Agency</h3><p data-i18n="work.p2">Флагманський сайт агентства: стиль і UX.</p></div>
           </a>
-          <a class="case case--tg" data-cat="tg" href="https://t.me/FoodByDrTolstikovaBot" target="_blank" rel="noopener">
-            <div class="case__shot case__shot--tg">
-              <span class="tgcard"><b>@FoodByDrTolstikovaBot</b><em>5000+</em><small data-i18n="work.users">активних користувачів</small></span>
+          <a class="case-card" data-cat="bot" href="https://t.me/FoodByDrTolstikovaBot" target="_blank" rel="noopener" data-cursor="Open">
+            <div class="case-card__media case-card__media--tg"><span class="tgstat"><b>5000+</b><small>активних користувачів</small></span></div>
+            <div class="case-card__meta">
+              <span>Telegram-бот</span>
+              <h3>FoodByDrTolstikova</h3>
+              <p>Бот дієтолога. 5000+ активних користувачів.</p>
             </div>
-            <div class="case__meta"><span data-i18n="work.tBot">Telegram-бот</span><h3>FoodByDrTolstikova</h3><p data-i18n="work.p3">Бот дієтолога: раціони й супровід клієнтів.</p></div>
           </a>
-          <a class="case case--tg" data-cat="tg" href="https://t.me/TopTrendShopBot" target="_blank" rel="noopener">
-            <div class="case__shot case__shot--tg">
-              <span class="tgcard"><b>@TopTrendShopBot</b><em>Mini App</em><small data-i18n="work.shop">каталог · кошик · оплата</small></span>
+          <a class="case-card" data-cat="app" href="https://t.me/TopTrendShopBot" target="_blank" rel="noopener" data-cursor="Open">
+            <div class="case-card__media case-card__media--tg"><span class="tgstat"><b>Mini App</b><small>каталог · кошик · оплата</small></span></div>
+            <div class="case-card__meta">
+              <span>Mini App</span>
+              <h3>TopTrendShop</h3>
+              <p>Магазин у Telegram: каталог, кошик, оплата.</p>
             </div>
-            <div class="case__meta"><span>Mini App</span><h3>TopTrendShop</h3><p data-i18n="work.p4">Повноцінний магазин усередині Telegram.</p></div>
           </a>
         </div>
       </div>
     </section>
 
-    <!-- ПІДХІД: серйозна інфа + наша фішка -->
-    <section class="section approach" id="approach">
-      <div class="wrap approach__grid">
-        <div class="approach__intro">
-          <span class="eyebrow" data-i18n="ap.eyebrow">Як ми працюємо</span>
-          <h2 data-split data-i18n-html="ap.title">Складні проєкти — <em>наша територія</em></h2>
-          <p data-rise data-i18n="ap.lead">Інтеграції з CRM і оплатами, боти з тисячами користувачів, магазини всередині Telegram. Ми не починаємо з дизайну — починаємо з того, як гроші мають рухатись від кліку до оплати.</p>
-          <div class="trick" data-rise>
-            <small data-i18n="ap.trickLabel">Наша фішка</small>
-            <p data-i18n="ap.trick">Система, а не сторінка. Сайт, бот, реклама й аналітика збираються в один контур — і ви бачите, звідки прийшов кожен клієнт.</p>
-          </div>
-        </div>
-        <ol class="steps">
-          <li data-rise><em>01</em><div><h3 data-i18n="ap.s1">Розбір</h3><p data-i18n="ap.s1p">Цифри, воронка, де губляться заявки. Фіксуємо обсяг і ціну до старту.</p></div></li>
-          <li data-rise><em>02</em><div><h3 data-i18n="ap.s2">Прототип</h3><p data-i18n="ap.s2p">Логіка і екрани до дизайну. Складне розбиваємо на етапи з окремим запуском.</p></div></li>
-          <li data-rise><em>03</em><div><h3 data-i18n="ap.s3">Збірка і тести</h3><p data-i18n="ap.s3p">Інтеграції, оплати, навантаження. Прогрес видно на кожному етапі.</p></div></li>
-          <li data-rise><em>04</em><div><h3 data-i18n="ap.s4">Запуск і ріст</h3><p data-i18n="ap.s4p">Аналітика з першого дня, трафік і доопрацювання вже живої системи.</p></div></li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- ІСТОРІЇ -->
-    <section class="section" id="stories">
+    <section class="section reviews" id="reviews">
       <div class="wrap">
         <div class="head">
-          <span class="eyebrow" data-i18n="st.eyebrow">Історії</span>
-          <h2 data-split data-i18n-html="st.title">Як це було <em>насправді</em></h2>
+          <span class="eyebrow" data-rise>Відгуки</span>
+          <h2 data-split>Клієнти <em>коротко</em></h2>
         </div>
-        <div class="stories">
-          <article class="story">
-            <small data-i18n="st.1tag">Telegram-бот · дієтологія</small>
-            <h3 data-i18n="st.1h">Консультації, що не масштабувались</h3>
-            <p data-i18n="st.1p">Дієтолог вела клієнтів вручну в особистих повідомленнях. Ми перенесли раціони й супровід у бота — і він виріс до 5000+ активних користувачів без розширення команди.</p>
+      </div>
+      <div class="ticker ticker--cards">
+        <div class="ticker__track">
+          <figure class="quote"><blockquote>Думали переробити сайт. Отримали систему, яка продає.</blockquote><figcaption><i>О</i><b>Олег</b><small>e-commerce</small></figcaption></figure>
+          <figure class="quote"><blockquote>Не треба було пояснювати десять разів. Самі запропонували варіант.</blockquote><figcaption><i>М</i><b>Марія</b><small>локальний бізнес</small></figcaption></figure>
+          <figure class="quote"><blockquote>Бот, канал, воронка. Одне тягне інше — і працює.</blockquote><figcaption><i>А</i><b>Андрій</b><small>стартап</small></figcaption></figure>
+          <figure class="quote"><blockquote>Через пару місяців побачила реальний ріст заявок.</blockquote><figcaption><i>І</i><b>Ірина</b><small>освіта</small></figcaption></figure>
+          <figure class="quote"><blockquote>Думали переробити сайт. Отримали систему, яка продає.</blockquote><figcaption><i>О</i><b>Олег</b><small>e-commerce</small></figcaption></figure>
+          <figure class="quote"><blockquote>Не треба було пояснювати десять разів. Самі запропонували варіант.</blockquote><figcaption><i>М</i><b>Марія</b><small>локальний бізнес</small></figcaption></figure>
+          <figure class="quote"><blockquote>Бот, канал, воронка. Одне тягне інше — і працює.</blockquote><figcaption><i>А</i><b>Андрій</b><small>стартап</small></figcaption></figure>
+          <figure class="quote"><blockquote>Через пару місяців побачила реальний ріст заявок.</blockquote><figcaption><i>І</i><b>Ірина</b><small>освіта</small></figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section atlas" id="stories">
+      <div class="wrap">
+        <div class="head">
+          <span class="eyebrow" data-rise>Історії</span>
+          <h2 data-split>Як це було <em>насправді</em></h2>
+        </div>
+        <div class="atlas__grid atlas__grid--3">
+          <article data-rise>
+            <small>Telegram-бот · дієтологія</small>
+            <h3>Консультації, що не масштабувались</h3>
+            <p>Дієтолог вела клієнтів вручну в особистих повідомленнях. Ми перенесли раціони й супровід у бота — він виріс до 5000+ активних користувачів без розширення команди.</p>
           </article>
-          <article class="story">
-            <small data-i18n="st.2tag">Mini App · e-commerce</small>
-            <h3 data-i18n="st.2h">Магазин там, де вже є покупці</h3>
-            <p data-i18n="st.2p">Аудиторія жила в Telegram, а продажі йшли через переписку. Зібрали Mini App з каталогом, кошиком і оплатою — покупець оформлює замовлення, не виходячи з месенджера.</p>
+          <article data-rise>
+            <small>Mini App · e-commerce</small>
+            <h3>Магазин там, де вже є покупці</h3>
+            <p>Аудиторія жила в Telegram, а продажі йшли через переписку. Зібрали Mini App з каталогом, кошиком і оплатою — замовлення без виходу з месенджера.</p>
           </article>
-          <article class="story">
-            <small data-i18n="st.3tag">Сайт + SEO · освіта</small>
-            <h3 data-i18n="st.3h">Школа англійської без бюджету на рекламу</h3>
-            <p data-i18n="st.3p">Потрібні були заявки без постійних витрат на трафік. Зробили сайт під пошук і налаштували аналітику — тепер 20–35 заявок на місяць приходять з органіки.</p>
+          <article data-rise>
+            <small>Сайт + SEO · освіта</small>
+            <h3>Школа англійської без бюджету на рекламу</h3>
+            <p>Потрібні були заявки без постійних витрат на трафік. Сайт під пошук і аналітика — тепер 20–35 заявок на місяць з органіки.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- КОНТЕНТ-СТРІЧКА: пости з ТГ-каналу «Новини майбутнього» -->
     <section class="section news" id="news">
       <div class="wrap">
         <div class="head head--row">
           <div>
-            <span class="eyebrow" data-i18n="news.eyebrow">Контент-стрічка</span>
-            <h2 data-split data-i18n-html="news.title">Новини <em>майбутнього</em></h2>
+            <span class="eyebrow" data-rise>Контент-стрічка</span>
+            <h2 data-split>Новини <em>майбутнього</em></h2>
           </div>
-          <a class="btn btn--ghost" href="https://t.me/newsfuture7" target="_blank" rel="noopener"><span data-i18n="news.sub">Підписатись у Telegram</span></a>
+          <a class="btn btn--ghost" href="https://t.me/newsfuture7" target="_blank" rel="noopener"><span>Наш Telegram-канал</span></a>
         </div>
-        <p class="news__lead" data-rise data-i18n="news.lead">Технології, ШІ і цифрові новинки — свіжі пости з нашого Telegram-каналу.</p>
       </div>
       <div class="feed" id="feed" data-channel="newsfuture7" data-latest="44" data-count="6" aria-label="Пости з Telegram-каналу"></div>
-      <div class="wrap feed__more">
-        <button class="btn btn--ghost" id="feedMore" type="button"><span data-i18n="news.more">Показати ще</span></button>
-      </div>
+      <div class="wrap feed__more"><button class="btn btn--ghost" id="feedMore" type="button"><span>Показати ще</span></button></div>
     </section>
 
-    <!-- FAQ -->
     <section class="section" id="faq">
       <div class="wrap faq">
         <div>
-          <span class="eyebrow">FAQ</span>
-          <h2 data-split data-i18n-html="faq.title">Коротко <em>по суті</em></h2>
+          <span class="eyebrow" data-rise>FAQ</span>
+          <h2 data-split>Коротко <em>по суті</em></h2>
         </div>
         <div class="acc">
-          <details open><summary data-i18n="faq.q1">Скільки коштує проєкт?</summary><p data-i18n="faq.a1">Сайт — від 300$, бот — від 200$. Точну ціну фіксуємо після брифу, до старту.</p></details>
-          <details><summary data-i18n="faq.q2">Скільки триває запуск?</summary><p data-i18n="faq.a2">Лендінг — від 10 днів. Система «сайт + бот + аналітика» — 3–6 тижнів.</p></details>
-          <details><summary data-i18n="faq.q3">Як оплата?</summary><p data-i18n="faq.a3">Повністю або етапами. Обсяг фіксуємо заздалегідь, без сюрпризів у кінці.</p></details>
-          <details><summary data-i18n="faq.q4">Працюєте по NDA?</summary><p data-i18n="faq.a4">Так. Кейс публікуємо лише з вашої згоди.</p></details>
+          <details open>
+            <summary>Скільки коштує сайт?</summary>
+            <p>Від 300$. Точну цифру даємо після брифу — залежить від логіки, дизайну і інтеграцій.</p>
+          </details>
+          <details>
+            <summary>Як оплата?</summary>
+            <p>Повністю або етапами. Фіксуємо обсяг до старту, без сюрпризів у кінці.</p>
+          </details>
+          <details>
+            <summary>Скільки триває запуск?</summary>
+            <p>Лендінг — від 10 днів. Повна система (сайт + бот + аналітика) — зазвичай 3–6 тижнів після брифу.</p>
+          </details>
+          <details>
+            <summary>Чи працюєте по NDA?</summary>
+            <p>Так. Закриті бриф, макети і доступи. Публікуємо кейс лише з вашої згоди. Більшість систем залишається приватною.</p>
+          </details>
         </div>
       </div>
     </section>
 
-    <!-- КОНТАКТИ: маленький блок -->
-    <section class="contact" id="contact">
-      <div class="wrap">
-        <div class="contact__box">
-          <div class="contact__info">
-            <h2 data-i18n-html="ct.title">Обговоримо <em>ваш проєкт?</em></h2>
-            <p data-i18n="ct.lead">Відповімо протягом 24 годин. Перший проєкт — зі знижкою 30%.</p>
-            <div class="contact__links">
-              <a href="tel:+380970745767">+380 97 074 57 67</a>
-              <a href="mailto:kingkonglab2024@gmail.com">kingkonglab2024@gmail.com</a>
-            </div>
+    <section class="closer closer--compact" id="contact">
+      <div class="wrap closer__grid">
+        <div>
+          <span class="eyebrow" data-rise>Контакти</span>
+          <h2>Обговоримо <em>проєкт?</em></h2>
+          <p data-rise>Відповідаємо протягом 24 годин. Перший проєкт — −30%.</p>
+          <div class="direct" data-rise>
+            <a href="tel:+380970745767"><small>Телефон · EET</small>+380 97 074 57 67</a>
+            <a href="mailto:kingkonglab2024@gmail.com"><small>Пошта</small>kingkonglab2024@gmail.com</a>
           </div>
-          <form class="form" id="leadForm" novalidate>
-            <div class="field">
-              <input id="fName" name="name" type="text" placeholder=" " autocomplete="name" required />
-              <label for="fName" data-i18n="ct.name">Ваше ім'я</label>
-            </div>
-            <div class="field">
-              <input id="fPhone" name="phone" type="tel" placeholder=" " autocomplete="tel" inputmode="tel" required />
-              <label for="fPhone" data-i18n="ct.phone">Телефон або Telegram</label>
-            </div>
-            <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" />
-            <button class="btn btn--blue btn--lg" type="submit"><span data-i18n="ct.send">Надіслати</span></button>
-            <p class="form__note"><span data-i18n="ct.note">Надсилаючи, ви погоджуєтесь з</span> <a href="privacy.html" data-i18n="ct.policy">політикою конфіденційності</a>.</p>
-          </form>
         </div>
+
+        <form class="form" id="leadForm" novalidate>
+          <div class="field">
+            <input id="fName" name="name" type="text" placeholder=" " autocomplete="name" required />
+            <label for="fName">Ваше ім'я</label>
+          </div>
+          <div class="field">
+            <input id="fPhone" name="phone" type="tel" placeholder=" " autocomplete="tel" inputmode="tel" required />
+            <label for="fPhone">Телефон</label>
+          </div>
+          <div class="field">
+            <textarea id="fMsg" name="message" rows="2" placeholder=" "></textarea>
+            <label for="fMsg">Що потрібно зібрати?</label>
+          </div>
+          <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <button class="btn btn--blue btn--lg btn--full mag" type="submit"><span>Надіслати заявку</span></button>
+          <p class="form__note">Натискаючи кнопку, ви погоджуєтесь з <a href="privacy.html">політикою конфіденційності</a>.</p>
+          <div class="form__status" id="formStatus" role="status" aria-live="polite"></div>
+        </form>
       </div>
     </section>
   </main>
 
   <footer class="foot">
-    <div class="wrap foot__row">
-      <a class="nav__logo" href="#top"><img class="logo" src="assets/img/logo.png" alt="" width="30" height="30" /><span>King Kong <strong>Lab</strong></span></a>
-      <span>© <span id="year">2026</span> King Kong Lab</span>
-      <a href="https://t.me/newsfuture7" target="_blank" rel="noopener">Telegram</a>
-      <a href="privacy.html" data-i18n="foot.privacy">Політика конфіденційності</a>
+    <div class="wrap">
+      <div class="foot__top">
+        <div class="foot__brand">
+          <a class="nav__logo" href="#top"><img class="logo" src="assets/img/logo.png" alt="" width="36" height="36" /><span>King Kong <strong>Lab</strong></span></a>
+          <p>Сайти, боти і Mini Apps під ключ.</p>
+        </div>
+        <div class="foot__cols">
+          <div>
+            <h4>Lab</h4>
+            <a href="#solutions">Рішення</a>
+            <a href="#work">Портфоліо</a>
+            <a href="#stories">Історії</a>
+            <a href="#news">Новини</a>
+          </div>
+          <div>
+            <h4>Контакт</h4>
+            <a href="tel:+380970745767">+380 97 074 57 67</a>
+            <a href="mailto:kingkonglab2024@gmail.com">kingkonglab2024@gmail.com</a>
+            <a href="#contact">Заявка</a>
+          </div>
+        </div>
+      </div>
+      <p class="foot__giant" aria-hidden="true">KING KONG LAB</p>
+      <div class="foot__bottom">
+        <span>© <span id="year">2026</span> King Kong Lab</span>
+        <a href="privacy.html">Політика конфіденційності</a>
+      </div>
     </div>
   </footer>
 
@@ -324,6 +441,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 </body>
 </html>

@@ -4,86 +4,8 @@
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const store = {
-    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
-    set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* ignore */ } },
-  };
-
-  /* ---------- i18n: UA (в HTML) / EN ---------- */
-  const EN = {
-    'nav.services': 'Services', 'nav.work': 'Portfolio', 'nav.approach': 'Approach', 'nav.stories': 'Stories',
-    'nav.news': 'News', 'nav.contact': 'Contact', 'nav.cta': 'Discuss a project',
-    'hero.tag': '−30% on your first project', 'hero.t1': 'Websites, bots', 'hero.t2': 'and Mini Apps', 'hero.t3': 'that sell',
-    'hero.lead': 'We take on complex tasks and assemble website, bot, traffic and analytics into one system that brings clients.',
-    'hero.cta1': 'Discuss a project', 'hero.cta2': 'See our work', 'hero.badge': 'projects launched',
-    'svc.eyebrow': 'Services', 'svc.title': 'What we <em>do</em>',
-    'svc.1': 'Websites', 'svc.1p': 'Landing pages, corporate, SEO', 'svc.1price': 'from $300',
-    'svc.2': 'Bots & Mini Apps', 'svc.2p': 'Sales and service in Telegram', 'svc.2price': 'from $200',
-    'svc.3': 'Traffic', 'svc.3p': 'Ads that bring leads', 'svc.3price': 'from $500',
-    'svc.4': 'Design / UX', 'svc.4p': 'Style that converts', 'svc.4price': 'from $600',
-    'about.eyebrow': 'About us', 'about.line': 'A small team that <em>delivers results</em> — from idea to first leads.',
-    'about.f1': 'projects', 'about.f2': 'years of experience', 'about.f3': 'response time', 'about.f4': 'working languages',
-    'about.f5': 'clients', 'about.f6': 'on request',
-    'work.eyebrow': 'Portfolio', 'work.title': 'Live <em>projects</em>', 'work.all': 'All', 'work.web': 'Websites',
-    'work.tWeb': 'Website', 'work.tBot': 'Telegram bot', 'work.users': 'active users', 'work.shop': 'catalog · cart · payment',
-    'work.p1': 'Corporate website with 3D and animations.', 'work.p2': 'The agency flagship: style and UX.',
-    'work.p3': 'Nutritionist bot: meal plans and client support.', 'work.p4': 'A full store inside Telegram.',
-    'ap.eyebrow': 'How we work', 'ap.title': 'Complex projects are <em>our territory</em>',
-    'ap.lead': 'CRM and payment integrations, bots with thousands of users, stores inside Telegram. We don’t start with design — we start with how money should flow from click to payment.',
-    'ap.trickLabel': 'Our signature', 'ap.trick': 'A system, not a page. Website, bot, ads and analytics work as one loop — and you see where every client came from.',
-    'ap.s1': 'Audit', 'ap.s1p': 'Numbers, funnel, where leads get lost. Scope and price are fixed before we start.',
-    'ap.s2': 'Prototype', 'ap.s2p': 'Logic and screens before design. Big projects are split into stages with separate launches.',
-    'ap.s3': 'Build & test', 'ap.s3p': 'Integrations, payments, load. You see progress at every stage.',
-    'ap.s4': 'Launch & growth', 'ap.s4p': 'Analytics from day one, traffic and improvements to a live system.',
-    'st.eyebrow': 'Stories', 'st.title': 'How it <em>really went</em>',
-    'st.1tag': 'Telegram bot · nutrition', 'st.1h': 'Consultations that didn’t scale',
-    'st.1p': 'The nutritionist handled clients manually in private messages. We moved meal plans and support into a bot — it grew to 5000+ active users without growing the team.',
-    'st.2tag': 'Mini App · e-commerce', 'st.2h': 'A store where the buyers already are',
-    'st.2p': 'The audience lived in Telegram, but sales went through chats. We built a Mini App with catalog, cart and payment — buyers order without leaving the messenger.',
-    'st.3tag': 'Website + SEO · education', 'st.3h': 'An English school with no ad budget',
-    'st.3p': 'They needed leads without constant ad spend. We built a search-optimised site with analytics — now 20–35 leads a month come from organic search.',
-    'news.eyebrow': 'Content feed', 'news.title': 'News of the <em>future</em>', 'news.sub': 'Follow on Telegram',
-    'news.lead': 'Tech, AI and digital novelties — fresh posts from our Telegram channel (in Ukrainian).', 'news.more': 'Show more',
-    'faq.title': 'Short and <em>to the point</em>',
-    'faq.q1': 'How much does a project cost?', 'faq.a1': 'Websites from $300, bots from $200. The exact price is fixed after the brief, before we start.',
-    'faq.q2': 'How long does a launch take?', 'faq.a2': 'A landing page — from 10 days. A website + bot + analytics system — 3–6 weeks.',
-    'faq.q3': 'How do payments work?', 'faq.a3': 'In full or by stages. Scope is fixed upfront, no surprises at the end.',
-    'faq.q4': 'Do you work under NDA?', 'faq.a4': 'Yes. We publish a case only with your consent.',
-    'ct.title': 'Shall we discuss <em>your project?</em>', 'ct.lead': 'We reply within 24 hours. Your first project is 30% off.',
-    'ct.name': 'Your name', 'ct.phone': 'Phone or Telegram', 'ct.send': 'Send',
-    'ct.note': 'By sending, you agree to the', 'ct.policy': 'privacy policy',
-    'foot.privacy': 'Privacy policy',
-    'pv.title': 'Privacy <em>policy</em>',
-    'pv.1': 'We use the data you leave on the site (name, phone or Telegram) only to contact you about our services.',
-    'pv.2': 'We don’t share it with third parties. The site may use cookies to work properly.',
-    'pv.3': 'Questions about your data:', 'pv.back': '← Back to home',
-    'msg.invalid': 'Please enter your name and a phone or Telegram', 'msg.ok': 'Request prepared — send the email',
-  };
-  const UA = { 'msg.invalid': 'Вкажіть ім\'я та телефон або Telegram', 'msg.ok': 'Заявку сформовано — надішліть лист' };
-  const nodes = $$('[data-i18n], [data-i18n-html]');
-  nodes.forEach((el) => {
-    if (el.dataset.i18n) UA[el.dataset.i18n] = el.textContent;
-    else UA[el.dataset.i18nHtml] = el.innerHTML;
-  });
-  let lang = new URLSearchParams(location.search).get('lang') || store.get('kk-lang') || 'uk';
-  if (!['uk', 'en'].includes(lang)) lang = 'uk';
-  const t = (k) => (lang === 'en' ? EN[k] : UA[k]) ?? UA[k] ?? k;
-  const applyLang = (next, animate) => {
-    lang = next;
-    document.documentElement.lang = lang;
-    store.set('kk-lang', lang);
-    $$('.lang button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
-    const swap = () => nodes.forEach((el) => {
-      if (el.dataset.i18n) el.textContent = t(el.dataset.i18n);
-      else el.innerHTML = t(el.dataset.i18nHtml);
-    });
-    if (animate && !reduced) {
-      document.body.animate([{ opacity: 1 }, { opacity: .35 }, { opacity: 1 }], { duration: 360, easing: 'ease-out' });
-      setTimeout(swap, 140);
-    } else swap();
-  };
-  $$('.lang button').forEach((b) => b.addEventListener('click', () => { if (b.dataset.lang !== lang) applyLang(b.dataset.lang, true); }));
-  if (lang !== 'uk') applyLang(lang, false);
+  const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
 
   const year = $('#year');
   if (year) year.textContent = new Date().getFullYear();
@@ -95,186 +17,341 @@
     toast.textContent = msg;
     toast.classList.add('is-on');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove('is-on'), 3400);
+    toastTimer = setTimeout(() => toast.classList.remove('is-on'), 3600);
   };
 
-  /* ---------- header: ховається вниз, з'являється вгору; індикатор активного пункту ---------- */
   const nav = $('#nav');
   const burger = $('#burger');
   const drawer = $('#drawer');
-  const ink = $('.nav__ink');
-  const linkBox = $('.nav__links');
-  const moveInk = (a) => {
-    if (!ink || !linkBox) return;
-    if (!a) { ink.style.opacity = '0'; return; }
-    ink.style.opacity = '1';
-    ink.style.width = a.offsetWidth + 'px';
-    ink.style.transform = `translateX(${a.offsetLeft}px)`;
+  const closeDrawer = () => {
+    drawer?.classList.remove('is-on');
+    burger?.classList.remove('is-on');
+    burger?.setAttribute('aria-expanded', 'false');
+    drawer?.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
   };
-  const setDrawer = (on) => {
-    drawer?.classList.toggle('is-on', on);
-    burger?.classList.toggle('is-on', on);
-    burger?.setAttribute('aria-expanded', String(on));
-    drawer?.setAttribute('aria-hidden', String(!on));
+  burger?.addEventListener('click', () => {
+    const on = !drawer.classList.contains('is-on');
+    drawer.classList.toggle('is-on', on);
+    burger.classList.toggle('is-on', on);
+    burger.setAttribute('aria-expanded', String(on));
+    drawer.setAttribute('aria-hidden', String(!on));
     document.body.style.overflow = on ? 'hidden' : '';
-    nav?.classList.remove('is-hidden');
-  };
-  burger?.addEventListener('click', () => setDrawer(!drawer.classList.contains('is-on')));
-  $$('#drawer a').forEach((a) => a.addEventListener('click', () => setDrawer(false)));
-  addEventListener('keydown', (e) => { if (e.key === 'Escape') setDrawer(false); });
+  });
+  $$('#drawer a').forEach((a) => a.addEventListener('click', closeDrawer));
 
+  const sections = ['solutions', 'about', 'work', 'stories', 'news', 'faq', 'contact']
+    .map((id) => document.getElementById(id))
+    .filter(Boolean);
   const navLinks = $$('.nav__links a');
-  const sections = navLinks.map((a) => document.getElementById(a.getAttribute('href').slice(1))).filter(Boolean);
-  let lastY = scrollY;
-  let current = null;
-  const onScroll = () => {
-    const y = scrollY;
-    if (nav && !drawer?.classList.contains('is-on')) {
-      nav.classList.toggle('is-solid', y > 16);
-      nav.classList.toggle('is-hidden', y > 320 && y > lastY + 4);
-      if (y < lastY - 4) nav.classList.remove('is-hidden');
-    }
-    lastY = y;
-    let id = null;
-    sections.forEach((s) => { if (s.offsetTop <= y + 160) id = s.id; });
-    if (id !== current) {
-      current = id;
-      navLinks.forEach((a) => a.classList.toggle('is-on', a.getAttribute('href') === `#${id}`));
-      moveInk(navLinks.find((a) => a.classList.contains('is-on')));
-    }
+  const setActive = () => {
+    const y = scrollY + 140;
+    let current = '';
+    sections.forEach((s) => { if (s.offsetTop <= y) current = s.id; });
+    navLinks.forEach((a) => a.classList.toggle('is-on', a.getAttribute('href') === `#${current}`));
+    nav?.classList.toggle('is-solid', scrollY > 16);
     const bar = $('#scrollProgress');
     if (bar) {
       const max = document.documentElement.scrollHeight - innerHeight;
-      bar.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+      bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
     }
   };
-  addEventListener('scroll', onScroll, { passive: true });
-  addEventListener('resize', () => moveInk(navLinks.find((a) => a.classList.contains('is-on'))));
-  navLinks.forEach((a) => {
-    a.addEventListener('mouseenter', () => moveInk(a));
-    a.addEventListener('mouseleave', () => moveInk(navLinks.find((l) => l.classList.contains('is-on'))));
-  });
-  onScroll();
+  addEventListener('scroll', setActive, { passive: true });
+  setActive();
 
-  /* ---------- факти «про нас»: безшовна стрічка справа наліво ---------- */
-  const track = $('.facts__track');
-  if (track) {
-    [...track.children].forEach((n) => {
+  const sols = $$('.sol');
+  const labImg = $('#labImg');
+  const labStage = $('.lab__stage');
+  const activateSol = (btn) => {
+    sols.forEach((s) => {
+      const on = s === btn;
+      s.classList.toggle('is-on', on);
+      s.setAttribute('aria-selected', String(on));
+    });
+    if (!labImg || !btn.dataset.img || labImg.src.includes(btn.dataset.img.split('/').pop())) return;
+    labStage?.classList.add('is-swap');
+    setTimeout(() => {
+      labImg.src = btn.dataset.img;
+      labImg.alt = btn.dataset.alt || '';
+      labStage?.classList.remove('is-swap');
+    }, 160);
+  };
+  sols.forEach((btn) => {
+    btn.addEventListener('mouseenter', () => { if (fine) activateSol(btn); });
+    btn.addEventListener('click', () => activateSol(btn));
+    btn.addEventListener('focus', () => activateSol(btn));
+  });
+
+  $$('.filter').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      $$('.filter').forEach((b) => {
+        b.classList.toggle('is-on', b === btn);
+        b.setAttribute('aria-selected', String(b === btn));
+      });
+      const cat = btn.dataset.filter;
+      $$('.case-card').forEach((card) => {
+        card.classList.toggle('is-hidden', cat !== 'all' && card.dataset.cat !== cat);
+      });
+    });
+  });
+
+  // портфоліо: якщо живий скріншот не завантажився — стара картинка
+  $$('img[data-fallback]').forEach((img) => {
+    img.addEventListener('error', () => { if (!img.dataset.failed) { img.dataset.failed = '1'; img.src = img.dataset.fallback; } });
+  });
+
+  // «Про нас»: безшовна стрічка фактів справа наліво
+  const factsTrack = $('.facts__track');
+  if (factsTrack) {
+    [...factsTrack.children].forEach((n) => {
       const c = n.cloneNode(true);
       c.setAttribute('aria-hidden', 'true');
-      $$('[data-i18n]', c).forEach((el) => nodes.push(el));
-      track.appendChild(c);
+      factsTrack.appendChild(c);
     });
   }
 
-  /* ---------- портфоліо ---------- */
-  $$('.case__shot img[data-fallback]').forEach((img) => {
-    img.addEventListener('error', () => { if (!img.dataset.failed) { img.dataset.failed = '1'; img.src = img.dataset.fallback; img.style.paddingTop = '0'; } });
-  });
-  $$('.filter').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      $$('.filter').forEach((b) => { b.classList.toggle('is-on', b === btn); b.setAttribute('aria-selected', String(b === btn)); });
-      const cat = btn.dataset.filter;
-      $$('.case').forEach((card) => card.classList.toggle('is-hidden', cat !== 'all' && card.dataset.cat !== cat));
-    });
-  });
-
-  /* ---------- FAQ: відкритий лише один ---------- */
-  const accs = $$('.acc details');
-  accs.forEach((d) => d.addEventListener('toggle', () => { if (d.open) accs.forEach((o) => { if (o !== d) o.open = false; }); }));
-
-  /* ---------- контент-стрічка з Telegram-каналу ---------- */
+  // контент-стрічка: пости з Telegram-каналу
   const feed = $('#feed');
-  const more = $('#feedMore');
+  const feedMore = $('#feedMore');
   if (feed) {
     const channel = feed.dataset.channel;
     let next = Number(feed.dataset.latest);
     const step = Number(feed.dataset.count) || 6;
     const addPost = (id) => {
       const box = document.createElement('div');
-      box.className = 'post is-loading';
-      const s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://telegram.org/js/telegram-widget.js?22';
-      s.dataset.telegramPost = `${channel}/${id}`;
-      s.dataset.width = '100%';
-      s.dataset.userpic = 'false';
-      s.dataset.color = '1E3BFF';
-      box.appendChild(s);
+      box.className = 'post';
+      const sc = document.createElement('script');
+      sc.async = true;
+      sc.src = 'https://telegram.org/js/telegram-widget.js?22';
+      sc.dataset.telegramPost = `${channel}/${id}`;
+      sc.dataset.width = '100%';
+      sc.dataset.userpic = 'false';
+      sc.dataset.color = '2700EE';
+      box.appendChild(sc);
       feed.appendChild(box);
-      const done = () => box.classList.remove('is-loading');
-      new MutationObserver((m, obs) => {
-        const f = box.querySelector('iframe');
-        if (f) { f.addEventListener('load', done); setTimeout(done, 4000); obs.disconnect(); }
-      }).observe(box, { childList: true, subtree: true });
     };
     const loadBatch = () => {
       for (let i = 0; i < step && next > 0; i += 1) addPost(next--);
-      if (next <= 0 && more) more.hidden = true;
+      if (next <= 0 && feedMore) feedMore.hidden = true;
     };
-    const io = new IntersectionObserver((entries) => {
-      if (entries.some((e) => e.isIntersecting)) { loadBatch(); io.disconnect(); }
+    const io = new IntersectionObserver((en) => {
+      if (en.some((e) => e.isIntersecting)) { loadBatch(); io.disconnect(); }
     }, { rootMargin: '400px' });
     io.observe(feed);
-    more?.addEventListener('click', () => {
+    feedMore?.addEventListener('click', () => {
       const before = feed.children.length;
       loadBatch();
       feed.children[before]?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
     });
   }
 
-  /* ---------- форма ---------- */
+  const accs = $$('.acc details');
+  accs.forEach((d) => d.addEventListener('toggle', () => {
+    if (d.open) accs.forEach((o) => { if (o !== d) o.open = false; });
+  }));
+
   const form = $('#leadForm');
+  const phone = $('#fPhone');
+  phone?.addEventListener('focus', () => { if (!phone.value) phone.value = '+380 '; });
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
     if (form.company.value) return;
     const name = form.name.value.trim();
-    const contact = form.phone.value.trim();
+    const tel = phone.value.trim();
+    const digits = tel.replace(/\D/g, '');
     let ok = true;
-    [[form.name, name.length >= 2], [form.phone, contact.replace(/[^\w]/g, '').length >= 5]].forEach(([input, valid]) => {
+    [[form.name, name.length >= 2], [phone, digits.length >= 10]].forEach(([input, valid]) => {
       input.parentElement.classList.toggle('is-error', !valid);
       if (!valid) ok = false;
     });
-    if (!ok) { showToast(t('msg.invalid')); return; }
-    const body = `Ім'я: ${name}\nКонтакт: ${contact}`;
+    if (!ok) { showToast('Вкажіть ім\'я та коректний телефон'); return; }
+    const services = $$('input[name="service"]:checked', form).map((i) => i.value).join(', ') || '—';
+    const body = `Ім'я: ${name}\nТелефон: ${tel}\nПослуги: ${services}\n\nЗадача:\n${form.message.value.trim() || '—'}`;
     location.href = `mailto:kingkonglab2024@gmail.com?subject=${encodeURIComponent('Заявка з сайту — ' + name)}&body=${encodeURIComponent(body)}`;
-    showToast(t('msg.ok'));
+    const status = $('#formStatus');
+    if (status) status.textContent = 'Дякуємо! Відкриється поштовий клієнт — надішліть лист.';
+    showToast('Заявку сформовано');
     form.reset();
   });
 
-  /* ---------- анімації ---------- */
-  const hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
-  if (!hasGsap || reduced || !$('.hero')) { document.documentElement.classList.add('no-anim'); return; }
-  gsap.registerPlugin(ScrollTrigger);
+  if (fine && !reduced) {
+    document.body.classList.add('has-cursor');
+    const cur = $('#cursor');
+    const dot = $('i', cur);
+    const ring = $('em', cur);
+    let x = 0, y = 0, rx = 0, ry = 0;
+    addEventListener('mousemove', (e) => { x = e.clientX; y = e.clientY; });
+    const loop = () => {
+      rx += (x - rx) * .18; ry += (y - ry) * .18;
+      if (dot) dot.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      if (ring) ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
+      requestAnimationFrame(loop);
+    };
+    loop();
+    $$('a, button, .sol, .case-card, .filter').forEach((el) => {
+      el.addEventListener('mouseenter', () => {
+        cur.classList.add('is-hover');
+        if (el.dataset.cursor) {
+          cur.classList.add('is-label');
+          ring.textContent = el.dataset.cursor;
+        }
+      });
+      el.addEventListener('mouseleave', () => {
+        cur.classList.remove('is-hover', 'is-label');
+        ring.textContent = '';
+      });
+    });
+    $$('.mag').forEach((el) => {
+      el.addEventListener('mousemove', (e) => {
+        const r = el.getBoundingClientRect();
+        const dx = e.clientX - (r.left + r.width / 2);
+        const dy = e.clientY - (r.top + r.height / 2);
+        el.style.transform = `translate(${dx * .16}px, ${dy * .2}px)`;
+      });
+      el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+    });
+    addEventListener('pointermove', (e) => {
+      document.documentElement.style.setProperty('--mx', e.clientX + 'px');
+      document.documentElement.style.setProperty('--my', e.clientY + 'px');
+    });
+  }
 
-  gsap.from('.hero__title .line > span', { yPercent: 110, duration: 1, ease: 'power4.out', stagger: .09, delay: .15 });
-  gsap.from('.hero [data-rise]', { y: 24, opacity: 0, duration: .8, ease: 'power3.out', stagger: .08, delay: .35 });
-  gsap.from('.hero__photo', { x: 60, opacity: 0, duration: 1.1, ease: 'power3.out', delay: .25 });
-  gsap.to('.hero__photo > img', { yPercent: -6, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+  const kong = $('#kong');
+  if (kong && !reduced) {
+    const fire = () => {
+      kong.classList.remove('is-hot');
+      void kong.offsetWidth;
+      kong.classList.add('is-hot');
+    };
+    if (fine) {
+      kong.addEventListener('pointermove', (e) => {
+        const r = kong.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5;
+        const y = (e.clientY - r.top) / r.height - .5;
+        kong.style.setProperty('--rx', `${(-y * 16).toFixed(2)}deg`);
+        kong.style.setProperty('--ry', `${(x * 20).toFixed(2)}deg`);
+        kong.style.setProperty('--tx', `${(x * 14).toFixed(1)}px`);
+        kong.style.setProperty('--ty', `${(y * 14).toFixed(1)}px`);
+      });
+      kong.addEventListener('pointerleave', () => {
+        kong.style.setProperty('--rx', '0deg');
+        kong.style.setProperty('--ry', '0deg');
+        kong.style.setProperty('--tx', '0px');
+        kong.style.setProperty('--ty', '0px');
+      });
+    }
+    kong.addEventListener('click', fire);
+  }
+
+  if (!hasGsap || reduced) {
+    document.documentElement.classList.add('no-anim');
+    $('#loader')?.classList.add('is-done');
+    document.body.classList.remove('is-loading');
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+  document.body.classList.add('is-loading');
+
+  if (fine && typeof window.Lenis !== 'undefined') {
+    const lenis = new Lenis({ lerp: .1, smoothWheel: true });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((t) => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  const loader = $('#loader');
+  const bar = $('#loaderBar');
+  gsap.to({ n: 0 }, {
+    n: 100, duration: .7, ease: 'power2.inOut',
+    onUpdate() {
+      if (bar) bar.style.width = Math.round(this.targets()[0].n) + '%';
+    },
+    onComplete() {
+      loader?.classList.add('is-done');
+      document.body.classList.remove('is-loading');
+      intro();
+    },
+  });
+
+  function split(el) {
+    const html = el.innerHTML;
+    const wrap = document.createElement('span');
+    wrap.innerHTML = html;
+    const walk = (node, frag) => {
+      [...node.childNodes].forEach((n) => {
+        if (n.nodeType === 3) {
+          n.textContent.split(/(\s+)/).forEach((part) => {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+            const outer = document.createElement('span');
+            outer.style.display = 'inline-block';
+            outer.style.overflow = 'hidden';
+            const inner = document.createElement('span');
+            inner.style.display = 'inline-block';
+            inner.textContent = part;
+            outer.appendChild(inner);
+            frag.appendChild(outer);
+          });
+        } else if (n.nodeName === 'EM' || n.nodeName === 'B') {
+          const em = document.createElement(n.nodeName.toLowerCase());
+          const f = document.createDocumentFragment();
+          walk(n, f);
+          em.appendChild(f);
+          frag.appendChild(em);
+        } else {
+          walk(n, frag);
+        }
+      });
+    };
+    const frag = document.createDocumentFragment();
+    walk(wrap, frag);
+    el.textContent = '';
+    el.appendChild(frag);
+    return $$('span span', el);
+  }
+
+  function intro() {
+    gsap.from('.banner__title .line span', { yPercent: 110, duration: 1, ease: 'power4.out', stagger: .08 });
+    gsap.from('.banner [data-rise], .banner__off', { y: 20, opacity: 0, duration: .75, ease: 'power3.out', stagger: .05, delay: .15 });
+    gsap.from('.kong', { scale: .86, opacity: 0, duration: 1, ease: 'power3.out', delay: .15 });
+  }
 
   $$('[data-split]').forEach((el) => {
-    gsap.from(el, {
-      y: 30, opacity: 0, duration: .9, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 90%', once: true },
-    });
-  });
-  $$('[data-rise]').forEach((el) => {
-    if (el.closest('.hero')) return;
-    gsap.from(el, {
-      y: 24, opacity: 0, duration: .7, ease: 'power3.out',
+    const words = split(el);
+    gsap.from(words, {
+      yPercent: 120, duration: .85, ease: 'power4.out', stagger: .03,
+      immediateRender: false,
       scrollTrigger: { trigger: el, start: 'top 92%', once: true },
     });
   });
-  // «Про нас»: рядок і факти випливають справа наліво
-  gsap.from('.about__line', { x: 120, opacity: 0, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: '.about', start: 'top 75%', once: true } });
-  gsap.from('.facts', { x: '40%', opacity: 0, duration: 1.3, ease: 'power3.out', scrollTrigger: { trigger: '.facts', start: 'top 90%', once: true } });
-  // послуги, історії і кейси — з'являються по черзі справа
-  ['.services .svc', '.stories .story', '.work .case'].forEach((sel) => {
-    const items = $$(sel);
-    if (!items.length) return;
-    gsap.from(items, {
-      x: 50, opacity: 0, duration: .8, ease: 'power3.out', stagger: .1,
-      scrollTrigger: { trigger: items[0].parentElement, start: 'top 85%', once: true },
+
+  $$('[data-rise]').forEach((el) => {
+    if (el.closest('.banner')) return;
+    gsap.from(el, {
+      y: 22, opacity: 0, duration: .7, ease: 'power3.out',
+      immediateRender: false,
+      scrollTrigger: { trigger: el, start: 'top 94%', once: true },
     });
   });
+
+  // «Про нас»: текст і факти випливають справа наліво
+  gsap.from('#about .statement', { x: 120, opacity: 0, duration: 1.1, ease: 'power3.out', immediateRender: false, scrollTrigger: { trigger: '#about', start: 'top 80%', once: true } });
+  gsap.from('.facts', { x: '35%', opacity: 0, duration: 1.3, ease: 'power3.out', immediateRender: false, scrollTrigger: { trigger: '.facts', start: 'top 92%', once: true } });
+
+  const statement = $('#statement');
+  if (statement) {
+    const words = statement.textContent.trim().split(/\s+/);
+    statement.innerHTML = words.map((w) => `<span class="w">${w}</span>`).join(' ');
+    const spans = $$('#statement .w');
+    ScrollTrigger.create({
+      trigger: statement,
+      start: 'top 78%',
+      end: 'bottom 48%',
+      onUpdate: (self) => {
+        const n = Math.round(self.progress * spans.length);
+        spans.forEach((s, i) => s.classList.toggle('is-on', i < n));
+      },
+    });
+  }
 })();
