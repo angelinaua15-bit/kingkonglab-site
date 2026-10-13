@@ -116,19 +116,35 @@
   if (feed) {
     const channel = feed.dataset.channel;
     let next = Number(feed.dataset.latest);
-    const step = Number(feed.dataset.count) || 6;
+    const mobile = matchMedia('(max-width: 860px)').matches;
+    const step = mobile ? 3 : (Number(feed.dataset.count) || 6);
+    // кожен пост вантажимо лише коли він близько до екрана — легше для телефону
+    const lazy = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        lazy.unobserve(e.target);
+        const box = e.target;
+        const sc = document.createElement('script');
+        sc.async = true;
+        sc.src = 'https://telegram.org/js/telegram-widget.js?22';
+        sc.dataset.telegramPost = box.dataset.post;
+        sc.dataset.width = '100%';
+        sc.dataset.userpic = 'false';
+        sc.dataset.color = '2700EE';
+        box.appendChild(sc);
+        const done = () => box.classList.remove('is-wait');
+        new MutationObserver((m, obs) => {
+          const f = box.querySelector('iframe');
+          if (f) { f.addEventListener('load', done); setTimeout(done, 5000); obs.disconnect(); }
+        }).observe(box, { childList: true });
+      });
+    }, { root: mobile ? null : feed, rootMargin: mobile ? '300px 0px' : '0px 400px' });
     const addPost = (id) => {
       const box = document.createElement('div');
-      box.className = 'post';
-      const sc = document.createElement('script');
-      sc.async = true;
-      sc.src = 'https://telegram.org/js/telegram-widget.js?22';
-      sc.dataset.telegramPost = `${channel}/${id}`;
-      sc.dataset.width = '100%';
-      sc.dataset.userpic = 'false';
-      sc.dataset.color = '2700EE';
-      box.appendChild(sc);
+      box.className = 'post is-wait';
+      box.dataset.post = `${channel}/${id}`;
       feed.appendChild(box);
+      lazy.observe(box);
     };
     const loadBatch = () => {
       for (let i = 0; i < step && next > 0; i += 1) addPost(next--);
@@ -141,7 +157,7 @@
     feedMore?.addEventListener('click', () => {
       const before = feed.children.length;
       loadBatch();
-      feed.children[before]?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+      if (!mobile) feed.children[before]?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
     });
   }
 
