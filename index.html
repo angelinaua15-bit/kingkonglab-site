@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>King Kong Lab — Розробка сайтів, Telegram-ботів та Mini Apps під ключ</title>
   <meta name="description" content="IT-агентство King Kong Lab: сайти, Telegram-боти, Mini Apps, SEO, таргет і UI/UX під ключ. -30% на перший проєкт." />
-  <meta name="theme-color" content="#F7F5FF" />
+  <meta name="theme-color" content="#04050C" />
   <link rel="canonical" href="https://kingkonglab.com/uk" />
 
   <meta property="og:type" content="website" />
@@ -37,25 +37,18 @@
   </script>
 </head>
 <body>
-  <div class="atmosphere" aria-hidden="true">
-    <span class="blob blob--1"></span>
-    <span class="blob blob--2"></span>
-    <span class="blob blob--3"></span>
-    <span class="blob blob--4"></span>
-  </div>
   <div class="loader" id="loader" aria-hidden="true">
-    <img class="logo" src="assets/img/logo.png" alt="" width="72" height="72" />
+    <img class="logo" src="assets/img/logo-line.png" alt="" width="96" height="96" />
     <div class="loader__bar"><i id="loaderBar"></i></div>
   </div>
 
   <div class="grain" aria-hidden="true"></div>
-  <div class="spotlight" aria-hidden="true"></div>
   <div class="cursor" id="cursor" aria-hidden="true"><i></i><em></em></div>
   <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
 
   <header class="nav" id="nav">
     <a class="nav__logo" href="#top" aria-label="King Kong Lab">
-      <img class="logo" src="assets/img/logo.png" alt="" width="36" height="36" />
+      <img class="logo" src="assets/img/logo-line.png" alt="" width="36" height="36" />
       <span>King Kong <strong>Lab</strong></span>
     </a>
     <nav class="nav__links" aria-label="Головна навігація">
@@ -87,14 +80,11 @@
 
   <main id="top">
     <section class="banner" id="promo" aria-label="King Kong Lab">
+      <canvas class="banner__particles" id="particles" aria-hidden="true"></canvas>
       <div class="banner__bg" aria-hidden="true">
-        <span class="banner__aurora"></span>
-        <span class="banner__grid"></span>
-        <span class="banner__shine"></span>
-        <span class="spark spark--1"></span>
-        <span class="spark spark--2"></span>
-        <span class="spark spark--3"></span>
-        <b class="frame" aria-hidden="true"><i></i><i></i><i></i><i></i></b>
+        <span class="banner__cols"><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="banner__word">KONG</span>
+        <b class="frame"><i></i><i></i><i></i><i></i></b>
       </div>
 
       <div class="wrap banner__layout">
@@ -121,15 +111,20 @@
         </div>
 
         <div class="kong" id="kong" aria-hidden="true">
-          <span class="kong__glow"></span>
-          <span class="kong__ring kong__ring--a"></span>
-          <span class="kong__ring kong__ring--b"></span>
-          <span class="kong__ring kong__ring--c"></span>
-          <span class="kong__burst"></span>
-          <div class="kong__mark">
-            <img class="logo" src="assets/img/logo.png" alt="" width="220" height="220" />
+          <span class="kong__halo"></span>
+          <svg class="kong__ring" viewBox="0 0 200 200"><circle cx="100" cy="100" r="97" pathLength="1" /></svg>
+          <svg class="kong__ring kong__ring--thin" viewBox="0 0 200 200"><circle cx="100" cy="100" r="99" /></svg>
+          <div class="kong__orbit">
+            <span class="orb" style="--a:0deg"><img src="assets/img/work-sensora.jpg" alt="" width="240" height="150" /></span>
+            <span class="orb" style="--a:72deg"><img src="assets/img/work-slavsko.jpg" alt="" width="240" height="150" /></span>
+            <span class="orb" style="--a:144deg"><img src="assets/img/work-notespace.jpg" alt="" width="240" height="150" /></span>
+            <span class="orb" style="--a:216deg"><img src="assets/img/work-khitar.jpg" alt="" width="240" height="150" /></span>
+            <span class="orb orb--tg" style="--a:288deg"><b>5000+</b><small>у боті</small></span>
           </div>
-          <small class="kong__cap">King Kong</small>
+          <div class="kong__mark">
+            <img class="logo" src="assets/img/logo-line.png" alt="" width="420" height="420" />
+          </div>
+          <small class="kong__cap">King Kong Lab</small>
         </div>
       </div>
 
@@ -430,7 +425,7 @@
     <div class="wrap">
       <div class="foot__top">
         <div class="foot__brand">
-          <a class="nav__logo" href="#top"><img class="logo" src="assets/img/logo.png" alt="" width="36" height="36" /><span>King Kong <strong>Lab</strong></span></a>
+          <a class="nav__logo" href="#top"><img class="logo" src="assets/img/logo-line.png" alt="" width="36" height="36" /><span>King Kong <strong>Lab</strong></span></a>
           <p>Сайти, боти і Mini Apps під ключ.</p>
         </div>
         <div class="foot__cols">

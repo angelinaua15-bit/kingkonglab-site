@@ -195,7 +195,7 @@
     const cur = $('#cursor');
     const dot = $('i', cur);
     const ring = $('em', cur);
-    let x = 0, y = 0, rx = 0, ry = 0;
+    let x = -200, y = -200, rx = -200, ry = -200;
     addEventListener('mousemove', (e) => { x = e.clientX; y = e.clientY; });
     const loop = () => {
       rx += (x - rx) * .18; ry += (y - ry) * .18;
@@ -257,6 +257,128 @@
       });
     }
     kong.addEventListener('click', fire);
+  }
+
+  /* ───── HERO: частинки + орбіта робіт ───── */
+  const hero = $('.banner');
+  const canvas = $('#particles');
+  const orbs = $$('.kong__orbit .orb');
+  let heroVisible = true;
+  if (hero && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => { heroVisible = e.isIntersecting; }, { threshold: 0 }).observe(hero);
+  }
+
+  if (canvas && !reduced) {
+    const ctx = canvas.getContext('2d');
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+    const mobile = matchMedia('(max-width: 860px)').matches;
+    const COUNT = mobile ? 420 : 1100;
+    const COLORS = ['217,210,255', '140,107,255', '193,59,255', '106,75,255', '255,255,255'];
+    let W = 0, H = 0, cx = 0, cy = 0, R = 0;
+    let mouse = { x: -9999, y: -9999 };
+    const parts = [];
+    const kongEl = $('#kong');
+    const measure = () => {
+      const r = hero.getBoundingClientRect();
+      W = r.width; H = r.height;
+      canvas.width = W * DPR; canvas.height = H * DPR;
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      const k = kongEl?.getBoundingClientRect();
+      cx = k ? k.left - r.left + k.width / 2 : W * .65;
+      cy = k ? k.top - r.top + k.height / 2 : H * .5;
+      R = k ? k.width * .5 : Math.min(W, H) * .35;
+    };
+    measure();
+    for (let i = 0; i < COUNT; i++) {
+      // туманність: більшість частинок у кільці навколо горили, частина — розлітається
+      const ang = Math.random() * Math.PI * 2;
+      const band = Math.random() < .78 ? .9 + Math.random() * .45 : .5 + Math.random() * 1.9;
+      parts.push({
+        ang, band,
+        speed: (0.0008 + Math.random() * 0.0024) * (Math.random() < .5 ? 1 : 1),
+        tilt: .42 + Math.random() * .12,
+        size: Math.random() < .08 ? 1.8 + Math.random() * 1.4 : .5 + Math.random() * 1.1,
+        c: COLORS[(Math.random() * COLORS.length) | 0],
+        a: .25 + Math.random() * .7,
+        x: Math.random() * W, y: Math.random() * H, // старт: розсипані по екрану → збираються
+        ox: 0, oy: 0,
+      });
+    }
+    let t0 = performance.now();
+    const gather = 1800; // мс — «збирання» частинок при завантаженні
+    hero.addEventListener('pointermove', (e) => {
+      const r = hero.getBoundingClientRect();
+      mouse = { x: e.clientX - r.left, y: e.clientY - r.top };
+    });
+    hero.addEventListener('pointerleave', () => { mouse = { x: -9999, y: -9999 }; });
+    addEventListener('resize', () => { measure(); });
+    const draw = (now) => {
+      requestAnimationFrame(draw);
+      if (!heroVisible || document.hidden) return;
+      const k = Math.min(1, (now - t0) / gather);
+      const ease = 1 - Math.pow(1 - k, 3);
+      ctx.clearRect(0, 0, W, H);
+      ctx.globalCompositeOperation = 'lighter';
+      for (const p of parts) {
+        p.ang += p.speed;
+        const rr = R * p.band;
+        let tx = cx + Math.cos(p.ang) * rr;
+        let ty = cy + Math.sin(p.ang) * rr * p.tilt;
+        // відштовхування від курсора
+        const dx = tx + p.ox - mouse.x, dy = ty + p.oy - mouse.y;
+        const d2 = dx * dx + dy * dy;
+        if (d2 < 14000) {
+          const f = (14000 - d2) / 14000 * 2.4;
+          p.ox += (dx / Math.sqrt(d2 + 1)) * f;
+          p.oy += (dy / Math.sqrt(d2 + 1)) * f;
+        }
+        p.ox *= .94; p.oy *= .94;
+        tx += p.ox; ty += p.oy;
+        const x = p.x + (tx - p.x) * ease;
+        const y = p.y + (ty - p.y) * ease;
+        if (k >= 1) { p.x = tx; p.y = ty; }
+        // частинки «за» горилою тьмяніші — глибина
+        const behind = Math.sin(p.ang) < 0 && p.band < 1.5 ? .45 : 1;
+        ctx.fillStyle = `rgba(${p.c},${p.a * behind})`;
+        ctx.beginPath();
+        ctx.arc(x, y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalCompositeOperation = 'source-over';
+    };
+    requestAnimationFrame(draw);
+    canvas.restart = () => { t0 = performance.now(); measure(); };
+  }
+
+  if (orbs.length) {
+    const kongBox = $('#kong');
+    let spin = 0;
+    const place = () => {
+      const w = kongBox.clientWidth;
+      const rx = w * .58, ry = w * .2;
+      orbs.forEach((o, i) => {
+        const a = spin + (i / orbs.length) * Math.PI * 2;
+        const x = Math.cos(a) * rx;
+        const y = Math.sin(a) * ry + w * .05;
+        const depth = (Math.sin(a) + 1) / 2; // 0 — позаду, 1 — попереду
+        const s = .62 + depth * .48;
+        o.style.transform = `translate(-50%, -50%) translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) scale(${s.toFixed(3)})`;
+        o.style.opacity = (.35 + depth * .65).toFixed(2);
+        o.style.zIndex = depth > .5 ? 3 : 1;
+        o.style.filter = depth < .4 ? `blur(${((.4 - depth) * 4).toFixed(1)}px)` : '';
+      });
+    };
+    place();
+    if (!reduced) {
+      const loop = () => {
+        requestAnimationFrame(loop);
+        if (!heroVisible || document.hidden) return;
+        spin += 0.0026;
+        place();
+      };
+      requestAnimationFrame(loop);
+    }
+    addEventListener('resize', place);
   }
 
   if (!hasGsap || reduced) {
@@ -330,7 +452,10 @@
   function intro() {
     gsap.from('.banner__title .line span', { yPercent: 110, duration: 1, ease: 'power4.out', stagger: .08 });
     gsap.from('.banner [data-rise], .banner__off', { y: 20, opacity: 0, duration: .75, ease: 'power3.out', stagger: .05, delay: .15 });
-    gsap.from('.kong', { scale: .86, opacity: 0, duration: 1, ease: 'power3.out', delay: .15 });
+    gsap.fromTo('.kong__ring:not(.kong__ring--thin) circle', { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.8, ease: 'power3.inOut', delay: .1 });
+    gsap.from('.kong__mark', { opacity: 0, scale: .9, filter: 'blur(12px)', duration: 1.4, ease: 'power3.out', delay: .5 });
+    gsap.from('.banner__word', { opacity: 0, y: 40, duration: 2, ease: 'power3.out' });
+    $('#particles')?.restart?.();
   }
 
   $$('[data-split]').forEach((el) => {
