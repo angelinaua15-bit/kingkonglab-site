@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>King Kong Lab — Розробка сайтів, Telegram-ботів та Mini Apps під ключ</title>
   <meta name="description" content="IT-агентство King Kong Lab: сайти, Telegram-боти, Mini Apps, SEO, таргет і UI/UX під ключ. -30% на перший проєкт." />
-  <meta name="theme-color" content="#04050C" />
+  <meta name="theme-color" content="#0B1450" />
   <link rel="canonical" href="https://kingkonglab.com/uk" />
 
   <meta property="og:type" content="website" />
@@ -19,7 +19,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <script>document.documentElement.classList.add('js');</script>
 
@@ -42,6 +42,7 @@
     <div class="loader__bar"><i id="loaderBar"></i></div>
   </div>
 
+  <canvas class="space" id="space" aria-hidden="true"></canvas>
   <div class="grain" aria-hidden="true"></div>
   <div class="cursor" id="cursor" aria-hidden="true"><i></i><em></em></div>
   <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
@@ -51,92 +52,84 @@
       <img class="logo" src="assets/img/logo-line.png" alt="" width="36" height="36" />
       <span>King Kong <strong>Lab</strong></span>
     </a>
-    <nav class="nav__links" aria-label="Головна навігація">
-      <a href="#solutions">Послуги</a>
-      <a href="#work">Портфоліо</a>
-      <a href="#stories">Історії</a>
-      <a href="#news">Новини</a>
-      <a href="#contact">Контакти</a>
+    <nav class="nav__quick" aria-label="Швидка навігація">
+      <a class="nav__talk" href="#contact"><i></i>Обговорити</a>
+      <a class="nav__hide-sm" href="#work">Портфоліо</a>
+      <a class="nav__hide-sm" href="#news">Новини</a>
+      <span class="nav__lang" title="Українська">UA</span>
     </nav>
-    <a class="btn btn--blue nav__cta mag" href="#contact"><span>−30% на старт</span></a>
     <button class="burger" id="burger" type="button" aria-label="Меню" aria-expanded="false" aria-controls="drawer">
-      <i></i><i></i>
+      <i></i><i></i><i></i>
     </button>
   </header>
 
   <aside class="drawer" id="drawer" aria-hidden="true">
-    <nav>
-      <a href="#solutions"><small>01</small>Послуги</a>
-      <a href="#work"><small>02</small>Портфоліо</a>
-      <a href="#stories"><small>03</small>Історії</a>
-      <a href="#news"><small>04</small>Новини</a>
-      <a href="#contact"><small>05</small>Контакти</a>
+    <span class="drawer__glow" aria-hidden="true"></span>
+    <nav class="nav__links" aria-label="Головна навігація">
+      <a href="#solutions"><small>01</small><span>Послуги</span></a>
+      <a href="#work"><small>02</small><span>Портфоліо</span></a>
+      <a href="#stories"><small>03</small><span>Історії</span></a>
+      <a href="#news"><small>04</small><span>Новини</span></a>
+      <a href="#contact"><small>05</small><span>Контакти</span></a>
     </nav>
     <div class="drawer__foot">
       <a href="tel:+380970745767">+380 97 074 57 67</a>
       <a href="mailto:kingkonglab2024@gmail.com">kingkonglab2024@gmail.com</a>
+      <a class="btn btn--blue" href="#contact"><span>−30% на старт</span></a>
     </div>
   </aside>
+
+  <a class="fab mag" href="#contact" aria-label="Обговорити проєкт" data-cursor="Hi">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.4 3.2 2.9 10.4c-1.3.5-1.2 1.3-.2 1.6l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.7c.3-1.3-.5-1.9-1.5-1.5zM8.6 13.2l9.9-6.3c.5-.3.9-.1.5.2l-8.4 7.6-.3 3.6-1.7-5.1z"/></svg>
+  </a>
 
   <main id="top">
     <section class="banner" id="promo" aria-label="King Kong Lab">
       <canvas class="banner__particles" id="particles" aria-hidden="true"></canvas>
       <div class="banner__bg" aria-hidden="true">
-        <span class="banner__cols"><i></i><i></i><i></i><i></i><i></i></span>
-        <span class="banner__word">KONG</span>
         <b class="frame"><i></i><i></i><i></i><i></i></b>
+        <span class="banner__meta banner__meta--l">UA · EU · US</span>
+        <span class="banner__meta banner__meta--r">Lab № 01 / systems</span>
       </div>
 
       <div class="wrap banner__layout">
         <div class="banner__copy">
-          <span class="promo__tag" data-rise><i></i> Перший проєкт</span>
-          <p class="banner__off">−30%</p>
+          <span class="promo__tag" data-rise><i></i> Перший проєкт <b>−30%</b></span>
           <h1 class="banner__title">
-            <span class="line"><span>Сайти, боти</span></span>
+            <span class="line line--outline"><span>Сайти, боти<i class="glowdot"></i></span></span>
             <span class="line"><span>і Mini Apps,</span></span>
             <span class="line line--island"><span>що продають</span></span>
           </h1>
           <p class="banner__lead" data-rise>
-            Сайт, бот і трафік в одній системі під ключ.
+            Сайт, бот і <b>трафік</b> в одній <b>системі</b> під ключ.
           </p>
           <div class="banner__actions" data-rise>
             <a class="btn btn--blue btn--lg mag" href="#contact" data-cursor="Go"><span>Обговорити проєкт</span></a>
             <a class="btn btn--ghost btn--lg mag" href="#work"><span>Роботи</span></a>
           </div>
           <ul class="banner__stats" data-rise>
-            <li><b>97+</b><small>проєктів</small></li>
-            <li><b>5+</b><small>років</small></li>
+            <li><b data-count="97">97+</b><small>проєктів</small></li>
+            <li><b data-count="5">5+</b><small>років</small></li>
             <li><b>24/7</b><small>підтримка</small></li>
           </ul>
         </div>
 
         <div class="kong" id="kong" aria-hidden="true">
           <span class="kong__halo"></span>
-          <svg class="kong__ring" viewBox="0 0 200 200"><circle cx="100" cy="100" r="97" pathLength="1" /></svg>
-          <svg class="kong__ring kong__ring--thin" viewBox="0 0 200 200"><circle cx="100" cy="100" r="99" /></svg>
-          <div class="kong__orbit">
-            <span class="orb" style="--a:0deg"><img src="assets/img/work-sensora.jpg" alt="" width="240" height="150" /></span>
-            <span class="orb" style="--a:72deg"><img src="assets/img/work-slavsko.jpg" alt="" width="240" height="150" /></span>
-            <span class="orb" style="--a:144deg"><img src="assets/img/work-notespace.jpg" alt="" width="240" height="150" /></span>
-            <span class="orb" style="--a:216deg"><img src="assets/img/work-khitar.jpg" alt="" width="240" height="150" /></span>
-            <span class="orb orb--tg" style="--a:288deg"><b>5000+</b><small>у боті</small></span>
-          </div>
-          <div class="kong__mark">
-            <img class="logo" src="assets/img/logo-line.png" alt="" width="420" height="420" />
-          </div>
-          <small class="kong__cap">King Kong Lab</small>
+          <img class="kong__fallback logo" src="assets/img/logo-line.png" alt="" width="420" height="420" />
         </div>
       </div>
 
-      <div class="banner__rail" aria-hidden="true">
-        <div class="ticker__track">
-          <span>systems that sell</span><i></i><span>−30% first build</span><i></i><span>web · bots · mini apps</span><i></i><span>king kong lab</span><i></i>
-          <span>systems that sell</span><i></i><span>−30% first build</span><i></i><span>web · bots · mini apps</span><i></i><span>king kong lab</span><i></i>
-        </div>
-      </div>
+      <div class="banner__scroll" aria-hidden="true"><span>Scroll</span><i></i></div>
     </section>
 
+    <div class="mega" aria-hidden="true"><div class="mega__track">
+      <span>Systems that sell</span><i></i><span class="o">Web · Bots · Mini Apps</span><i></i><span>King Kong Lab</span><i></i><span class="o">−30% first build</span><i></i>
+      <span>Systems that sell</span><i></i><span class="o">Web · Bots · Mini Apps</span><i></i><span>King Kong Lab</span><i></i><span class="o">−30% first build</span><i></i>
+    </div></div>
+
     <section class="section" id="solutions">
+      <span class="halo-ring" aria-hidden="true"><i></i></span>
       <div class="wrap">
         <div class="head">
           <span class="eyebrow" data-rise>Рішення</span>
@@ -192,7 +185,7 @@
           <h2 data-split>Lab, який збирає <em>систему</em></h2>
         </div>
         <div>
-          <p class="statement" data-rise>Невелика команда, яка доводить проєкт до перших заявок — без зайвих посередників.</p>
+          <p class="statement" id="statement">Невелика команда, яка доводить проєкт до перших заявок — без зайвих посередників.</p>
         </div>
       </div>
       <div class="facts" aria-label="Коротко про нас">
@@ -387,11 +380,16 @@
       </div>
     </section>
 
+    <div class="mega mega--rev" aria-hidden="true"><div class="mega__track">
+      <span class="o">Let's build</span><i></i><span>Обговоримо?</span><i></i><span class="o">King Kong Lab</span><i></i><span>24 год на відповідь</span><i></i>
+      <span class="o">Let's build</span><i></i><span>Обговоримо?</span><i></i><span class="o">King Kong Lab</span><i></i><span>24 год на відповідь</span><i></i>
+    </div></div>
+
     <section class="closer closer--compact" id="contact">
       <div class="wrap closer__grid">
         <div>
           <span class="eyebrow" data-rise>Контакти</span>
-          <h2>Обговоримо <em>проєкт?</em></h2>
+          <h2 data-split>Обговоримо <em>проєкт?</em></h2>
           <p data-rise>Відповідаємо протягом 24 годин. Перший проєкт — −30%.</p>
           <div class="direct" data-rise>
             <a href="tel:+380970745767"><small>Телефон · EET</small>+380 97 074 57 67</a>
