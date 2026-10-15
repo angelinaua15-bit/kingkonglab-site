@@ -6,6 +6,7 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+  const FX = { sol: 0 }; // яка послуга активна → яку форму збирають частинки
 
   const year = $('#year');
   if (year) year.textContent = new Date().getFullYear();
@@ -66,6 +67,7 @@
   const labImg = $('#labImg');
   const labStage = $('.lab__stage');
   const activateSol = (btn) => {
+    FX.sol = Math.max(0, sols.indexOf(btn));
     sols.forEach((s) => {
       const on = s === btn;
       s.classList.toggle('is-on', on);
@@ -99,6 +101,8 @@
   });
 
   // портфоліо: якщо живий скріншот не завантажився — стара картинка
+  $('#labImg')?.addEventListener('error', (e) => { e.target.style.visibility = 'hidden'; });
+  $('#labImg')?.addEventListener('load', (e) => { e.target.style.visibility = ''; });
   $$('img[data-fallback]').forEach((img) => {
     img.addEventListener('error', () => { if (!img.dataset.failed) { img.dataset.failed = '1'; img.src = img.dataset.fallback; } });
   });
@@ -334,142 +338,256 @@
     requestAnimationFrame(tick);
   }
 
-  /* ───── HERO: горила з частинок (золото / біле / синє), вибухає на скролі ───── */
+  /* ───── ПОЛЕ ЧАСТИНОК: один обʼєкт, що змінює форму від сцени до сцени (як на референсі) ─────
+     hero — горила · Рішення — форма активної послуги · Про нас — планета · далі — зоряний пил · Контакти — горила знову */
   const hero = $('.banner');
   const canvas = $('#particles');
-  const kongEl = $('#kong');
-  let heroVisible = true;
-  if (hero && 'IntersectionObserver' in window) {
-    new IntersectionObserver(([e]) => { heroVisible = e.isIntersecting; }, { threshold: 0 }).observe(hero);
-  }
   if (!canvas || reduced || !canvas.getContext) document.documentElement.classList.add('no-canvas');
 
   if (canvas && !reduced && canvas.getContext) {
     const ctx = canvas.getContext('2d');
-    const N = mobile ? 1500 : 3400;
-    let W = 0, H = 0, cx = 0, cy = 0, S = 0;
-    let parts = [];
-    let t0 = performance.now();
-    let mx = 0, my = 0, smx = 0, smy = 0;
-    let mouse = { x: -9999, y: -9999 };
-    const measure = () => {
-      const r = hero.getBoundingClientRect();
-      W = r.width; H = r.height;
+    const N = mobile ? 1500 : 3200;
+    let W = 0, H = 0;
+    const resize = () => {
+      W = innerWidth; H = innerHeight;
       canvas.width = W * DPR; canvas.height = H * DPR;
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      const k = kongEl.getBoundingClientRect();
-      cx = k.left - r.left + k.width / 2;
-      cy = k.top - r.top + k.height / 2;
-      S = k.width;
     };
-    const build = (img) => {
-      const n = 220;
+    resize();
+    addEventListener('resize', resize);
+
+    // форма → набір точок: малюємо на прихованому полотні й беремо непрозорі пікселі
+    const SN = 220;
+    const sample = (paint) => {
       const off = document.createElement('canvas');
-      off.width = off.height = n;
+      off.width = off.height = SN;
       const o = off.getContext('2d');
-      o.drawImage(img, 0, 0, n, n);
-      const d = o.getImageData(0, 0, n, n).data;
+      o.strokeStyle = o.fillStyle = '#fff';
+      o.lineCap = o.lineJoin = 'round';
+      o.lineWidth = 5;
+      paint(o);
+      const d = o.getImageData(0, 0, SN, SN).data;
       const pts = [];
-      let x0 = n, x1 = 0, y0 = n, y1 = 0;
-      for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
-        if (d[(y * n + x) * 4 + 3] > 90) {
-          pts.push([x, y]);
+      let x0 = SN, x1 = 0, y0 = SN, y1 = 0;
+      for (let y = 0; y < SN; y++) for (let x = 0; x < SN; x++) {
+        if (d[(y * SN + x) * 4 + 3] > 90) {
+          pts.push(x, y);
           if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
         }
       }
-      if (!pts.length) return;
-      const bx = (x0 + x1) / 2, by = (y0 + y1) / 2, bs = Math.max(x1 - x0, y1 - y0);
-      parts = [];
+      const bx = (x0 + x1) / 2, by = (y0 + y1) / 2, bs = Math.max(x1 - x0, y1 - y0) || 1;
+      const out = new Float32Array(N * 3);
+      const m = pts.length / 2;
       for (let i = 0; i < N; i++) {
-        const dust = Math.random() < .08;
-        let u, v;
-        if (dust) {
-          const a = Math.random() * 6.283, rr = Math.sqrt(Math.random()) * .62;
-          u = Math.cos(a) * rr; v = Math.sin(a) * rr * .95;
-        } else {
-          const p = pts[(Math.random() * pts.length) | 0];
-          u = (p[0] + (Math.random() - .5) * .8 - bx) / bs;
-          v = (p[1] + (Math.random() - .5) * .8 - by) / bs;
-        }
-        const r = Math.random();
-        const c = r < .4 ? '255,200,112' : r < .76 ? '240,244,255' : '120,148,255';
-        const len = Math.hypot(u, v) || 1;
-        parts.push({
-          u, v, z: (Math.random() - .5) * (dust ? .7 : .14),
-          c, a: dust ? .12 + Math.random() * .25 : .7 + Math.random() * .3,
-          size: dust ? .6 + Math.random() * .8 : (Math.random() < .07 ? 2.4 + Math.random() * 1.6 : 1.1 + Math.random() * 1.2),
-          ex: u / len + (Math.random() - .5) * .9, ey: v / len + (Math.random() - .5) * .9,
-          dist: .4 + Math.random() * 1.6,
-          sx: Math.random(), sy: Math.random(),
-          delay: Math.random() * 900, tw: Math.random() * 6.28,
-          ox: 0, oy: 0,
-        });
+        if (!m) break;
+        const j = ((Math.random() * m) | 0) * 2;
+        out[i * 3] = (pts[j] + (Math.random() - .5) * .8 - bx) / bs;
+        out[i * 3 + 1] = (pts[j + 1] + (Math.random() - .5) * .8 - by) / bs;
+        out[i * 3 + 2] = (Math.random() - .5) * .14;
       }
-      t0 = performance.now();
+      return out;
     };
-    measure();
+    const rr = (o, x, y, w, h, r) => { o.beginPath(); if (o.roundRect) o.roundRect(x, y, w, h, r); else o.rect(x, y, w, h); o.stroke(); };
+    const line = (o, ...p) => { o.beginPath(); o.moveTo(p[0], p[1]); for (let i = 2; i < p.length; i += 2) o.lineTo(p[i], p[i + 1]); o.stroke(); };
+    const SHAPES = {
+      web: sample((o) => { // вікно браузера: сайт / додаток
+        rr(o, 22, 42, 176, 136, 16); line(o, 22, 70, 198, 70);
+        [40, 54, 68].forEach((x) => { o.beginPath(); o.arc(x, 56, 3.5, 0, 7); o.fill(); });
+        line(o, 44, 94, 116, 94); line(o, 44, 112, 104, 112); line(o, 44, 130, 92, 130);
+        rr(o, 44, 146, 50, 16, 8); rr(o, 128, 90, 52, 70, 8);
+      }),
+      plane: sample((o) => { // Telegram
+        o.save(); o.translate(14, 18); o.scale(8, 8); o.lineWidth = .62;
+        o.stroke(new Path2D('M21.4 3.2 2.9 10.4c-1.3.5-1.2 1.3-.2 1.6l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.7c.3-1.3-.5-1.9-1.5-1.5zM8.6 13.2l9.9-6.3c.5-.3.9-.1.5.2l-8.4 7.6-.3 3.6-1.7-5.1z'));
+        o.restore();
+      }),
+      chart: sample((o) => { // трафік: стовпчики + стрілка вгору
+        line(o, 26, 188, 196, 188);
+        [[40, 40], [80, 72], [120, 104], [160, 138]].forEach(([x, h]) => rr(o, x, 188 - h, 24, h, 5));
+        line(o, 34, 128, 80, 100, 116, 110, 178, 40); line(o, 152, 42, 178, 40, 174, 66);
+      }),
+      gem: sample((o) => { // дизайн: діамант
+        o.beginPath(); o.moveTo(70, 42); o.lineTo(150, 42); o.lineTo(188, 88); o.lineTo(110, 192); o.lineTo(32, 88); o.closePath(); o.stroke();
+        line(o, 32, 88, 188, 88); line(o, 70, 42, 90, 88, 110, 192); line(o, 150, 42, 130, 88, 110, 192); line(o, 90, 88, 110, 42, 130, 88);
+      }),
+    };
+    // планета: меридіани, паралелі, поверхня і кільце
+    SHAPES.globe = (() => {
+      const g = new Float32Array(N * 3);
+      for (let i = 0; i < N; i++) {
+        const r = Math.random();
+        let lat, lon, rad = .5, ring = false;
+        if (r < .4) { lon = ((Math.random() * 12) | 0) / 12 * Math.PI * 2; lat = (Math.random() - .5) * Math.PI; }
+        else if (r < .74) { lat = (((Math.random() * 7) | 0) - 3) * .38; lon = Math.random() * Math.PI * 2; }
+        else if (r < .88) { lat = Math.asin(Math.random() * 2 - 1); lon = Math.random() * Math.PI * 2; }
+        else { ring = true; lon = Math.random() * Math.PI * 2; rad = .7 + Math.random() * .06; lat = 0; }
+        const x = Math.cos(lat) * Math.cos(lon) * rad;
+        const y = ring ? (Math.random() - .5) * .01 : Math.sin(lat) * rad;
+        const z = Math.cos(lat) * Math.sin(lon) * rad;
+        g[i * 3] = x; g[i * 3 + 1] = -y; g[i * 3 + 2] = z;
+      }
+      return g;
+    })();
+    SHAPES.dust = (() => {
+      const g = new Float32Array(N * 3);
+      for (let i = 0; i < N; i++) { g[i * 3] = Math.random() - .5; g[i * 3 + 1] = (Math.random() - .5) * .75; g[i * 3 + 2] = (Math.random() - .5) * .5; }
+      return g;
+    })();
+    const SOL = ['web', 'plane', 'chart', 'gem'];
+
+    // частинки: колір (золото — головний), розмір, напрям вибуху
+    const parts = [];
+    for (let i = 0; i < N; i++) {
+      const r = Math.random();
+      const big = Math.random() < .07;
+      parts.push({
+        c: r < .5 ? '255,200,112' : r < .8 ? '240,244,255' : '120,148,255',
+        a: .65 + Math.random() * .35,
+        size: big ? 2.3 + Math.random() * 1.5 : 1 + Math.random() * 1.2,
+        big,
+        ex: Math.random() - .5, ey: Math.random() - .5,
+        dist: .4 + Math.random() * 1.2,
+        sx: Math.random(), sy: Math.random(),
+        delay: Math.random() * 900, tw: Math.random() * 6.28,
+        ox: 0, oy: 0,
+      });
+    }
+
+    const scenes = [
+      { el: $('#kong'), shape: 'gorilla', a: 1 },
+      { el: $('#solAnchor'), shape: 'sol', a: 1 },
+      { el: $('#aboutAnchor'), shape: 'globe', a: 1.25 },
+      { el: null, shape: 'dust', a: .32 },
+      { el: $('#contactAnchor'), shape: 'gorilla', a: 1 },
+    ];
+    const gates = [
+      [$('#solutions'), .92, .6],
+      [$('#about'), .92, .6],
+      [$('#process'), .75, .5],
+      [$('#contact'), .95, .55],
+    ];
+    const clamp01 = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);
+    const ease = (t) => t * t * (3 - 2 * t);
+
+    let mouse = { x: -9999, y: -9999 }, mx = 0, my = 0, smx = 0, smy = 0;
+    addEventListener('pointermove', (e) => {
+      mouse = { x: e.clientX, y: e.clientY };
+      mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5;
+    }, { passive: true });
+    document.addEventListener('pointerleave', () => { mouse = { x: -9999, y: -9999 }; });
+
+    let solCur = 0, solPrev = 0, solT = -9999;
+    let stage = 0;
+    let t0 = performance.now();
+    const view = [];
+    const project = (sc, i, now, out) => {
+      const v = view[sc];
+      let P = SHAPES[scenes[sc].shape];
+      let u, w, z;
+      if (scenes[sc].shape === 'sol') {
+        const m = clamp01((now - solT) / 900), e = ease(m);
+        const A = SHAPES[SOL[solPrev]], B = SHAPES[SOL[solCur]], j = i * 3;
+        const burst = Math.sin(Math.PI * e) * .22 * parts[i].dist;
+        u = A[j] + (B[j] - A[j]) * e + parts[i].ex * burst;
+        w = A[j + 1] + (B[j + 1] - A[j + 1]) * e + parts[i].ey * burst;
+        z = A[j + 2] + (B[j + 2] - A[j + 2]) * e;
+      } else {
+        const j = i * 3; u = P[j]; w = P[j + 1]; z = P[j + 2];
+      }
+      let x, y, zz;
+      if (scenes[sc].shape === 'globe') {
+        const cy = Math.cos(v.spin), sy = Math.sin(v.spin);
+        const x1 = u * cy + z * sy, z1 = -u * sy + z * cy;
+        const ct = Math.cos(.38 + smy * .3), st = Math.sin(.38 + smy * .3);
+        x = x1; y = w * ct - z1 * st; zz = w * st + z1 * ct;
+      } else if (scenes[sc].shape === 'dust') {
+        x = u; y = w; zz = z;
+      } else {
+        x = u * v.cs + z * v.sn; y = w; zz = -u * v.sn + z * v.cs + w * smy * .3;
+      }
+      const k = 1 / (1 - zz * .55);
+      out.x = v.cx + x * v.S * k;
+      out.y = v.cy + y * v.S * k;
+      out.k = k;
+      out.back = scenes[sc].shape === 'globe' && zz < 0 ? .45 : 1;
+    };
+
+    const start = (img) => {
+      SHAPES.gorilla = sample((o) => o.drawImage(img, 0, 0, SN, SN));
+      t0 = performance.now();
+      const A = {}, B = {};
+      const draw = (now) => {
+        requestAnimationFrame(draw);
+        if (document.hidden) return;
+        if (FX.sol !== solCur) { solPrev = solCur; solCur = FX.sol; solT = now; }
+        smx += (mx - smx) * .05; smy += (my - smy) * .05;
+        // де ми на сторінці → між якими сценами переходимо
+        let s = 0;
+        gates.forEach(([el, st, len]) => { if (el) s += clamp01((H * st - el.getBoundingClientRect().top) / (H * len)); });
+        stage += (s - stage) * .14;
+        const a = Math.min(3, Math.floor(stage));
+        const f = clamp01(stage - a);
+        const e = ease(f);
+        // геометрія сцен (обʼєкти прикріплені до свого місця на сторінці)
+        const rot = Math.sin(now * .00032) * .26 + smx * .6;
+        [a, a + 1].forEach((sc) => {
+          const el = scenes[sc].el;
+          let cx = W / 2, cy = H / 2, S = Math.max(W, H) * 1.15;
+          if (el) { const r = el.getBoundingClientRect(); cx = r.left + r.width / 2; cy = r.top + r.height / 2; S = r.width * .92; }
+          view[sc] = { cx, cy, S, cs: Math.cos(rot), sn: Math.sin(rot), spin: now * .00022 + smx * .5 };
+        });
+        const burstK = Math.sin(Math.PI * e);
+        state.warpT = burstK * (a < 2 ? .85 : .35);
+        const span = Math.max(W, H);
+        const alA = scenes[a].a, alB = scenes[a + 1].a;
+        const breathe = Math.sin(now * .0016);
+        ctx.clearRect(0, 0, W, H);
+        ctx.globalCompositeOperation = 'lighter';
+        for (let i = 0; i < N; i++) {
+          const p = parts[i];
+          project(a, i, now, A);
+          let tx = A.x, ty = A.y, k = A.k, back = A.back;
+          if (e > .001) {
+            project(a + 1, i, now, B);
+            tx += (B.x - A.x) * e; ty += (B.y - A.y) * e; k += (B.k - A.k) * e; back += (B.back - A.back) * e;
+            const d = burstK * p.dist * span * (mobile ? .16 : .3);
+            tx += p.ex * d; ty += p.ey * d;
+          }
+          ty += Math.sin(now * .0016 + p.tw) * 1.2 + breathe * .6;
+          const dx = tx + p.ox - mouse.x, dy = ty + p.oy - mouse.y;
+          const d2 = dx * dx + dy * dy;
+          if (d2 < 9000) {
+            const fr = (9000 - d2) / 9000 * 3, dl = Math.sqrt(d2) + .01;
+            p.ox += (dx / dl) * fr; p.oy += (dy / dl) * fr;
+          }
+          p.ox *= .92; p.oy *= .92;
+          tx += p.ox; ty += p.oy;
+          const q = clamp01((now - t0 - p.delay) / 1700);
+          const g = 1 - Math.pow(1 - q, 4);
+          const x = p.sx * W + (tx - p.sx * W) * g;
+          const y = p.sy * H + (ty - p.sy * H) * g;
+          if (x < -20 || x > W + 20 || y < -20 || y > H + 20) continue;
+          const tw = .72 + .28 * Math.sin(now * .003 + p.tw);
+          const al = p.a * tw * (alA + (alB - alA) * e) * back * Math.min(1, .45 + k * .55) * (.25 + .75 * g);
+          if (al < .02) continue;
+          const sz = p.size * k * (1 + burstK * 1.6);
+          ctx.fillStyle = `rgba(${p.c},${al.toFixed(3)})`;
+          ctx.fillRect(x - sz / 2, y - sz / 2, sz, sz);
+          if (p.big) {
+            const gz = sz * 3.2;
+            ctx.fillStyle = `rgba(${p.c},${(al * .12).toFixed(3)})`;
+            ctx.fillRect(x - gz / 2, y - gz / 2, gz, gz);
+          }
+        }
+        ctx.globalCompositeOperation = 'source-over';
+      };
+      requestAnimationFrame(draw);
+      canvas.restart = () => { t0 = performance.now(); };
+    };
     const img = new Image();
-    img.onload = () => { measure(); build(img); };
+    img.onload = () => start(img);
     img.onerror = () => document.documentElement.classList.add('no-canvas');
     img.src = 'assets/img/logo-line.png';
-    hero.addEventListener('pointermove', (e) => {
-      const r = hero.getBoundingClientRect();
-      mouse = { x: e.clientX - r.left, y: e.clientY - r.top };
-      mx = (e.clientX / innerWidth) - .5; my = (e.clientY / innerHeight) - .5;
-    });
-    hero.addEventListener('pointerleave', () => { mouse = { x: -9999, y: -9999 }; mx = 0; my = 0; });
-    let rt;
-    addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(measure, 120); });
-    const draw = (now) => {
-      requestAnimationFrame(draw);
-      if (!heroVisible || document.hidden || !parts.length) return;
-      smx += (mx - smx) * .05; smy += (my - smy) * .05;
-      const rot = Math.sin(now * .00032) * .26 + smx * .7;
-      const cs = Math.cos(rot), sn = Math.sin(rot);
-      const tilt = smy * .3;
-      const breathe = 1 + Math.sin(now * .0011) * .015;
-      const E = state.explode;
-      const E2 = E * E;
-      const span = Math.max(W, H);
-      const scale = S * .92 * breathe;
-      ctx.clearRect(0, 0, W, H);
-      ctx.globalCompositeOperation = 'lighter';
-      for (const p of parts) {
-        const x3 = p.u * cs + p.z * sn;
-        const z3 = -p.u * sn + p.z * cs + p.v * tilt;
-        const k = 1 / (1 - z3 * .55);
-        let tx = cx + x3 * scale * k;
-        let ty = cy + p.v * scale * k + Math.sin(now * .0016 + p.tw) * 1.4;
-        if (E > 0) { const dd = E2 * p.dist * span; tx += p.ex * dd; ty += p.ey * dd; }
-        const dx = tx + p.ox - mouse.x, dy = ty + p.oy - mouse.y;
-        const d2 = dx * dx + dy * dy;
-        if (d2 < 9000) {
-          const f = (9000 - d2) / 9000 * 3;
-          const dl = Math.sqrt(d2) + .01;
-          p.ox += (dx / dl) * f; p.oy += (dy / dl) * f;
-        }
-        p.ox *= .92; p.oy *= .92;
-        tx += p.ox; ty += p.oy;
-        const q = Math.min(1, Math.max(0, (now - t0 - p.delay) / 1700));
-        const e = 1 - Math.pow(1 - q, 4);
-        const x = p.sx * W + (tx - p.sx * W) * e;
-        const y = p.sy * H + (ty - p.sy * H) * e;
-        const tw = .7 + .3 * Math.sin(now * .003 + p.tw);
-        const al = p.a * tw * Math.min(1, .45 + k * .55) * (1 - E * .8) * (.25 + .75 * e);
-        if (al < .02) continue;
-        const sz = p.size * k * (1 + E * 2.4);
-        ctx.fillStyle = `rgba(${p.c},${al.toFixed(3)})`;
-        ctx.fillRect(x - sz / 2, y - sz / 2, sz, sz);
-        if (p.size > 2.3) { // м'яке сяйво навколо великих частинок
-          const g = sz * 3.2;
-          ctx.fillStyle = `rgba(${p.c},${(al * .12).toFixed(3)})`;
-          ctx.fillRect(x - g / 2, y - g / 2, g, g);
-        }
-      }
-      ctx.globalCompositeOperation = 'source-over';
-    };
-    requestAnimationFrame(draw);
-    canvas.restart = () => { measure(); t0 = performance.now(); };
   }
 
   if (!hasGsap || reduced) {
@@ -520,8 +638,8 @@
             const outer = document.createElement('span');
             outer.style.display = 'inline-block';
             outer.style.overflow = 'hidden';
-            outer.style.paddingBottom = '.06em';
-            outer.style.marginBottom = '-.06em';
+            outer.style.padding = '.04em .06em .18em';
+            outer.style.margin = '0 -.06em -.18em';
             const inner = document.createElement('span');
             inner.style.display = 'inline-block';
             inner.textContent = part;
@@ -553,7 +671,7 @@
       .from('.glowdot', { scale: 0, duration: .8, ease: 'back.out(3)' }, .7)
       .from('.banner [data-rise]', { y: 26, opacity: 0, duration: .8, ease: 'power3.out', stagger: .07 }, .3)
       .from('.frame i', { opacity: 0, scale: .4, duration: .8, ease: 'power3.out', stagger: .06 }, .2)
-      .from('.banner__meta, .banner__scroll', { opacity: 0, duration: 1.2 }, .8)
+      .from('.banner__scroll', { opacity: 0, duration: 1.2 }, .8)
       .fromTo('.fab', { scale: 0, rotate: -90 }, { scale: 1, rotate: 0, duration: .9, ease: 'back.out(2)', clearProps: 'transform' }, .9)
       .from('.kong__halo', { scale: .4, opacity: 0, duration: 2, ease: 'power3.out' }, 0);
     $$('.banner__stats b[data-count]').forEach((b) => {
@@ -565,24 +683,11 @@
   }
 
   /* hero → гіперпростір: горила розлітається, зірки тягнуться, далі «Рішення» з кільцем */
-  const heroEnd = mobile ? 'bottom top' : '+=90%';
-  const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '.banner', start: 'top top', end: heroEnd, pin: !mobile, scrub: .5, anticipatePin: 1,
-      onUpdate: (self) => {
-        const p = self.progress;
-        state.explode = smooth(.14, .92, p);
-        state.warpT = Math.sin(smooth(.05, 1, p) * Math.PI) * (mobile ? .6 : 1);
-      },
-      onLeave: () => { state.warpT = 0; },
-      onLeaveBack: () => { state.warpT = 0; state.explode = 0; },
-    },
-  })
-    .to('.banner__copy', { y: mobile ? -40 : -160, opacity: 0, ease: 'power2.in', duration: .7 }, 0)
-    .to('.kong__halo', { scale: 2.6, opacity: 0, ease: 'power1.in', duration: .8 }, 0)
-    .to('.banner__meta, .banner__scroll, .frame', { opacity: 0, ease: 'none', duration: .4 }, 0)
-    .to({}, { duration: .12 });
+  // hero: текст відлітає вгору, поки горила розсипається в наступну сцену
+  gsap.timeline({ scrollTrigger: { trigger: '.banner', start: 'top top', end: 'bottom 20%', scrub: .5 } })
+    .to('.banner__copy', { y: mobile ? -40 : -120, opacity: 0, ease: 'power2.in' }, 0)
+    .to('.kong__halo', { scale: 2.2, opacity: 0, ease: 'power1.in' }, 0)
+    .to('.banner__scroll, .frame', { opacity: 0, ease: 'none' }, 0);
 
   // заголовки: слова виїжджають знизу, лінія біля eyebrow малюється
   $$('[data-split]').forEach((el) => {
@@ -625,9 +730,8 @@
   // Рішення: кільце світиться і «приземляється», список виїжджає зліва, фото розкривається
   gsap.from('.halo-ring', { scale: 0, opacity: 0, rotate: -120, duration: 1.6, ease: 'expo.out', scrollTrigger: { trigger: '#solutions', start: 'top 85%', once: true } });
   gsap.to('.halo-ring', { y: 120, ease: 'none', scrollTrigger: { trigger: '#solutions', start: 'top top', end: 'bottom top', scrub: true } });
-  gsap.from('.sol', { x: -90, opacity: 0, duration: 1, ease: 'power4.out', stagger: .1, scrollTrigger: { trigger: '.lab', start: 'top 82%', once: true } });
-  gsap.fromTo('.lab__stage', { clipPath: 'inset(20% 20% 20% 20% round 24px)' }, { clipPath: 'inset(0% 0% 0% 0% round 24px)', ease: 'none', scrollTrigger: { trigger: '.lab', start: 'top 85%', end: 'top 30%', scrub: .6 } });
-  gsap.fromTo('#labImg', { scale: 1.35 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.lab', start: 'top 85%', end: 'bottom 30%', scrub: .6 } });
+  gsap.from('.sol', { x: 90, opacity: 0, duration: 1, ease: 'power4.out', stagger: .1, scrollTrigger: { trigger: '.lab', start: 'top 82%', once: true } });
+  gsap.from('.lab__thumb', { y: 60, opacity: 0, rotate: 4, duration: 1.2, ease: 'expo.out', delay: .4, scrollTrigger: { trigger: '.lab', start: 'top 70%', once: true } });
 
   // Про нас: слова «загоряються» по черзі, факти випливають справа
   const statement = $('#statement');
@@ -642,7 +746,7 @@
         spans.forEach((s, i) => s.classList.toggle('is-on', i < n));
       },
     });
-    gsap.from(statement, { x: 120, opacity: 0, duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: '#about', start: 'top 80%', once: true } });
+    gsap.from(statement, { x: -80, opacity: 0, duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: '#about', start: 'top 80%', once: true } });
   }
   gsap.from('.facts', { x: '40%', opacity: 0, duration: 1.4, ease: 'power3.out', immediateRender: false, scrollTrigger: { trigger: '.facts', start: 'top 92%', once: true } });
 
@@ -697,7 +801,7 @@
 
   // Контакти: світло «розгоряється», форма повертається до глядача
   gsap.fromTo('.closer', { '--gs': .5 }, { '--gs': 1.25, ease: 'none', scrollTrigger: { trigger: '.closer', start: 'top bottom', end: 'bottom bottom', scrub: true } });
-  gsap.from('.form', { y: 90, rotateX: 18, opacity: 0, transformPerspective: 1000, transformOrigin: '50% 100%', duration: 1.3, ease: 'expo.out', scrollTrigger: { trigger: '.form', start: 'top 92%', once: true } });
+  gsap.from('.form', { y: 70, opacity: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.form', start: 'top 92%', once: true } });
   gsap.from('.direct a', { y: 30, opacity: 0, duration: .8, ease: 'power3.out', stagger: .1, scrollTrigger: { trigger: '.direct', start: 'top 95%', once: true } });
 
   // футер

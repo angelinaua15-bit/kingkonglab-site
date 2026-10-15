@@ -43,6 +43,7 @@
   </div>
 
   <canvas class="space" id="space" aria-hidden="true"></canvas>
+  <canvas class="pfield" id="particles" aria-hidden="true"></canvas>
   <div class="grain" aria-hidden="true"></div>
   <div class="cursor" id="cursor" aria-hidden="true"><i></i><em></em></div>
   <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
@@ -85,11 +86,8 @@
 
   <main id="top">
     <section class="banner" id="promo" aria-label="King Kong Lab">
-      <canvas class="banner__particles" id="particles" aria-hidden="true"></canvas>
       <div class="banner__bg" aria-hidden="true">
         <b class="frame"><i></i><i></i><i></i><i></i></b>
-        <span class="banner__meta banner__meta--l">UA · EU · US</span>
-        <span class="banner__meta banner__meta--r">Lab № 01 / systems</span>
       </div>
 
       <div class="wrap banner__layout">
@@ -123,12 +121,7 @@
       <div class="banner__scroll" aria-hidden="true"><span>Scroll</span><i></i></div>
     </section>
 
-    <div class="mega" aria-hidden="true"><div class="mega__track">
-      <span>Systems that sell</span><i></i><span class="o">Web · Bots · Mini Apps</span><i></i><span>King Kong Lab</span><i></i><span class="o">−30% first build</span><i></i>
-      <span>Systems that sell</span><i></i><span class="o">Web · Bots · Mini Apps</span><i></i><span>King Kong Lab</span><i></i><span class="o">−30% first build</span><i></i>
-    </div></div>
-
-    <section class="section" id="solutions">
+    <section class="section scene" id="solutions">
       <span class="halo-ring" aria-hidden="true"><i></i></span>
       <div class="wrap">
         <div class="head">
@@ -172,13 +165,15 @@
             </button>
           </div>
           <figure class="lab__stage">
-            <img id="labImg" src="https://images.unsplash.com/photo-1600132806608-231446b2e7af?w=1000&q=70&auto=format&fit=crop" alt="Сайт та SEO" width="1024" height="1024" />
+            <span class="lab__shape" id="solAnchor" aria-hidden="true"></span>
+            <img class="lab__thumb" id="labImg" src="https://images.unsplash.com/photo-1600132806608-231446b2e7af?w=1000&q=70&auto=format&fit=crop" alt="Сайт та SEO" width="1024" height="1024" />
           </figure>
         </div>
       </div>
     </section>
 
-    <section class="section section--tight" id="about">
+    <section class="section scene" id="about">
+      <span class="about__globe" id="aboutAnchor" aria-hidden="true"></span>
       <div class="wrap about">
         <div>
           <span class="eyebrow" data-rise>Про нас</span>
@@ -200,7 +195,7 @@
       </div>
     </section>
 
-    <section class="section process" id="process">
+    <section class="section section--panel process" id="process">
       <div class="wrap">
         <div class="head">
           <span class="eyebrow" data-rise>Як ми працюємо</span>
@@ -313,7 +308,7 @@
       </div>
     </section>
 
-    <section class="section atlas" id="stories">
+    <section class="section section--panel atlas" id="stories">
       <div class="wrap">
         <div class="head">
           <span class="eyebrow" data-rise>Історії</span>
@@ -353,7 +348,7 @@
       <div class="wrap feed__more"><button class="btn btn--ghost" id="feedMore" type="button"><span>Показати ще</span></button></div>
     </section>
 
-    <section class="section" id="faq">
+    <section class="section section--panel" id="faq">
       <div class="wrap faq">
         <div>
           <span class="eyebrow" data-rise>FAQ</span>
@@ -396,6 +391,8 @@
             <a href="mailto:kingkonglab2024@gmail.com"><small>Пошта</small>kingkonglab2024@gmail.com</a>
           </div>
         </div>
+
+        <div class="closer__kong" id="contactAnchor" aria-hidden="true"><span></span></div>
 
         <form class="form" id="leadForm" novalidate>
           <div class="field">
