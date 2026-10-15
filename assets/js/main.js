@@ -6,7 +6,37 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
-  const FX = { sol: 0 }; // яка послуга активна → яку форму збирають частинки
+  const FX = { sol: 0, light: document.documentElement.dataset.theme !== 'dark' }; // активна послуга + тема для частинок
+
+  // ── світла / темна тема: перехід колом від кнопки ──
+  const themeBtn = $('#themeToggle');
+  const setTheme = (t) => {
+    const root = document.documentElement;
+    root.dataset.theme = t;
+    FX.light = t !== 'dark';
+    try { localStorage.setItem('kk-theme', t); } catch (e) { /* приватний режим */ }
+    const m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.content = t === 'dark' ? '#0B1450' : '#F4F6FD';
+  };
+  themeBtn?.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    const r = themeBtn.getBoundingClientRect();
+    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    if (document.startViewTransition && !reduced) {
+      const vt = document.startViewTransition(() => setTheme(next));
+      vt.ready.then(() => {
+        document.documentElement.animate(
+          { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${rad}px at ${x}px ${y}px)`] },
+          { duration: 900, easing: 'cubic-bezier(.22,1,.36,1)', pseudoElement: '::view-transition-new(root)' },
+        );
+      }).catch(() => {});
+    } else {
+      document.documentElement.classList.add('theme-anim');
+      setTheme(next);
+      setTimeout(() => document.documentElement.classList.remove('theme-anim'), 700);
+    }
+  });
 
   const year = $('#year');
   if (year) year.textContent = new Date().getFullYear();
@@ -285,6 +315,7 @@
     const ctx = space.getContext('2d');
     const N = mobile ? 150 : 320;
     const COLS = ['255,255,255', '226,232,255', '255,214,150', '150,170,255'];
+    const COLS_L = ['11,20,80', '47,75,255', '216,150,31', '90,110,200'];
     let W = 0, H = 0;
     const stars = [];
     const resize = () => {
@@ -299,7 +330,7 @@
       s.y = (Math.random() - .5) * 2.2;
       s.z = far ? .9 + Math.random() * .1 : .08 + Math.random() * .92;
       s.pz = s.z;
-      s.c = COLS[(Math.random() * COLS.length) | 0];
+      s.ci = (Math.random() * COLS.length) | 0;
       s.r = .4 + Math.random() * 1.1;
       s.tw = Math.random() * 6.28;
     };
@@ -314,6 +345,7 @@
       const w = Math.max(state.warp, state.vel * .3);
       const speed = .0007 + w * .03;
       ctx.clearRect(0, 0, W, H);
+      const pal = FX.light ? COLS_L : COLS, dim = FX.light ? .55 : 1;
       const cx = W * .5, cy = H * .5, f = Math.max(W, H) * .5;
       for (const s of stars) {
         s.pz = s.z;
@@ -322,15 +354,16 @@
         const sx = cx + (s.x / s.z) * f, sy = cy + (s.y / s.z) * f;
         if (sx < -40 || sx > W + 40 || sy < -40 || sy > H + 40) { reset(s, true); continue; }
         const near = 1 - s.z;
-        const a = Math.min(1, near * 1.4 + .1) * (.65 + .35 * Math.sin(now * .002 + s.tw));
+        const a = Math.min(1, near * 1.4 + .1) * (.65 + .35 * Math.sin(now * .002 + s.tw)) * dim;
+        const sc = pal[s.ci];
         const size = s.r * (.5 + near * 1.6);
         if (w > .05) {
           const px = cx + (s.x / (s.pz + w * .02)) * f, py = cy + (s.y / (s.pz + w * .02)) * f;
-          ctx.strokeStyle = `rgba(${s.c},${a})`;
+          ctx.strokeStyle = `rgba(${sc},${a})`;
           ctx.lineWidth = size;
           ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(sx, sy); ctx.stroke();
         } else {
-          ctx.fillStyle = `rgba(${s.c},${a})`;
+          ctx.fillStyle = `rgba(${sc},${a})`;
           ctx.fillRect(sx - size / 2, sy - size / 2, size, size);
         }
       }
@@ -441,7 +474,7 @@
       const r = Math.random();
       const big = Math.random() < .07;
       parts.push({
-        c: r < .5 ? '255,200,112' : r < .8 ? '240,244,255' : '120,148,255',
+        ci: r < .5 ? 0 : r < .8 ? 1 : 2,
         a: .65 + Math.random() * .35,
         size: big ? 2.3 + Math.random() * 1.5 : 1 + Math.random() * 1.2,
         big,
@@ -542,7 +575,8 @@
         const alA = scenes[a].a, alB = scenes[a + 1].a;
         const breathe = Math.sin(now * .0016);
         ctx.clearRect(0, 0, W, H);
-        ctx.globalCompositeOperation = 'lighter';
+        const PAL = FX.light ? ['206,138,20', '11,20,80', '47,75,255'] : ['255,200,112', '240,244,255', '120,148,255'];
+        ctx.globalCompositeOperation = FX.light ? 'source-over' : 'lighter';
         for (let i = 0; i < N; i++) {
           const p = parts[i];
           project(a, i, now, A);
@@ -570,12 +604,13 @@
           const tw = .72 + .28 * Math.sin(now * .003 + p.tw);
           const al = p.a * tw * (alA + (alB - alA) * e) * back * Math.min(1, .45 + k * .55) * (.25 + .75 * g);
           if (al < .02) continue;
-          const sz = p.size * k * (1 + burstK * 1.6);
-          ctx.fillStyle = `rgba(${p.c},${al.toFixed(3)})`;
+          const sz = p.size * k * (1 + burstK * 1.6) * (FX.light ? 1.15 : 1);
+          const pc = PAL[p.ci];
+          ctx.fillStyle = `rgba(${pc},${al.toFixed(3)})`;
           ctx.fillRect(x - sz / 2, y - sz / 2, sz, sz);
           if (p.big) {
             const gz = sz * 3.2;
-            ctx.fillStyle = `rgba(${p.c},${(al * .12).toFixed(3)})`;
+            ctx.fillStyle = `rgba(${pc},${(al * (FX.light ? .08 : .12)).toFixed(3)})`;
             ctx.fillRect(x - gz / 2, y - gz / 2, gz, gz);
           }
         }
