@@ -98,6 +98,8 @@
   const labStage = $('.lab__stage');
   const activateSol = (btn) => {
     FX.sol = Math.max(0, sols.indexOf(btn));
+    const more = $('#solMore');
+    if (more && btn.dataset.href) more.href = btn.dataset.href;
     sols.forEach((s) => {
       const on = s === btn;
       s.classList.toggle('is-on', on);

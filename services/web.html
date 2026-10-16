@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="uk" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Розробка сайтів і веб-додатків під ключ | King Kong Lab</title>
+  <meta name="description" content="Лендінги, корпоративні сайти, магазини та веб-застосунки з SEO-основою й аналітикою. Від 300$, −30% на перший проєкт." />
+  <meta name="theme-color" content="#F4F6FD" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Розробка сайтів і веб-додатків під ключ — King Kong Lab" />
+  <meta property="og:description" content="Лендінги, корпоративні сайти, магазини та веб-застосунки з SEO-основою й аналітикою. Від 300$, −30% на перший проєкт." />
+  <meta property="og:image" content="../assets/img/logo.png" />
+  <link rel="icon" href="../assets/img/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/service.css" />
+  <script>(function(){var t='light';try{t=localStorage.getItem('kk-theme')||'light'}catch(e){}document.documentElement.dataset.theme=t;var m=document.querySelector('meta[name=theme-color]');if(m)m.content=t==='dark'?'#0B1450':'#F4F6FD';})();document.documentElement.classList.add('js');</script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Service","name":"Сайти та додатки","provider":{"@type":"Organization","name":"King Kong Lab","telephone":"+380970745767","email":"kingkonglab2024@gmail.com"},"areaServed":"UA","offers":{"@type":"Offer","priceCurrency":"USD","price":"300","description":"від 300$"}}
+  </script>
+</head>
+<body>
+  <canvas class="space" id="space" aria-hidden="true"></canvas>
+  <canvas class="pfield" id="particles" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
+
+  <header class="nav" id="nav">
+    <a class="nav__logo" href="../index.html" aria-label="King Kong Lab — на головну">
+      <img class="logo" src="../assets/img/logo-line.png" alt="" width="36" height="36" />
+      <span>King Kong <strong>Lab</strong></span>
+    </a>
+    <nav class="nav__quick" aria-label="Швидка навігація">
+      <a class="nav__talk" href="#order"><i></i>Обговорити</a>
+      <a class="nav__hide-sm" href="../index.html#solutions">Послуги</a>
+      <a class="nav__hide-sm" href="../index.html#work">Портфоліо</a>
+      <span class="nav__lang" title="Українська">UA</span>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Перемкнути тему" title="Світла / темна тема">
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+      </button>
+    </nav>
+    <button class="burger" id="burger" type="button" aria-label="Меню" aria-expanded="false" aria-controls="drawer"><i></i><i></i><i></i></button>
+  </header>
+
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <span class="drawer__glow" aria-hidden="true"></span>
+    <nav class="nav__links" aria-label="Послуги">
+        <a href="web.html"><small>01</small><span>Сайти</span></a>
+        <a href="bots.html"><small>02</small><span>Боти</span></a>
+        <a href="ads.html"><small>03</small><span>Реклама</span></a>
+        <a href="design.html"><small>04</small><span>Дизайн</span></a>
+        <a href="../index.html"><small>←</small><span>Головна</span></a>
+    </nav>
+    <div class="drawer__foot">
+      <a href="tel:+380970745767">+380 97 074 57 67</a>
+      <a href="mailto:kingkonglab2024@gmail.com">kingkonglab2024@gmail.com</a>
+      <a class="btn btn--blue" href="#order"><span>−30% на старт</span></a>
+    </div>
+  </aside>
+
+  <a class="fab" href="#order" aria-label="Обговорити проєкт">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.4 3.2 2.9 10.4c-1.3.5-1.2 1.3-.2 1.6l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.7c.3-1.3-.5-1.9-1.5-1.5zM8.6 13.2l9.9-6.3c.5-.3.9-.1.5.2l-8.4 7.6-.3 3.6-1.7-5.1z"/></svg>
+  </a>
+
+  <main id="top">
+    <section class="svc-hero">
+      <div class="wrap svc-hero__grid">
+        <div>
+          <nav class="crumbs" aria-label="Навігація"><a href="../index.html">Головна</a><i>/</i><a href="../index.html#solutions">Послуги</a><i>/</i><span>Сайти та додатки</span></nav>
+          <h1>Сайти<em>що приводять заявки</em></h1>
+          <p class="svc-hero__lead">Лендінги, корпоративні сайти, магазини та веб-застосунки. <b>Дизайн, розробка, SEO-основа й аналітика</b> — в одних руках, без посередників.</p>
+          <div class="svc-price"><strong><small>від</small>300$</strong><span>Лендінг від <b>10 днів</b></span><span>Адаптив під телефон</span><span>Перший проєкт <b>−30%</b></span></div>
+          <div class="banner__actions">
+            <a class="btn btn--blue btn--lg" href="#order"><span>Обговорити проєкт</span></a>
+            <a class="btn btn--ghost btn--lg" href="#packs"><span>Формати й ціни</span></a>
+          </div>
+        </div>
+        <div class="svc-shape" id="shapeAnchor" data-shape="web" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section class="svc-sec" id="included">
+      <div class="wrap">
+        <div class="head"><span class="eyebrow">Що входить</span><h2>Під ключ — <em>це так</em></h2></div>
+        <ul class="incl">
+          <li data-rise><em>01</em><h3>Аналіз і структура</h3><p>Розбираємо нішу, конкурентів і шлях клієнта до заявки. Структуру сторінок погоджуємо до дизайну.</p></li>
+          <li data-rise><em>02</em><h3>Прототип і дизайн</h3><p>Спершу логіка й екрани, потім стиль. Мобільна версія — з першого макета, а не «потім підженемо».</p></li>
+          <li data-rise><em>03</em><h3>Розробка</h3><p>Швидкий код без зайвих плагінів. Контент можна редагувати самостійно, без програміста.</p></li>
+          <li data-rise><em>04</em><h3>SEO-основа</h3><p>Мета-теги, швидкість, мікророзмітка, карта сайту — щоб пошуковики бачили сайт з дня запуску.</p></li>
+          <li data-rise><em>05</em><h3>Аналітика</h3><p>GA4, пікселі, цілі на кожну заявку. Видно, з якого каналу прийшов кожен клієнт.</p></li>
+          <li data-rise><em>06</em><h3>Запуск і супровід</h3><p>Домен, хостинг, SSL, перенос даних. Після запуску не зникаємо — доопрацьовуємо живий сайт.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section--panel" id="fit">
+      <div class="wrap fit">
+        <div><span class="eyebrow">Для кого</span><h2>Коли це <em>вам потрібно</em></h2><p class="approach__lead">Сайт — не візитка «щоб було», а точка, куди приходить трафік і де людина вирішує написати вам.</p></div>
+        <ul>
+            <li data-rise>Запускаєте новий продукт і потрібна сторінка під рекламу</li>
+            <li data-rise>Старий сайт є, але заявок з нього майже немає</li>
+            <li data-rise>Потрібен каталог або магазин з оплатою онлайн</li>
+            <li data-rise>Хочете заявки з пошуку без постійних витрат на рекламу</li>
+            <li data-rise>Потрібен кабінет клієнта, бронювання чи інша логіка</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="svc-sec" id="packs">
+      <div class="wrap">
+        <div class="head"><span class="eyebrow">Формати</span><h2>Формати <em>й ціни</em></h2><p>Точну вартість фіксуємо після брифу — до старту, без сюрпризів у кінці. На перший проєкт −30%.</p></div>
+        <div class="packs">
+          <article class="pack" data-rise>
+            <span class="pack__tag">від 10 днів</span>
+            <h3>Лендінг</h3>
+            <p>Одна сторінка під одну пропозицію чи рекламну кампанію.</p>
+            <ul><li>Структура й тексти під конверсію</li><li>Дизайн і адаптив</li><li>Форма заявки + аналітика</li></ul>
+            <div class="pack__meta"><div><small>вартість</small><strong>від 300$</strong></div><div><small>терміни</small>від 10 днів</div></div>
+            <a class="btn btn--blue" href="#order" data-pick="Лендінг"><span>Обрати</span></a>
+          </article>
+          <article class="pack pack--hot" data-rise>
+            <span class="pack__tag">Найчастіше обирають</span>
+            <h3>Сайт компанії</h3>
+            <p>Кілька сторінок: послуги, кейси, контакти, блог.</p>
+            <ul><li>Унікальний дизайн</li><li>Редагування контенту</li><li>SEO-основа під пошук</li></ul>
+            <div class="pack__meta"><div><small>вартість</small><strong>ціна після брифу</strong></div><div><small>терміни</small>терміни після брифу</div></div>
+            <a class="btn btn--ghost" href="#order" data-pick="Сайт компанії"><span>Обрати</span></a>
+          </article>
+          <article class="pack" data-rise>
+            <span class="pack__tag">етапами</span>
+            <h3>Магазин / веб-додаток</h3>
+            <p>Каталог, кошик, оплата, кабінет, інтеграції.</p>
+            <ul><li>Онлайн-оплата</li><li>Інтеграція з CRM</li><li>Адмінка під ваші процеси</li></ul>
+            <div class="pack__meta"><div><small>вартість</small><strong>ціна після брифу</strong></div><div><small>терміни</small>етапами</div></div>
+            <a class="btn btn--blue" href="#order" data-pick="Магазин / веб-додаток"><span>Обрати</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="svc-sec" id="process">
+      <div class="wrap">
+        <div class="head"><span class="eyebrow">Як працюємо</span><h2>Чотири <em>кроки</em></h2></div>
+        <ol class="steps">
+          <li data-rise><em>01</em><h3>Бриф</h3><p>Цілі, аудиторія, конкуренти. Фіксуємо обсяг і ціну до старту.</p></li>
+          <li data-rise><em>02</em><h3>Прототип</h3><p>Структура й логіка екранів, погоджуємо до дизайну.</p></li>
+          <li data-rise><em>03</em><h3>Дизайн і код</h3><p>Збираємо, тестуємо на телефонах і швидкість.</p></li>
+          <li data-rise><em>04</em><h3>Запуск</h3><p>Підключаємо аналітику, навчаємо, супроводжуємо.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="svc-sec" id="cases">
+      <div class="wrap">
+        <div class="head head--row">
+          <div><span class="eyebrow">Кейси</span><h2>Що ми <em>вже зробили</em></h2></div>
+          <a class="btn btn--ghost" href="../index.html#work"><span>Усе портфоліо</span></a>
+        </div>
+        <div class="svc-cases">
+          <a class="case-card" href="https://notest.space/" target="_blank" rel="noopener" data-rise>
+            <div class="case-card__media"><img src="../assets/img/work-notespace.jpg" alt="NoteSpase" width="1200" height="800" loading="lazy" /></div>
+            <div class="case-card__meta"><span>Веб-платформа</span><h3>NoteSpase</h3><p>Платформа, де студенти діляться конспектами й лабораторними.</p></div>
+          </a>
+          <a class="case-card" href="https://gemp-slavsko.vercel.app/" target="_blank" rel="noopener" data-rise>
+            <div class="case-card__media"><img src="../assets/img/work-slavsko.jpg" alt="Slavsko Glamp" width="1200" height="800" loading="lazy" /></div>
+            <div class="case-card__meta"><span>Лендінг</span><h3>Slavsko Glamp</h3><p>Глемпінг у Карпатах: ціни, бронювання в 3 кроки, FAQ.</p></div>
+          </a>
+          <a class="case-card" href="https://v0-luxury-retreat-landing-page-brown.vercel.app/" target="_blank" rel="noopener" data-rise>
+            <div class="case-card__media"><img src="../assets/img/work-khitar.jpg" alt="Khitar Retreat" width="1200" height="800" loading="lazy" /></div>
+            <div class="case-card__meta"><span>Лендінг</span><h3>Khitar Retreat</h3><p>Преміальний карпатський ретрит, що веде до бронювання.</p></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section--panel" id="faq">
+      <div class="wrap faq">
+        <div><span class="eyebrow">FAQ</span><h2>Часті <em>питання</em></h2></div>
+        <div class="acc">
+          <details open><summary>Скільки коштує сайт?</summary><p>Від 300$ за лендінг. Точну цифру даємо після брифу — залежить від кількості сторінок, дизайну та інтеграцій.</p></details>
+          <details><summary>Скільки триває розробка?</summary><p>Лендінг — від 10 днів. Більші сайти ділимо на етапи з окремим запуском, терміни фіксуємо після брифу.</p></details>
+          <details><summary>Чи зможу я сам змінювати тексти й фото?</summary><p>Так. Робимо редагування контенту без програміста і показуємо, як ним користуватись.</p></details>
+          <details><summary>Як оплата?</summary><p>Повністю або етапами. Обсяг фіксуємо до старту — без сюрпризів у кінці.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="closer svc-closer" id="order">
+      <div class="wrap closer__grid">
+        <div>
+          <span class="eyebrow">Заявка</span>
+          <h2>Обговоримо <em>ваш проєкт?</em></h2>
+          <p>Відповідаємо протягом 24 годин. Перший проєкт — −30%.</p>
+          <div class="direct">
+            <a href="tel:+380970745767"><small>Телефон · EET</small>+380 97 074 57 67</a>
+            <a href="mailto:kingkonglab2024@gmail.com"><small>Пошта</small>kingkonglab2024@gmail.com</a>
+          </div>
+        </div>
+        <form class="form" id="leadForm" data-service="Сайти та додатки" novalidate>
+          <div class="picks" role="radiogroup" aria-label="Формат">
+            <label><input type="radio" name="pack" value="Лендінг" /><span>Лендінг</span></label>
+            <label><input type="radio" name="pack" value="Сайт компанії" /><span>Сайт компанії</span></label>
+            <label><input type="radio" name="pack" value="Магазин / веб-додаток" /><span>Магазин / веб-додаток</span></label>
+          </div>
+          <div class="field"><input id="fName" name="name" type="text" placeholder=" " autocomplete="name" required /><label for="fName">Ваше ім'я</label></div>
+          <div class="field"><input id="fPhone" name="phone" type="tel" placeholder=" " autocomplete="tel" inputmode="tel" required /><label for="fPhone">Телефон</label></div>
+          <div class="field"><textarea id="fMsg" name="message" rows="2" placeholder=" "></textarea><label for="fMsg">Коротко про задачу</label></div>
+          <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <button class="btn btn--blue btn--lg btn--full" type="submit"><span>Надіслати заявку</span></button>
+          <p class="form__note">Натискаючи кнопку, ви погоджуєтесь з <a href="../privacy.html">політикою конфіденційності</a>.</p>
+          <div class="form__status" id="formStatus" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+
+    <section class="svc-sec" id="others">
+      <div class="wrap">
+        <div class="head"><span class="eyebrow">Ще послуги</span><h2>Разом — <em>це система</em></h2><p>Сайт, бот, реклама й аналітика працюють як один контур — і ви бачите, звідки прийшов кожен клієнт.</p></div>
+        <div class="others">
+          <a href="bots.html" data-rise>Боти та Mini Apps<small>від 200$</small></a>
+          <a href="ads.html" data-rise>Реклама та трафік<small>від 500$</small></a>
+          <a href="design.html" data-rise>Дизайн та UI/UX<small>від 600$</small></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <div class="foot__top">
+        <div class="foot__brand">
+          <a class="nav__logo" href="../index.html"><img class="logo" src="../assets/img/logo-line.png" alt="" width="36" height="36" /><span>King Kong <strong>Lab</strong></span></a>
+          <p>Сайти, боти і Mini Apps під ключ.</p>
+        </div>
+        <div class="foot__cols">
+          <div>
+            <h4>Послуги</h4>
+            <a href="web.html">Сайти та додатки</a>
+            <a href="bots.html">Боти та Mini Apps</a>
+            <a href="ads.html">Реклама та трафік</a>
+            <a href="design.html">Дизайн та UI/UX</a>
+          </div>
+          <div>
+            <h4>Контакт</h4>
+            <a href="tel:+380970745767">+380 97 074 57 67</a>
+            <a href="mailto:kingkonglab2024@gmail.com">kingkonglab2024@gmail.com</a>
+            <a href="../index.html">Головна</a>
+          </div>
+        </div>
+      </div>
+      <div class="foot__bottom">
+        <span>© <span id="year">2026</span> King Kong Lab</span>
+        <a href="../privacy.html">Політика конфіденційності</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/page.js" defer></script>
+</body>
+</html>
