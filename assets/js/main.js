@@ -132,6 +132,29 @@
     });
   });
 
+  // портфоліо: живі скріншоти сайтів (сервіс інколи спершу віддає заглушку — пробуємо ще раз)
+  $$('img[data-shot]').forEach((img) => {
+    let tries = 0;
+    const ok = () => img.naturalWidth >= 900;
+    const check = () => {
+      if (ok()) { img.classList.add('is-ready'); return; }
+      if (tries++ < 4) setTimeout(() => { img.src = img.src.replace(/&r=\d+$/, '') + '&r=' + tries; }, 3500);
+    };
+    img.addEventListener('load', check);
+    img.addEventListener('error', () => img.remove());
+    if (img.complete && img.naturalWidth) check();
+  });
+  const work = $('.work');
+  const workMore = $('#workMore');
+  workMore?.addEventListener('click', () => {
+    work?.classList.add('is-open');
+    workMore.parentElement.hidden = true;
+    window.ScrollTrigger?.refresh();
+  });
+  $$('.filter').forEach((b) => b.addEventListener('click', () => {
+    if (b.dataset.filter !== 'all') { work?.classList.add('is-open'); if (workMore) workMore.parentElement.hidden = true; }
+  }));
+
   // портфоліо: якщо живий скріншот не завантажився — стара картинка
   $('#labImg')?.addEventListener('error', (e) => { e.target.style.visibility = 'hidden'; });
   $('#labImg')?.addEventListener('load', (e) => { e.target.style.visibility = ''; });
