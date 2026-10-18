@@ -132,17 +132,12 @@
     });
   });
 
-  // портфоліо: живі скріншоти сайтів (сервіс інколи спершу віддає заглушку — пробуємо ще раз)
+  // портфоліо: скріншоти сайтів (assets/img/work, оновлює GitHub Action); якщо файлу нема — охайна заглушка
   $$('img[data-shot]').forEach((img) => {
-    let tries = 0;
-    const ok = () => img.naturalWidth >= 900;
-    const check = () => {
-      if (ok()) { img.classList.add('is-ready'); return; }
-      if (tries++ < 4) setTimeout(() => { img.src = img.src.replace(/&r=\d+$/, '') + '&r=' + tries; }, 3500);
-    };
-    img.addEventListener('load', check);
+    const ready = () => img.classList.add('is-ready');
+    img.addEventListener('load', ready);
     img.addEventListener('error', () => img.remove());
-    if (img.complete && img.naturalWidth) check();
+    if (img.complete && img.naturalWidth) ready();
   });
   const work = $('.work');
   const workMore = $('#workMore');

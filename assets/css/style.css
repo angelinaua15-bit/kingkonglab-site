@@ -694,3 +694,4 @@ html.theme-anim, html.theme-anim *, html.theme-anim *::before, html.theme-anim *
 .shot-ph b { font-size: clamp(22px, 2.2vw, 32px); opacity: .55; text-transform: none; letter-spacing: .01em; }
 .work.is-open .case-card--wide:not(.is-hidden) { grid-column: span 2; }
 @media (max-width: 860px) { .work.is-open .case-card--wide:not(.is-hidden) { grid-column: auto; } }
+.case-card__media--shot img { object-position: 0 0 !important; }
