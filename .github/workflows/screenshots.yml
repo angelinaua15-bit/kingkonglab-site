@@ -1,0 +1,29 @@
+name: Portfolio screenshots
+on:
+  push:
+    branches: [main]
+    paths: ['tools/shots.json', 'tools/shots.mjs', '.github/workflows/screenshots.yml']
+  workflow_dispatch:
+  schedule:
+    - cron: '17 4 1 * *' # раз на місяць оновлюємо скріншоти
+permissions:
+  contents: write
+concurrency: { group: screenshots, cancel-in-progress: true }
+jobs:
+  shots:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm i --no-save --no-package-lock playwright@1.47.2 && npx playwright install --with-deps chromium
+      - run: node tools/shots.mjs
+      - name: Commit screenshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/img/work
+          git diff --cached --quiet && exit 0
+          git commit -m "Update portfolio screenshots"
+          git pull --rebase origin main
+          git push
