@@ -140,6 +140,26 @@
     if (img.complete && img.naturalWidth) ready();
   });
   const work = $('.work');
+  // телефон: портфоліо — горизонтальна карусель з лічильником
+  const workBar = $('#workBar'), workIdx = $('#workIdx'), workTotal = $('#workTotal');
+  const updWork = () => {
+    if (!work) return;
+    const cards = $$('.case-card', work).filter((c) => c.offsetParent !== null);
+    if (workTotal) workTotal.textContent = cards.length;
+    const max = work.scrollWidth - work.clientWidth;
+    const p = max > 0 ? work.scrollLeft / max : 0;
+    if (workBar) workBar.style.transform = `scaleX(${Math.max(.06, p)})`;
+    if (workIdx && cards.length) {
+      const left = work.getBoundingClientRect().left;
+      let best = 0, bd = 1e9;
+      cards.forEach((c, i) => { const d = Math.abs(c.getBoundingClientRect().left - left - 12); if (d < bd) { bd = d; best = i; } });
+      workIdx.textContent = best + 1;
+    }
+  };
+  work?.addEventListener('scroll', updWork, { passive: true });
+  addEventListener('resize', updWork);
+  $$('.filter').forEach((b) => b.addEventListener('click', () => { if (work) work.scrollLeft = 0; setTimeout(updWork, 50); }));
+  updWork();
   const workMore = $('#workMore');
   workMore?.addEventListener('click', () => {
     work?.classList.add('is-open');

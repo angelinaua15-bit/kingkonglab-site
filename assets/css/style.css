@@ -695,3 +695,31 @@ html.theme-anim, html.theme-anim *, html.theme-anim *::before, html.theme-anim *
 .work.is-open .case-card--wide:not(.is-hidden) { grid-column: span 2; }
 @media (max-width: 860px) { .work.is-open .case-card--wide:not(.is-hidden) { grid-column: auto; } }
 .case-card__media--shot img { object-position: 0 0 !important; }
+
+/* ═════ портфоліо на телефоні: карусель замість довгої стрічки ═════ */
+.work__nav { display: none; }
+@media (max-width: 860px) {
+  .work {
+    display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+    margin-inline: -12px; padding: 4px 12px 14px; scroll-padding-inline: 12px; scrollbar-width: none; perspective: none;
+  }
+  .work::-webkit-scrollbar { display: none; }
+  .work .case-card, .work .case-card.case-card--feature { flex: 0 0 84%; min-height: 0; height: 430px; scroll-snap-align: start; grid-column: auto; grid-row: auto; }
+  .work .case-card.is-more { display: grid; }
+  .work .case-card.is-hidden { display: none !important; }
+  .case-card__meta { padding: 56px 18px 18px; }
+  .case-card__meta h3 { font-size: 26px; }
+  .case-card--feature .case-card__meta h3 { font-size: 34px; }
+  .case-card__meta p { font-size: 13px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .case-card__media--shot img, .case-card__media img { height: 62%; }
+  .work__more { display: none !important; }
+  .work__nav { display: flex; align-items: center; gap: 14px; margin-top: 10px; font-size: 13px; color: var(--muted); }
+  .work__count b { color: var(--text); font-weight: 700; }
+  .work__count i { font-style: normal; }
+  .work__bar { position: relative; flex: 1; height: 2px; background: var(--line-2); border-radius: 2px; overflow: hidden; }
+  .work__bar i { position: absolute; inset: 0; background: var(--gold); transform-origin: 0 50%; transform: scaleX(.06); transition: transform .2s; }
+  .work__hint { color: var(--gold); font-weight: 600; }
+  #work .filters { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; max-width: 100%; }
+}
+html, main { overflow-x: clip; }
+@media (max-width: 860px) { .work__count { order: 3; } .work__hint { order: 1; padding-left: 64px; } .work__bar { order: 2; } }
