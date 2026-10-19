@@ -723,3 +723,64 @@ html.theme-anim, html.theme-anim *, html.theme-anim *::before, html.theme-anim *
 }
 html, main { overflow-x: clip; }
 @media (max-width: 860px) { .work__count { order: 3; } .work__hint { order: 1; padding-left: 64px; } .work__bar { order: 2; } }
+
+/* ═════ відгуки: картки повністю, без обрізання ═════ */
+.ticker--cards { overflow-x: clip; overflow-y: visible; }
+.ticker--cards .ticker__track { align-items: stretch; padding: 14px 0 34px; }
+.quote { display: flex; flex-direction: column; justify-content: space-between; min-height: 210px; }
+.quote:hover { transform: translateY(-4px); }
+.reviews { overflow: visible; }
+
+/* ═════ «Чому вигідніше» поруч із фішкою ═════ */
+.tricks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 36px; }
+.tricks .trick { margin-top: 0; max-width: none; }
+.trick--save::before { background: conic-gradient(from 180deg, transparent 0 70%, var(--signal-2) 80%, var(--text) 84%, var(--gold) 90%, transparent 100%); }
+@media (max-width: 860px) { .tricks { grid-template-columns: 1fr; } }
+
+/* ═════ форма: швидкий Telegram ═════ */
+.tg-quick {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px;
+  padding: 14px 16px; border-radius: 16px; color: #fff;
+  background: linear-gradient(135deg, #2AABEE, #1E88D9); box-shadow: 0 14px 34px -14px rgba(34, 158, 217, .9);
+  transition: transform .4s var(--ease), box-shadow .4s;
+}
+.tg-quick:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -12px rgba(34, 158, 217, 1); }
+.tg-quick i { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: rgba(255, 255, 255, .2); }
+.tg-quick svg { width: 20px; height: 20px; fill: #fff; transform: translateX(-1px); }
+.tg-quick b { display: block; font-family: var(--display); font-size: 16px; }
+.tg-quick small { display: block; font-size: 12px; opacity: .85; }
+.tg-quick em { font-style: normal; font-size: 18px; transition: transform .4s var(--ease); }
+.tg-quick:hover em { transform: translateX(4px); }
+.form__or { display: flex; align-items: center; gap: 12px; margin: 4px 0; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+.form__or::before, .form__or::after { content: ""; flex: 1; height: 1px; background: var(--line-2); }
+@media (max-width: 860px) { .direct { grid-template-columns: minmax(0, 1fr) !important; } .closer__grid > * { min-width: 0; } }
+.direct--tg { color: #229ED9; box-shadow: inset 0 0 0 1px rgba(34, 158, 217, .5) !important; }
+.form { scroll-margin-top: 90px; }
+.form.is-flash { animation: formFlash 1.4s var(--ease); }
+@keyframes formFlash { 0% { box-shadow: inset 0 0 0 1px var(--line-2), 0 0 0 0 rgba(216, 150, 31, .0); } 30% { box-shadow: inset 0 0 0 2px var(--gold), 0 0 0 10px rgba(216, 150, 31, .18); } 100% { box-shadow: inset 0 0 0 1px var(--line-2), 0 0 0 0 rgba(216, 150, 31, 0); } }
+.faq__lead { color: var(--muted); margin: 18px 0 18px; max-width: 360px; }
+
+/* ═════ новини: компактні картки, що розгортаються ═════ */
+.post { position: relative; width: min(320px, 80vw); min-height: 0; max-height: 360px; transition: max-height .6s var(--ease); }
+.post.is-open { max-height: 2400px; }
+.post__toggle {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: flex; justify-content: center; align-items: end;
+  height: 96px; padding-bottom: 14px; border: 0; cursor: pointer;
+  background: linear-gradient(transparent, rgb(var(--s2) / .96) 60%); color: var(--gold); font: 600 13px var(--body);
+}
+html[data-theme="light"] .post__toggle { background: linear-gradient(rgba(255, 255, 255, 0), #fff 62%); }
+.post.is-open .post__toggle { position: static; height: auto; padding: 12px 0 14px; background: none; }
+.post.is-wait .post__toggle { display: none; }
+
+/* ═════ телефон: легші ефекти для плавності ═════ */
+@media (max-width: 860px), (hover: none) {
+  .grain, body::after { display: none; }
+  .nav.is-solid, .btn--ghost, .promo__tag, .offer a, .quote, .form, .section--panel > .wrap, .case-card__meta span, .drawer { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+  .nav.is-solid { background: rgb(var(--s2) / .94); }
+  html[data-theme="light"] .nav.is-solid { background: rgba(255, 255, 255, .96); }
+  .kong__halo, .closer__kong span, .drawer__glow, .svc-shape::before { animation: none !important; filter: none !important; opacity: .5; }
+  .line--island > span { animation: none !important; }
+  .trick::before { animation-duration: 12s; }
+  .case-card { transition: none; }
+}
+@media (max-width: 860px) { #contact .direct, .svc-closer .direct { display: none; } #contact .closer__grid { gap: 18px; } }

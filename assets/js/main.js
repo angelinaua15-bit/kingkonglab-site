@@ -220,6 +220,15 @@
       const box = document.createElement('div');
       box.className = 'post is-wait';
       box.dataset.post = `${channel}/${id}`;
+      const tg = document.createElement('button');
+      tg.type = 'button';
+      tg.className = 'post__toggle';
+      tg.textContent = 'Розгорнути ↓';
+      tg.addEventListener('click', () => {
+        const on = box.classList.toggle('is-open');
+        tg.textContent = on ? 'Згорнути ↑' : 'Розгорнути ↓';
+      });
+      box.appendChild(tg);
       feed.appendChild(box);
       lazy.observe(box);
     };
@@ -243,6 +252,21 @@
     if (d.open) accs.forEach((o) => { if (o !== d) o.open = false; });
   }));
 
+  // «Обговорити проєкт» → одразу до форми: підсвічуємо її, на комп'ютері ставимо курсор у поле
+  $$('a[href="#leadForm"]').forEach((a) => a.addEventListener('click', (ev) => {
+    const f = $('#leadForm');
+    if (!f) return;
+    if (!window.Lenis || !fine) {
+      ev.preventDefault();
+      closeDrawer();
+      const go = () => scrollTo({ top: f.getBoundingClientRect().top + scrollY - 80, behavior: 'smooth' });
+      go(); setTimeout(go, 700); // друга корекція — якщо блоки вище ще доанімовувались
+    }
+    setTimeout(() => {
+      f.classList.remove('is-flash'); void f.offsetWidth; f.classList.add('is-flash');
+      if (fine) $('#fName')?.focus({ preventScroll: true });
+    }, 900);
+  }));
   const form = $('#leadForm');
   const phone = $('#fPhone');
   phone?.addEventListener('focus', () => { if (!phone.value) phone.value = '+380 '; });
@@ -347,13 +371,13 @@
   /* спільний стан: наскільки «вибухнула» горила і як сильно зірки тягнуться в гіперпростір */
   const state = { explode: 0, warp: 0, warpT: 0, vel: 0 };
   const mobile = matchMedia('(max-width: 860px)').matches;
-  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  const DPR = Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 2);
 
   /* ───── КОСМОС: зоряне поле на всю сторінку ───── */
   const space = $('#space');
   if (space && !reduced) {
     const ctx = space.getContext('2d');
-    const N = mobile ? 150 : 320;
+    const N = mobile ? 60 : 320;
     const COLS = ['255,255,255', '226,232,255', '255,214,150', '150,170,255'];
     const COLS_L = ['11,20,80', '47,75,255', '216,150,31', '90,110,200'];
     let W = 0, H = 0;
@@ -419,7 +443,7 @@
 
   if (canvas && !reduced && canvas.getContext) {
     const ctx = canvas.getContext('2d');
-    const N = mobile ? 1500 : 3200;
+    const N = mobile ? 750 : 3200;
     let W = 0, H = 0;
     const resize = () => {
       W = innerWidth; H = innerHeight;
@@ -512,7 +536,7 @@
     const parts = [];
     for (let i = 0; i < N; i++) {
       const r = Math.random();
-      const big = Math.random() < .07;
+      const big = !mobile && Math.random() < .07;
       parts.push({
         ci: r < .5 ? 0 : r < .8 ? 1 : 2,
         a: .65 + Math.random() * .35,
@@ -673,6 +697,7 @@
   }
 
   gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });
   document.body.classList.add('is-loading');
 
   if (fine && typeof window.Lenis !== 'undefined') {
@@ -685,7 +710,7 @@
       const el = id.length > 1 && document.querySelector(id);
       if (!el && id !== '#top') return;
       e.preventDefault();
-      lenis.scrollTo(id === '#top' ? 0 : el, { offset: -20, duration: 1.4 });
+      lenis.scrollTo(id === '#top' ? 0 : el, { offset: id === '#leadForm' ? -100 : -20, duration: 1.4 });
     }));
   }
 
@@ -793,7 +818,7 @@
     gsap.fromTo(track, { xPercent: rev ? -30 : 0 }, { xPercent: rev ? 0 : -30, ease: 'none', scrollTrigger: { trigger: m, start: 'top bottom', end: 'bottom top', scrub: .4 } });
   });
   // нахил стрічок від швидкості скролу
-  const skewers = $$('.mega, .ticker--cards');
+  const skewers = mobile ? [] : $$('.mega');
   const skewTo = skewers.map((el) => gsap.quickTo(el, 'skewX', { duration: .5, ease: 'power3' }));
   ScrollTrigger.create({
     onUpdate: (self) => {
@@ -863,7 +888,7 @@
   }));
 
   // Відгуки: картки падають у стрічку з легким поворотом
-  gsap.from('.ticker--cards .quote', { y: 40, rotate: 4, opacity: 0, duration: 1, ease: 'power3.out', stagger: .06, scrollTrigger: { trigger: '.ticker--cards', start: 'top 90%', once: true } });
+  gsap.from('.ticker--cards .quote', { y: 30, opacity: 0, duration: 1, ease: 'power3.out', stagger: .06, scrollTrigger: { trigger: '.ticker--cards', start: 'top 90%', once: true } });
 
   // Історії: колонки піднімаються по черзі, номери «друкуються»
   gsap.from('.atlas__grid article', { y: 110, opacity: 0, duration: 1.2, ease: 'power4.out', stagger: .16, scrollTrigger: { trigger: '.atlas__grid', start: 'top 85%', once: true } });

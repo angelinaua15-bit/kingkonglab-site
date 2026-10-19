@@ -14,8 +14,9 @@
   <meta property="og:image" content="assets/img/logo.png" />
   <meta property="og:locale" content="uk_UA" />
 
-  <link rel="icon" href="assets/img/favicon.png" type="image/png" />
-  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+  <link rel="icon" href="assets/img/favicon-32.png?v=2" type="image/png" sizes="32x32" />
+  <link rel="icon" href="assets/img/favicon.png?v=2" type="image/png" sizes="64x64" />
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png?v=2" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -55,7 +56,7 @@
       <span>King Kong <strong>Lab</strong></span>
     </a>
     <nav class="nav__quick" aria-label="Швидка навігація">
-      <a class="nav__talk" href="#contact"><i></i>Обговорити</a>
+      <a class="nav__talk" href="#leadForm"><i></i>Обговорити</a>
       <a class="nav__hide-sm" href="#work">Портфоліо</a>
       <a class="nav__hide-sm" href="#news">Новини</a>
       <span class="nav__lang" title="Українська">UA</span>
@@ -81,11 +82,11 @@
     <div class="drawer__foot">
       <a href="tel:+380970745767">+380 97 074 57 67</a>
       <a href="mailto:kingkonglab2024@gmail.com">kingkonglab2024@gmail.com</a>
-      <a class="btn btn--blue" href="#contact"><span>−30% на старт</span></a>
+      <a class="btn btn--blue" href="#leadForm"><span>−30% на старт</span></a>
     </div>
   </aside>
 
-  <a class="fab mag" href="#contact" aria-label="Обговорити проєкт" data-cursor="Hi">
+  <a class="fab mag" href="#leadForm" aria-label="Обговорити проєкт" data-cursor="Hi">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.4 3.2 2.9 10.4c-1.3.5-1.2 1.3-.2 1.6l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.7c.3-1.3-.5-1.9-1.5-1.5zM8.6 13.2l9.9-6.3c.5-.3.9-.1.5.2l-8.4 7.6-.3 3.6-1.7-5.1z"/></svg>
   </a>
 
@@ -113,7 +114,7 @@
             <li><a href="services/design.html"><i>04</i><b>Дизайн та UI/UX</b><small>від 600$</small></a></li>
           </ul>
           <div class="banner__actions" data-rise>
-            <a class="btn btn--blue btn--lg mag" href="#contact" data-cursor="Go"><span>Обговорити проєкт</span></a>
+            <a class="btn btn--blue btn--lg mag" href="#leadForm" data-cursor="Go"><span>Обговорити проєкт</span></a>
             <a class="btn btn--ghost btn--lg mag" href="#work"><span>Роботи</span></a>
           </div>
         </div>
@@ -215,9 +216,15 @@
           <li data-rise><em>03</em><h3>Збірка і тести</h3><p>Інтеграції, оплати, навантаження. Прогрес видно на кожному етапі.</p></li>
           <li data-rise><em>04</em><h3>Ріст</h3><p>Аналітика з першого дня, трафік і доопрацювання живої системи.</p></li>
         </ol>
-        <div class="trick" data-rise>
-          <small>Наша фішка</small>
-          <p>Система, а не сторінка. Сайт, бот, реклама й аналітика працюють як один контур — і ви бачите, звідки прийшов кожен клієнт.</p>
+        <div class="tricks">
+          <div class="trick" data-rise>
+            <small>Наша фішка</small>
+            <p>Система, а не сторінка. Сайт, бот, реклама й аналітика працюють як один контур — і ви бачите, звідки прийшов кожен клієнт.</p>
+          </div>
+          <div class="trick trick--save" data-rise>
+            <small>Чому вигідніше</small>
+            <p>Дизайн і розробку робимо самі — без сторонніх дизайнерів і підрядників. Ви не переплачуєте посередникам, а макет одразу стає робочим продуктом.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -458,23 +465,61 @@
         <div>
           <span class="eyebrow" data-rise>FAQ</span>
           <h2 data-split>Коротко <em>по суті</em></h2>
+          <p class="faq__lead" data-rise>Договір, оплата, терміни й права — без дрібного шрифту. Не знайшли свого питання?</p>
+          <a class="btn btn--ghost faq__tg" href="https://t.me/+380970745767" target="_blank" rel="noopener" data-rise><span>Запитати в Telegram</span></a>
         </div>
         <div class="acc">
           <details open>
             <summary>Скільки коштує сайт?</summary>
-            <p>Від 300$. Точну цифру даємо після брифу — залежить від логіки, дизайну і інтеграцій.</p>
+            <p>Від 300$ за лендінг. Точну цифру даємо після брифу — залежить від логіки, дизайну й інтеграцій. На перший проєкт — −30%.</p>
           </details>
           <details>
-            <summary>Як оплата?</summary>
-            <p>Повністю або етапами. Фіксуємо обсяг до старту, без сюрпризів у кінці.</p>
+            <summary>Чому у вас дешевше, ніж в агенціях?</summary>
+            <p>Дизайн і розробку робимо самі, без сторонніх дизайнерів, верстальників і підрядників. Ви не платите націнку посередникам і за погодження між командами.</p>
           </details>
           <details>
             <summary>Скільки триває запуск?</summary>
-            <p>Лендінг — від 10 днів. Повна система (сайт + бот + аналітика) — зазвичай 3–6 тижнів після брифу.</p>
+            <p>Лендінг — від 10 днів. Повна система (сайт + бот + аналітика) — зазвичай 3–6 тижнів після брифу. Великі проєкти ділимо на етапи з окремим запуском.</p>
+          </details>
+          <details>
+            <summary>Чи працюєте за договором?</summary>
+            <p>Так. Працюємо офіційно як ФОП: укладаємо договір, у якому фіксуємо обсяг робіт, терміни, вартість і етапи. Після кожного етапу підписуємо акт виконаних робіт.</p>
+          </details>
+          <details>
+            <summary>Як можна оплатити?</summary>
+            <p>Безготівково на рахунок ФОП — і для фізичних осіб, і для компаній. Компаніям виставляємо рахунок і акт, які можна провести в бухгалтерії. Іноземним клієнтам — оплата за інвойсом.</p>
+          </details>
+          <details>
+            <summary>Повна оплата чи етапами?</summary>
+            <p>Як зручніше. Зазвичай — передоплата за перший етап, далі оплата кожного етапу після його здачі. Невеликі проєкти можна оплатити одразу повністю. Обсяг фіксуємо до старту — без сюрпризів у кінці.</p>
+          </details>
+          <details>
+            <summary>Чи будуть доплати в процесі?</summary>
+            <p>Ціна з договору не змінюється, якщо не змінюється обсяг. Нові побажання, яких не було в брифі, спершу оцінюємо й погоджуємо з вами — і лише потім беремо в роботу.</p>
+          </details>
+          <details>
+            <summary>Кому належать сайт, код і доступи?</summary>
+            <p>Вам. Після оплати передаємо всі доступи: домен, хостинг, адмінку, код і рекламні кабінети. Нічого не «привʼязуємо» до себе.</p>
+          </details>
+          <details>
+            <summary>Що, якщо результат не сподобається?</summary>
+            <p>Прототип і дизайн погоджуємо до розробки, тож сюрпризів на фініші не буває. Правки обговорюємо на кожному етапі.</p>
+          </details>
+          <details>
+            <summary>Чи потрібне технічне завдання?</summary>
+            <p>Ні. Достатньо описати задачу своїми словами — бриф і ТЗ складаємо разом на першій розмові.</p>
+          </details>
+          <details>
+            <summary>Що після запуску?</summary>
+            <p>Не зникаємо: підтримка, оновлення й доопрацювання живої системи. Підключаємо аналітику з першого дня, щоб було видно, що працює.</p>
+          </details>
+          <details>
+            <summary>Працюєте з іноземними клієнтами?</summary>
+            <p>Так — з Україною, Європою, Великою Британією, США та ОАЕ. Спілкуємось українською та англійською.</p>
           </details>
           <details>
             <summary>Чи працюєте по NDA?</summary>
-            <p>Так. Закриті бриф, макети і доступи. Публікуємо кейс лише з вашої згоди. Більшість систем залишається приватною.</p>
+            <p>Так. Закриті бриф, макети й доступи. Публікуємо кейс лише з вашої згоди — більшість систем залишається приватною.</p>
           </details>
         </div>
       </div>
@@ -494,12 +539,19 @@
           <div class="direct" data-rise>
             <a href="tel:+380970745767"><small>Телефон · EET</small>+380 97 074 57 67</a>
             <a href="mailto:kingkonglab2024@gmail.com"><small>Пошта</small>kingkonglab2024@gmail.com</a>
+            <a class="direct--tg" href="https://t.me/+380970745767" target="_blank" rel="noopener"><small>Telegram</small>Написати в чат →</a>
           </div>
         </div>
 
         <div class="closer__kong" id="contactAnchor" aria-hidden="true"><span></span></div>
 
         <form class="form" id="leadForm" novalidate>
+          <a class="tg-quick" href="https://t.me/+380970745767" target="_blank" rel="noopener">
+            <i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.4 3.2 2.9 10.4c-1.3.5-1.2 1.3-.2 1.6l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.7c.3-1.3-.5-1.9-1.5-1.5zM8.6 13.2l9.9-6.3c.5-.3.9-.1.5.2l-8.4 7.6-.3 3.6-1.7-5.1z"/></svg></i>
+            <span><b>Написати в Telegram</b><small>Без форми — відповімо в чаті</small></span>
+            <em aria-hidden="true">→</em>
+          </a>
+          <p class="form__or"><span>або залиште заявку</span></p>
           <div class="field">
             <input id="fName" name="name" type="text" placeholder=" " autocomplete="name" required />
             <label for="fName">Ваше ім'я</label>
@@ -547,7 +599,8 @@
             <h4>Контакт</h4>
             <a href="tel:+380970745767">+380 97 074 57 67</a>
             <a href="mailto:kingkonglab2024@gmail.com">kingkonglab2024@gmail.com</a>
-            <a href="#contact">Заявка</a>
+            <a href="#leadForm">Заявка</a>
+            <a href="https://t.me/+380970745767" target="_blank" rel="noopener">Telegram</a>
           </div>
         </div>
       </div>

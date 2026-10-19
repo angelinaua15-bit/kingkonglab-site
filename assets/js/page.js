@@ -110,6 +110,16 @@
     if (status) status.textContent = 'Дякуємо! Відкриється поштовий клієнт — надішліть лист.';
     form.reset();
   });
+  // «Обговорити» → до форми з підсвіткою
+  $$('a[href="#leadForm"]').forEach((a) => a.addEventListener('click', (ev) => {
+    const f0 = $('#leadForm');
+    if (f0) { ev.preventDefault(); toggleDrawer(false); const go = () => scrollTo({ top: f0.getBoundingClientRect().top + scrollY - 80, behavior: reduced ? 'auto' : 'smooth' }); go(); setTimeout(go, 700); }
+  }));
+  $$('a[href="#leadForm"]').forEach((a) => a.addEventListener('click', () => setTimeout(() => {
+    const f = $('#leadForm'); if (!f) return;
+    f.classList.remove('is-flash'); void f.offsetWidth; f.classList.add('is-flash');
+    if (!mobile) $('#fName')?.focus({ preventScroll: true });
+  }, 700)));
   // кнопки пакетів одразу обирають формат у формі
   $$('[data-pick]').forEach((a) => a.addEventListener('click', () => {
     const box = $(`input[name="pack"][value="${a.dataset.pick}"]`);
@@ -118,10 +128,10 @@
 
   // ── зірки на фоні ──
   const space = $('#space');
-  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  const DPR = Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 2);
   if (space && !reduced) {
     const ctx = space.getContext('2d');
-    const N = mobile ? 110 : 220;
+    const N = mobile ? 50 : 220;
     const D = ['255,255,255', '226,232,255', '255,214,150', '150,170,255'];
     const L = ['11,20,80', '47,75,255', '216,150,31', '90,110,200'];
     let W = 0, H = 0;
@@ -149,7 +159,7 @@
   const anchor = $('#shapeAnchor');
   if (!canvas || !anchor || reduced || !canvas.getContext) { root.classList.add('no-canvas'); return; }
   const ctx = canvas.getContext('2d');
-  const N = mobile ? 1300 : 2600;
+  const N = mobile ? 650 : 2600;
   const SN = 220;
   const rr = (o, x, y, w, h, r) => { o.beginPath(); if (o.roundRect) o.roundRect(x, y, w, h, r); else o.rect(x, y, w, h); o.stroke(); };
   const line = (o, ...p) => { o.beginPath(); o.moveTo(p[0], p[1]); for (let i = 2; i < p.length; i += 2) o.lineTo(p[i], p[i + 1]); o.stroke(); };
@@ -194,7 +204,7 @@
   for (let i = 0; i < N; i++) {
     const j = ((Math.random() * (pts.length / 2)) | 0) * 2;
     const r = Math.random();
-    const big = Math.random() < .07;
+    const big = !mobile && Math.random() < .07;
     parts.push({
       u: (pts[j] + (Math.random() - .5) * .8 - bx) / bs, v: (pts[j + 1] + (Math.random() - .5) * .8 - by) / bs, z: (Math.random() - .5) * .14,
       ci: r < .5 ? 0 : r < .8 ? 1 : 2, a: .65 + Math.random() * .35,
