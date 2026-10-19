@@ -149,6 +149,9 @@
     const max = work.scrollWidth - work.clientWidth;
     const p = max > 0 ? work.scrollLeft / max : 0;
     if (workBar) workBar.style.transform = `scaleX(${Math.max(.06, p)})`;
+    const prev = $('#workPrev'), next = $('#workNext');
+    if (prev) prev.disabled = work.scrollLeft < 8;
+    if (next) next.disabled = work.scrollLeft > max - 8;
     if (workIdx && cards.length) {
       const left = work.getBoundingClientRect().left;
       let best = 0, bd = 1e9;
@@ -157,6 +160,13 @@
     }
   };
   work?.addEventListener('scroll', updWork, { passive: true });
+  const stepWork = (dir) => {
+    const card = $$('.case-card', work).find((c) => c.offsetParent !== null);
+    if (!work || !card) return;
+    work.scrollBy({ left: dir * (card.getBoundingClientRect().width + 12), behavior: 'smooth' });
+  };
+  $('#workPrev')?.addEventListener('click', () => stepWork(-1));
+  $('#workNext')?.addEventListener('click', () => stepWork(1));
   addEventListener('resize', updWork);
   $$('.filter').forEach((b) => b.addEventListener('click', () => { if (work) work.scrollLeft = 0; setTimeout(updWork, 50); }));
   updWork();
@@ -811,12 +821,20 @@
     });
   });
 
-  // великі стрічки рухаються разом зі скролом
-  $$('.mega').forEach((m) => {
+  // великі стрічки: гортаються самі безкінечно, а скрол їх прискорює
+  const megaLoops = $$('.mega').map((m) => {
     const track = $('.mega__track', m);
     const rev = m.classList.contains('mega--rev');
-    gsap.fromTo(track, { xPercent: rev ? -30 : 0 }, { xPercent: rev ? 0 : -30, ease: 'none', scrollTrigger: { trigger: m, start: 'top bottom', end: 'bottom top', scrub: .4 } });
+    return gsap.fromTo(track, { xPercent: rev ? -50 : 0 }, { xPercent: rev ? 0 : -50, ease: 'none', duration: mobile ? 22 : 28, repeat: -1 });
   });
+  if (megaLoops.length) {
+    ScrollTrigger.create({
+      onUpdate: (self) => {
+        const boost = 1 + Math.min(4, Math.abs(self.getVelocity()) / 600);
+        megaLoops.forEach((t) => gsap.to(t, { timeScale: boost, duration: .2, overwrite: true, onComplete: () => gsap.to(t, { timeScale: 1, duration: .8 }) }));
+      },
+    });
+  }
   // нахил стрічок від швидкості скролу
   const skewers = mobile ? [] : $$('.mega');
   const skewTo = skewers.map((el) => gsap.quickTo(el, 'skewX', { duration: .5, ease: 'power3' }));

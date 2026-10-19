@@ -722,7 +722,7 @@ html.theme-anim, html.theme-anim *, html.theme-anim *::before, html.theme-anim *
   #work .filters { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; max-width: 100%; }
 }
 html, main { overflow-x: clip; }
-@media (max-width: 860px) { .work__count { order: 3; } .work__hint { order: 1; padding-left: 64px; } .work__bar { order: 2; } }
+
 
 /* ═════ відгуки: картки повністю, без обрізання ═════ */
 .ticker--cards { overflow-x: clip; overflow-y: visible; }
@@ -785,3 +785,20 @@ html[data-theme="light"] .post__toggle { background: linear-gradient(rgba(255, 2
 }
 @media (max-width: 860px) { #contact .direct, .svc-closer .direct { display: none; } #contact .closer__grid { gap: 18px; } }
 .post { display: flex; flex-direction: column; } .post__toggle { order: 9; } .post.is-open .post__toggle { border-top: 1px solid var(--line); }
+/* без GSAP стрічка теж гортається */
+.no-anim .mega__track { animation: slide 28s linear infinite; }
+.no-anim .mega--rev .mega__track { animation-direction: reverse; }
+/* контакти: горила рівно по центру між текстом і формою */
+@media (min-width: 1101px) {
+  #contact .closer__grid { grid-template-columns: minmax(0, 1fr) minmax(0, .75fr) minmax(0, 1fr); }
+  #contact h2 { font-size: clamp(44px, 4.6vw, 84px); }
+  #contact .closer__kong { justify-self: center; width: min(100%, 360px); }
+}
+@media (max-width: 860px) {
+  .work__nav { gap: 12px; padding-left: 62px; margin-top: 14px; }
+  .work__arrow { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; font-size: 18px; color: var(--text); box-shadow: inset 0 0 0 1px var(--line-2); background: rgb(var(--s1) / .7); transition: background .25s, color .25s, opacity .25s; }
+  .work__arrow--next { background: var(--gold); color: #0B1450; box-shadow: none; }
+  .work__arrow:disabled { opacity: .35; }
+  .work__count { white-space: nowrap; }
+}
+.lab__thumb { width: 46% !important; }

@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20261019b" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20261019c" />
   <script>(function(){var t='light';try{t=localStorage.getItem('kk-theme')||'light'}catch(e){}document.documentElement.dataset.theme=t;var m=document.querySelector('meta[name=theme-color]');if(m)m.content=t==='dark'?'#0B1450':'#F4F6FD';})();</script>
   <script>document.documentElement.classList.add('js');</script>
 
@@ -138,7 +138,7 @@
 
         <div class="lab">
           <div class="lab__list" role="tablist" aria-label="Рішення">
-            <button class="sol is-on" role="tab" aria-selected="true" data-img="https://images.unsplash.com/photo-1600132806608-231446b2e7af?w=1000&q=70&auto=format&fit=crop" data-alt="Сайт та SEO" data-href="services/web.html">
+            <button class="sol is-on" role="tab" aria-selected="true" data-img="assets/img/sol-web.jpg" data-alt="Сайт та SEO" data-href="services/web.html">
               <span class="sol__num">01</span>
               <span class="sol__body">
                 <span class="sol__price">від <b>300$</b></span>
@@ -146,7 +146,7 @@
                 <span>Присутність, SEO і аналітика, що приводять заявки.</span>
               </span>
             </button>
-            <button class="sol" role="tab" aria-selected="false" data-img="https://images.unsplash.com/photo-1526045612212-70caf35c14df?w=1000&q=70&auto=format&fit=crop" data-alt="Telegram-боти" data-href="services/bots.html">
+            <button class="sol" role="tab" aria-selected="false" data-img="assets/img/sol-bots.jpg" data-alt="Telegram-боти" data-href="services/bots.html">
               <span class="sol__num">02</span>
               <span class="sol__body">
                 <span class="sol__price">від <b>200$</b></span>
@@ -154,7 +154,7 @@
                 <span>Продажі й сервіс прямо в Telegram.</span>
               </span>
             </button>
-            <button class="sol" role="tab" aria-selected="false" data-img="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1000&q=70&auto=format&fit=crop" data-alt="Трафік і таргет" data-href="services/ads.html">
+            <button class="sol" role="tab" aria-selected="false" data-img="assets/img/sol-ads.jpg" data-alt="Трафік і таргет" data-href="services/ads.html">
               <span class="sol__num">03</span>
               <span class="sol__body">
                 <span class="sol__price">від <b>500$</b></span>
@@ -162,7 +162,7 @@
                 <span>Платний трафік під результат, не під покази.</span>
               </span>
             </button>
-            <button class="sol" role="tab" aria-selected="false" data-img="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=1000&q=70&auto=format&fit=crop" data-alt="Дизайн та UI/UX" data-href="services/design.html">
+            <button class="sol" role="tab" aria-selected="false" data-img="assets/img/sol-design.jpg" data-alt="Дизайн та UI/UX" data-href="services/design.html">
               <span class="sol__num">04</span>
               <span class="sol__body">
                 <span class="sol__price">від <b>600$</b></span>
@@ -174,7 +174,7 @@
           </div>
           <figure class="lab__stage">
             <span class="lab__shape" id="solAnchor" aria-hidden="true"></span>
-            <img class="lab__thumb" id="labImg" src="https://images.unsplash.com/photo-1600132806608-231446b2e7af?w=1000&q=70&auto=format&fit=crop" alt="Сайт та SEO" width="1024" height="1024" />
+            <img class="lab__thumb" id="labImg" src="assets/img/sol-web.jpg" alt="Сайт та SEO" width="1000" height="750" />
           </figure>
         </div>
       </div>
@@ -394,7 +394,7 @@
             </div>
           </a>
         </div>
-        <div class="work__nav" aria-hidden="true"><span class="work__count"><b id="workIdx">1</b> / <i id="workTotal">18</i></span><span class="work__bar"><i id="workBar"></i></span><span class="work__hint">Гортайте →</span></div>
+        <div class="work__nav"><button class="work__arrow" id="workPrev" type="button" aria-label="Попередній проєкт">←</button><span class="work__bar" aria-hidden="true"><i id="workBar"></i></span><span class="work__count" aria-live="polite"><b id="workIdx">1</b> / <i id="workTotal">18</i></span><button class="work__arrow work__arrow--next" id="workNext" type="button" aria-label="Наступний проєкт">→</button></div>
         <div class="work__more"><button class="btn btn--ghost" id="workMore" type="button"><span>Показати ще проєкти</span></button></div>
       </div>
     </section>
@@ -616,6 +616,6 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
-  <script src="assets/js/main.js?v=20261019b" defer></script>
+  <script src="assets/js/main.js?v=20261019c" defer></script>
 </body>
 </html>
