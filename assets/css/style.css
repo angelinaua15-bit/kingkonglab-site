@@ -784,3 +784,4 @@ html[data-theme="light"] .post__toggle { background: linear-gradient(rgba(255, 2
   .case-card { transition: none; }
 }
 @media (max-width: 860px) { #contact .direct, .svc-closer .direct { display: none; } #contact .closer__grid { gap: 18px; } }
+.post { display: flex; flex-direction: column; } .post__toggle { order: 9; } .post.is-open .post__toggle { border-top: 1px solid var(--line); }
