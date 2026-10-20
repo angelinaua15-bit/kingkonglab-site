@@ -50,6 +50,9 @@
   };
   burger?.addEventListener('click', () => toggleDrawer(!drawer.classList.contains('is-on')));
   $$('#drawer a').forEach((a) => a.addEventListener('click', () => toggleDrawer(false)));
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer?.classList.contains('is-on')) toggleDrawer(false);
+  });
   let lastS = scrollY;
   const onScroll = () => {
     const y = scrollY;
@@ -90,8 +93,8 @@
   // ── заявка ──
   const form = $('#leadForm');
   const phone = $('#fPhone');
-  phone?.addEventListener('focus', () => { if (!phone.value) phone.value = '+380 '; });
-  form?.addEventListener('submit', (e) => {
+  window.kkInitLeadForm?.(form);
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (form.company.value) return;
     const name = form.name.value.trim();
@@ -103,12 +106,27 @@
     });
     const status = $('#formStatus');
     if (!ok) { if (status) status.textContent = 'Вкажіть ім\'я та коректний телефон'; return; }
-    const service = form.dataset.service || '—';
-    const pack = $$('input[name="pack"]:checked', form).map((i) => i.value).join(', ') || '—';
-    const body = `Ім'я: ${name}\nТелефон: ${tel}\nПослуга: ${service}\nФормат: ${pack}\n\nЗадача:\n${form.message.value.trim() || '—'}`;
-    location.href = `mailto:kingkonglab2024@gmail.com?subject=${encodeURIComponent(`Заявка: ${service} — ${name}`)}&body=${encodeURIComponent(body)}`;
-    if (status) status.textContent = 'Дякуємо! Відкриється поштовий клієнт — надішліть лист.';
-    form.reset();
+    if (typeof window.kkSubmitLead !== 'function') {
+      if (status) status.textContent = 'Помилка конфігурації. Напишіть у Telegram.';
+      return;
+    }
+    const btn = form.querySelector('button[type="submit"]');
+    btn?.setAttribute('aria-busy', 'true');
+    if (btn) btn.disabled = true;
+    if (status) status.textContent = 'Надсилаємо…';
+    try {
+      await window.kkSubmitLead(form);
+      if (status) status.textContent = 'Дякуємо! Заявку надіслано — звʼяжемось протягом 24 год.';
+      form.reset();
+    } catch (err) {
+      const msg = err?.name === 'AbortError'
+        ? 'Час вичерпано. Перевірте інтернет і спробуйте ще раз.'
+        : 'Не вдалось надіслати. Спробуйте ще раз або напишіть у Telegram.';
+      if (status) status.textContent = msg;
+    } finally {
+      if (btn) btn.disabled = false;
+      btn?.removeAttribute('aria-busy');
+    }
   });
   // «Обговорити» → до форми з підсвіткою
   $$('a[href="#leadForm"]').forEach((a) => a.addEventListener('click', (ev) => {

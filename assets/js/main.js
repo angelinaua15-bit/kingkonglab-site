@@ -63,6 +63,7 @@
     document.body.classList.remove('menu-open');
   };
   burger?.addEventListener('click', () => {
+    if (!drawer || !burger) return;
     const on = !drawer.classList.contains('is-on');
     drawer.classList.toggle('is-on', on);
     burger.classList.toggle('is-on', on);
@@ -73,6 +74,9 @@
     if (on) nav?.classList.remove('is-away');
   });
   $$('#drawer a').forEach((a) => a.addEventListener('click', closeDrawer));
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer?.classList.contains('is-on')) closeDrawer();
+  });
 
   const sections = ['solutions', 'about', 'work', 'stories', 'news', 'faq', 'contact']
     .map((id) => document.getElementById(id))
@@ -96,14 +100,16 @@
   const sols = $$('.sol');
   const labImg = $('#labImg');
   const labStage = $('.lab__stage');
+  const solHref = (el) => el.getAttribute('href') || el.dataset.href || '';
   const activateSol = (btn) => {
     FX.sol = Math.max(0, sols.indexOf(btn));
     const more = $('#solMore');
-    if (more && btn.dataset.href) more.href = btn.dataset.href;
+    const href = solHref(btn);
+    if (more && href) more.href = href;
     sols.forEach((s) => {
       const on = s === btn;
       s.classList.toggle('is-on', on);
-      s.setAttribute('aria-selected', String(on));
+      if (s.hasAttribute('aria-selected')) s.setAttribute('aria-selected', String(on));
     });
     if (!labImg || !btn.dataset.img || labImg.src.includes(btn.dataset.img.split('/').pop())) return;
     labStage?.classList.add('is-swap');
@@ -115,7 +121,6 @@
   };
   sols.forEach((btn) => {
     btn.addEventListener('mouseenter', () => { if (fine) activateSol(btn); });
-    btn.addEventListener('click', () => activateSol(btn));
     btn.addEventListener('focus', () => activateSol(btn));
   });
 
@@ -218,12 +223,24 @@
         sc.dataset.width = '100%';
         sc.dataset.userpic = 'false';
         sc.dataset.color = '2700EE';
+        sc.onerror = () => {
+          box.classList.remove('is-wait');
+          const a = document.createElement('a');
+          a.href = `https://t.me/${box.dataset.post}`;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.textContent = 'Відкрити пост у Telegram →';
+          box.appendChild(a);
+        };
         box.appendChild(sc);
         const done = () => box.classList.remove('is-wait');
         new MutationObserver((m, obs) => {
           const f = box.querySelector('iframe');
           if (f) { f.addEventListener('load', done); setTimeout(done, 5000); obs.disconnect(); }
         }).observe(box, { childList: true });
+        setTimeout(() => {
+          if (!box.querySelector('iframe') && !box.querySelector('a[href^="https://t.me/"]')) sc.onerror?.();
+        }, 12000);
       });
     }, { root: mobile ? null : feed, rootMargin: mobile ? '300px 0px' : '0px 400px' });
     const addPost = (id) => {
@@ -279,8 +296,8 @@
   }));
   const form = $('#leadForm');
   const phone = $('#fPhone');
-  phone?.addEventListener('focus', () => { if (!phone.value) phone.value = '+380 '; });
-  form?.addEventListener('submit', (e) => {
+  window.kkInitLeadForm?.(form);
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (form.company.value) return;
     const name = form.name.value.trim();
@@ -291,14 +308,35 @@
       input.parentElement.classList.toggle('is-error', !valid);
       if (!valid) ok = false;
     });
-    if (!ok) { showToast('Вкажіть ім\'я та коректний телефон'); return; }
-    const services = $$('input[name="service"]:checked', form).map((i) => i.value).join(', ') || '—';
-    const body = `Ім'я: ${name}\nТелефон: ${tel}\nПослуги: ${services}\n\nЗадача:\n${form.message.value.trim() || '—'}`;
-    location.href = `mailto:kingkonglab2024@gmail.com?subject=${encodeURIComponent('Заявка з сайту — ' + name)}&body=${encodeURIComponent(body)}`;
     const status = $('#formStatus');
-    if (status) status.textContent = 'Дякуємо! Відкриється поштовий клієнт — надішліть лист.';
-    showToast('Заявку сформовано');
-    form.reset();
+    if (!ok) {
+      if (status) status.textContent = '';
+      showToast('Вкажіть ім\'я та коректний телефон');
+      return;
+    }
+    if (typeof window.kkSubmitLead !== 'function') {
+      showToast('Помилка конфігурації форми. Напишіть у Telegram.');
+      return;
+    }
+    const btn = form.querySelector('button[type="submit"]');
+    btn?.setAttribute('aria-busy', 'true');
+    if (btn) btn.disabled = true;
+    if (status) status.textContent = 'Надсилаємо…';
+    try {
+      await window.kkSubmitLead(form);
+      if (status) status.textContent = 'Дякуємо! Заявку надіслано — звʼяжемось протягом 24 год.';
+      showToast('Заявку надіслано');
+      form.reset();
+    } catch (err) {
+      const msg = err?.name === 'AbortError'
+        ? 'Час вичерпано. Перевірте інтернет і спробуйте ще раз.'
+        : 'Не вдалось надіслати. Спробуйте ще раз або напишіть у Telegram.';
+      if (status) status.textContent = msg;
+      showToast('Помилка відправки');
+    } finally {
+      if (btn) btn.disabled = false;
+      btn?.removeAttribute('aria-busy');
+    }
   });
 
   if (fine && !reduced) {
@@ -926,4 +964,15 @@
   gsap.from('.foot__top > *', { y: 30, opacity: 0, duration: .9, ease: 'power3.out', stagger: .1, scrollTrigger: { trigger: '.foot', start: 'top 95%', once: true } });
 
   addEventListener('load', () => ScrollTrigger.refresh());
+
+  const prefetch = () => {
+    ['/services/web', '/services/bots', '/services/ads', '/services/design'].forEach((href) => {
+      const l = document.createElement('link');
+      l.rel = 'prefetch';
+      l.href = href;
+      document.head.appendChild(l);
+    });
+  };
+  if ('requestIdleCallback' in window) requestIdleCallback(prefetch, { timeout: 4000 });
+  else setTimeout(prefetch, 2500);
 })();

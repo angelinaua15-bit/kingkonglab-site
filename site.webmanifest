@@ -1,0 +1,14 @@
+{
+  "name": "King Kong Lab",
+  "short_name": "KK Lab",
+  "description": "Сайти, Telegram-боти та Mini Apps під ключ",
+  "lang": "uk",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F4F6FD",
+  "theme_color": "#0B1450",
+  "icons": [
+    { "src": "/assets/img/favicon.png", "sizes": "64x64", "type": "image/png" },
+    { "src": "/assets/img/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
