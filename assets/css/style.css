@@ -263,10 +263,11 @@ body.menu-open::before {
 .promo__tag i { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 4px rgba(139, 230, 194, .15), 0 0 12px var(--ok); }
 .banner__title {
   font-family: var(--cond); font-weight: 700; text-transform: uppercase; letter-spacing: -.012em;
-  font-size: clamp(56px, 6.7vw, 118px); line-height: .9; margin: 22px 0 0;
+  font-size: clamp(56px, 6.7vw, 118px); line-height: .96; margin: 22px 0 0;
 }
-.banner__title .line { display: block; overflow: hidden; padding: .04em .4em .16em 0; margin-bottom: -.12em; }
-.banner__title .line > span { display: block; position: relative; width: max-content; }
+.banner__title .line { display: block; overflow: hidden; padding: .06em .4em .24em 0; margin-bottom: -.06em; }
+.banner__title .line > span { display: block; position: relative; width: max-content; line-height: 1.02; }
+.banner__title .line--island { padding-bottom: .32em; }
 .line--outline > span { color: transparent; -webkit-text-stroke: 1.6px var(--text); }
 .glowdot {
   position: absolute; right: -.32em; top: .14em; width: .16em; height: .16em; border-radius: 50%;
@@ -279,6 +280,9 @@ body.menu-open::before {
   background: linear-gradient(90deg, var(--text) 0%, var(--halo) 30%, var(--gold) 60%, var(--text) 90%);
   background-size: 200% 100%;
   -webkit-background-clip: text; background-clip: text; color: transparent;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  padding-bottom: .06em;
+  line-height: 1.06;
   animation: sheen 6s linear infinite;
 }
 @keyframes sheen { to { background-position: -200% 0; } }
@@ -559,9 +563,10 @@ a.sol:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
   }
   .banner__title .line {
     overflow: visible;
-    padding: 0.08em 0.28em 0.24em 0.04em;
+    padding: 0.08em 0.28em 0.28em 0.04em;
     margin-bottom: 0.02em;
   }
+  .banner__title .line--island { padding-bottom: 0.36em; }
   .banner__title .line > span { width: auto; max-width: 100%; }
   .line--outline > span { -webkit-text-stroke-width: 1.35px; padding-right: 0.15em; }
   .glowdot { right: -0.05em; }
