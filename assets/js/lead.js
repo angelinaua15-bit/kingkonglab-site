@@ -1,7 +1,17 @@
 (() => {
   'use strict';
 
+  const HP = 'kk_hp';
   const MAX = { name: 80, phone: 24, message: 2000 };
+
+  const hpEl = (form) => form?.elements?.[HP] || form?.querySelector('.hp');
+
+  const fieldValue = (form, key) => {
+    const el = form.elements[key];
+    if (!el) return '';
+    const v = el instanceof RadioNodeList ? el.value : el.value;
+    return String(v ?? '').trim();
+  };
 
   const formatPhone = (raw) => {
     let d = raw.replace(/\D/g, '');
@@ -24,16 +34,18 @@
     if (!service) service = 'Головна';
     const pack = checked('pack').join(', ') || '—';
     return {
-      name: (form.elements.name?.value || '').trim().slice(0, MAX.name),
+      name: fieldValue(form, 'name').slice(0, MAX.name),
       phone: (phoneEl?.value || '').trim().slice(0, MAX.phone),
-      message: (form.elements.message?.value || '').trim().slice(0, MAX.message),
+      message: fieldValue(form, 'message').slice(0, MAX.message),
       service,
       pack,
       page: location.pathname + location.hash,
       pageTitle: document.title,
-      company: (form.elements.company?.value || '').trim(),
+      kk_hp: (hpEl(form)?.value || '').trim(),
     };
   };
+
+  window.kkLeadField = fieldValue;
 
   window.kkInitLeadForm = (form) => {
     if (!form || form.dataset.kkLeadReady) return;
@@ -41,12 +53,19 @@
     const phoneEl = form.querySelector('#fPhone') || form.elements.phone;
     const nameEl = form.elements.name;
     const msgEl = form.elements.message;
+    const hp = hpEl(form);
     nameEl?.setAttribute('maxlength', String(MAX.name));
     msgEl?.setAttribute('maxlength', String(MAX.message));
     phoneEl?.setAttribute('maxlength', String(MAX.phone));
     phoneEl?.setAttribute('inputmode', 'tel');
     phoneEl?.setAttribute('autocomplete', 'tel');
     nameEl?.setAttribute('autocomplete', 'name');
+    if (hp) {
+      hp.value = '';
+      hp.setAttribute('readonly', 'readonly');
+      hp.setAttribute('autocomplete', 'off');
+      hp.addEventListener('focus', () => { hp.value = ''; hp.blur(); });
+    }
     phoneEl?.addEventListener('focus', () => {
       if (!phoneEl.value.trim()) phoneEl.value = '+380 ';
     });

@@ -299,8 +299,7 @@
   window.kkInitLeadForm?.(form);
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (form.company.value) return;
-    const name = form.name.value.trim();
+    const name = (window.kkLeadField?.(form, 'name') ?? form.elements.name?.value ?? '').trim();
     const tel = phone.value.trim();
     const digits = tel.replace(/\D/g, '');
     let ok = true;
@@ -330,7 +329,9 @@
     } catch (err) {
       const msg = err?.name === 'AbortError'
         ? 'Час вичерпано. Перевірте інтернет і спробуйте ще раз.'
-        : 'Не вдалось надіслати. Спробуйте ще раз або напишіть у Telegram.';
+        : err?.code === 'not_configured'
+          ? 'Форма тимчасово недоступна. Напишіть у Telegram — відповімо там.'
+          : 'Не вдалось надіслати. Спробуйте ще раз або напишіть у Telegram.';
       if (status) status.textContent = msg;
       showToast('Помилка відправки');
     } finally {

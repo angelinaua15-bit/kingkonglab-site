@@ -67,7 +67,7 @@ module.exports = async (req, res) => {
     try { data = JSON.parse(data || '{}'); } catch { return res.status(400).json({ ok: false, error: 'invalid_json' }); }
   }
 
-  if (data.company) return res.status(200).json({ ok: true });
+  if (data.kk_hp || data.company) return res.status(200).json({ ok: true });
 
   const name = String(data.name || '').trim().slice(0, MAX.name);
   const phone = String(data.phone || '').trim().slice(0, MAX.phone);

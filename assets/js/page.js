@@ -94,10 +94,13 @@
   const form = $('#leadForm');
   const phone = $('#fPhone');
   window.kkInitLeadForm?.(form);
+  const showLeadStatus = (el) => {
+    if (!el?.textContent) return;
+    el.scrollIntoView({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' });
+  };
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (form.company.value) return;
-    const name = form.name.value.trim();
+    const name = (window.kkLeadField?.(form, 'name') ?? form.elements.name?.value ?? '').trim();
     const tel = phone.value.trim();
     let ok = true;
     [[form.name, name.length >= 2], [phone, tel.replace(/\D/g, '').length >= 10]].forEach(([input, valid]) => {
@@ -105,7 +108,11 @@
       if (!valid) ok = false;
     });
     const status = $('#formStatus');
-    if (!ok) { if (status) status.textContent = 'Вкажіть ім\'я та коректний телефон'; return; }
+    if (!ok) {
+      if (status) status.textContent = 'Вкажіть ім\'я та коректний телефон';
+      showLeadStatus(status);
+      return;
+    }
     if (typeof window.kkSubmitLead !== 'function') {
       if (status) status.textContent = 'Помилка конфігурації. Напишіть у Telegram.';
       return;
@@ -117,12 +124,16 @@
     try {
       await window.kkSubmitLead(form);
       if (status) status.textContent = 'Дякуємо! Заявку надіслано — звʼяжемось протягом 24 год.';
+      showLeadStatus(status);
       form.reset();
     } catch (err) {
       const msg = err?.name === 'AbortError'
         ? 'Час вичерпано. Перевірте інтернет і спробуйте ще раз.'
-        : 'Не вдалось надіслати. Спробуйте ще раз або напишіть у Telegram.';
+        : err?.code === 'not_configured'
+          ? 'Форма тимчасово недоступна. Напишіть у Telegram — відповімо там.'
+          : 'Не вдалось надіслати. Спробуйте ще раз або напишіть у Telegram.';
       if (status) status.textContent = msg;
+      showLeadStatus(status);
     } finally {
       if (btn) btn.disabled = false;
       btn?.removeAttribute('aria-busy');
