@@ -7,11 +7,18 @@ const MAX = { name: 80, phone: 24, message: 2000, service: 120, pack: 120, page:
 const hits = new Map();
 const RATE = { windowMs: 60_000, max: 8 };
 
-const allowedOrigins = () => {
+const isAllowedOrigin = (origin) => {
+  if (!origin) return true;
   const list = ['https://www.kingkonglab.com', 'https://kingkonglab.com'];
-  const vercel = process.env.VERCEL_URL;
-  if (vercel) list.push(`https://${vercel}`);
-  return list;
+  for (const host of [process.env.VERCEL_URL, process.env.VERCEL_BRANCH_URL, process.env.VERCEL_PROJECT_PRODUCTION_URL]) {
+    if (host) list.push(`https://${host.replace(/^https?:\/\//, '')}`);
+  }
+  if (list.includes(origin)) return true;
+  try {
+    const { protocol, hostname } = new URL(origin);
+    if (protocol === 'https:' && hostname.endsWith('.vercel.app')) return true;
+  } catch { /* ignore */ }
+  return false;
 };
 
 const rateKey = (req) => {
@@ -47,8 +54,7 @@ module.exports = async (req, res) => {
   }
 
   const origin = req.headers.origin || '';
-  const allowed = allowedOrigins();
-  if (origin && !allowed.includes(origin)) {
+  if (!isAllowedOrigin(origin)) {
     return res.status(403).json({ ok: false, error: 'forbidden' });
   }
 
