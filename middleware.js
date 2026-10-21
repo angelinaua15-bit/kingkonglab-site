@@ -2,7 +2,7 @@
 const GOOGLE_VERIFY = 'google6989cc14b2e2335d.html';
 
 export const config = {
-  matcher: [`/${GOOGLE_VERIFY}`],
+  matcher: ['/google6989cc14b2e2335d', '/google6989cc14b2e2335d.html'],
 };
 
 export default function middleware() {

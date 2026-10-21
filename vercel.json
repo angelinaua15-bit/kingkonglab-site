@@ -1,6 +1,16 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/google6989cc14b2e2335d",
+      "destination": "/api/google-verification"
+    },
+    {
+      "source": "/google6989cc14b2e2335d.html",
+      "destination": "/api/google-verification"
+    }
+  ],
   "redirects": [
     {
       "source": "/:path*",
