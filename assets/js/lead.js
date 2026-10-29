@@ -2,9 +2,10 @@
   'use strict';
 
   const HP = 'kk_hp';
-  const MAX = { name: 80, phone: 24, message: 2000 };
+  const MAX = { name: 80, phone: 80, message: 2000 };
 
   const hpEl = (form) => form?.elements?.[HP] || form?.querySelector('.hp');
+  const isPartnerForm = (form) => form?.dataset?.partner === '1';
 
   const fieldValue = (form, key) => {
     const el = form.elements[key];
@@ -27,18 +28,30 @@
     return out;
   };
 
+  const isValidPartnerContact = (raw) => {
+    const c = String(raw || '').trim();
+    if (c.length < 3) return false;
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c)) return true;
+    if (c.replace(/\D/g, '').length >= 10) return true;
+    if (/t\.me\//i.test(c)) return true;
+    if (/^@?[a-zA-Z][a-zA-Z0-9_]{3,31}$/.test(c)) return true;
+    return c.length >= 5;
+  };
+
   const collect = (form) => {
     const phoneEl = form.querySelector('#fPhone') || form.elements.phone;
     const checked = (name) => [...form.querySelectorAll(`input[name="${name}"]:checked`)].map((i) => i.value);
     let service = form.dataset.service || checked('service').join(', ');
     if (!service) service = 'Головна';
     const pack = checked('pack').join(', ') || '—';
+    const partner = isPartnerForm(form);
     return {
       name: fieldValue(form, 'name').slice(0, MAX.name),
       phone: (phoneEl?.value || '').trim().slice(0, MAX.phone),
       message: fieldValue(form, 'message').slice(0, MAX.message),
       service,
       pack,
+      type: partner ? 'partner' : 'lead',
       page: location.pathname + location.hash,
       pageTitle: document.title,
       kk_hp: (hpEl(form)?.value || '').trim(),
@@ -46,19 +59,19 @@
   };
 
   window.kkLeadField = fieldValue;
+  window.kkIsValidPartnerContact = isValidPartnerContact;
 
   window.kkInitLeadForm = (form) => {
     if (!form || form.dataset.kkLeadReady) return;
     form.dataset.kkLeadReady = '1';
+    const partner = isPartnerForm(form);
     const phoneEl = form.querySelector('#fPhone') || form.elements.phone;
     const nameEl = form.elements.name;
     const msgEl = form.elements.message;
     const hp = hpEl(form);
     nameEl?.setAttribute('maxlength', String(MAX.name));
     msgEl?.setAttribute('maxlength', String(MAX.message));
-    phoneEl?.setAttribute('maxlength', String(MAX.phone));
-    phoneEl?.setAttribute('inputmode', 'tel');
-    phoneEl?.setAttribute('autocomplete', 'tel');
+    phoneEl?.setAttribute('maxlength', String(partner ? 80 : 24));
     nameEl?.setAttribute('autocomplete', 'name');
     if (hp) {
       hp.value = '';
@@ -66,6 +79,13 @@
       hp.setAttribute('autocomplete', 'off');
       hp.addEventListener('focus', () => { hp.value = ''; hp.blur(); });
     }
+    if (partner) {
+      phoneEl?.setAttribute('autocomplete', 'username');
+      phoneEl?.removeAttribute('inputmode');
+      return;
+    }
+    phoneEl?.setAttribute('inputmode', 'tel');
+    phoneEl?.setAttribute('autocomplete', 'tel');
     phoneEl?.addEventListener('focus', () => {
       if (!phoneEl.value.trim()) phoneEl.value = '+380 ';
     });

@@ -101,15 +101,29 @@
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = (window.kkLeadField?.(form, 'name') ?? form.elements.name?.value ?? '').trim();
-    const tel = phone.value.trim();
+    const tel = phone?.value.trim() || '';
+    const partner = form.dataset.partner === '1';
+    const contactOk = partner
+      ? (window.kkIsValidPartnerContact?.(tel) ?? tel.length >= 5)
+      : tel.replace(/\D/g, '').length >= 10;
     let ok = true;
-    [[form.name, name.length >= 2], [phone, tel.replace(/\D/g, '').length >= 10]].forEach(([input, valid]) => {
-      input.parentElement.classList.toggle('is-error', !valid);
+    [[form.name, name.length >= 2], [phone, contactOk]].forEach(([input, valid]) => {
+      if (!input) return;
+      input.parentElement?.classList.toggle('is-error', !valid);
       if (!valid) ok = false;
     });
+    const agree = form.elements.agree;
+    if (agree) {
+      agree.closest('.field--check')?.classList.toggle('is-error', !agree.checked);
+      if (!agree.checked) ok = false;
+    }
     const status = $('#formStatus');
     if (!ok) {
-      if (status) status.textContent = 'Вкажіть ім\'я та коректний телефон';
+      if (status) {
+        status.textContent = partner
+          ? 'Вкажіть імʼя, контакт і погодьтесь з політикою'
+          : 'Вкажіть ім\'я та коректний телефон';
+      }
       showLeadStatus(status);
       return;
     }

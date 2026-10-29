@@ -3,7 +3,17 @@ const esc = (s) => String(s ?? '')
   .replace(/</g, '&lt;')
   .replace(/>/g, '&gt;');
 
-const MAX = { name: 80, phone: 24, message: 2000, service: 120, pack: 120, page: 200, pageTitle: 160 };
+const MAX = { name: 80, phone: 80, message: 2000, service: 120, pack: 120, page: 200, pageTitle: 160 };
+
+const isValidPartnerContact = (raw) => {
+  const c = String(raw || '').trim();
+  if (c.length < 3) return false;
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c)) return true;
+  if (c.replace(/\D/g, '').length >= 10) return true;
+  if (/t\.me\//i.test(c)) return true;
+  if (/^@?[a-zA-Z][a-zA-Z0-9_]{3,31}$/.test(c)) return true;
+  return c.length >= 5;
+};
 const hits = new Map();
 const RATE = { windowMs: 60_000, max: 8 };
 
@@ -76,31 +86,51 @@ module.exports = async (req, res) => {
   if (data.kk_hp || data.company) return res.status(200).json({ ok: true });
 
   const name = String(data.name || '').trim().slice(0, MAX.name);
-  const phone = String(data.phone || '').trim().slice(0, MAX.phone);
+  const phone = String(data.phone || data.contact || '').trim().slice(0, MAX.phone);
   const message = String(data.message || '').trim().slice(0, MAX.message);
   const service = String(data.service || '—').trim().slice(0, MAX.service) || '—';
   const pack = String(data.pack || '—').trim().slice(0, MAX.pack) || '—';
   const page = String(data.page || '—').trim().slice(0, MAX.page) || '—';
   const pageTitle = String(data.pageTitle || '—').trim().slice(0, MAX.pageTitle) || '—';
+  const isPartner = data.type === 'partner' || /партнер/i.test(service);
 
-  const digits = phone.replace(/\D/g, '');
-  if (name.length < 2 || digits.length < 10) {
+  if (name.length < 2) {
+    return res.status(400).json({ ok: false, error: 'validation' });
+  }
+  if (isPartner) {
+    if (!isValidPartnerContact(phone)) {
+      return res.status(400).json({ ok: false, error: 'validation' });
+    }
+  } else if (phone.replace(/\D/g, '').length < 10) {
     return res.status(400).json({ ok: false, error: 'validation' });
   }
 
-  const text = [
-    '<b>Нова заявка з сайту</b>',
-    '',
-    `<b>Імʼя:</b> ${esc(name)}`,
-    `<b>Телефон:</b> ${esc(phone)}`,
-    `<b>Послуга:</b> ${esc(service)}`,
-    `<b>Формат:</b> ${esc(pack)}`,
-    `<b>Сторінка:</b> ${esc(page)}`,
-    `<b>Заголовок:</b> ${esc(pageTitle)}`,
-    '',
-    '<b>Задача:</b>',
-    esc(message || '—'),
-  ].join('\n');
+  const text = isPartner
+    ? [
+      '<b>Партнерська заявка</b>',
+      '',
+      `<b>Імʼя:</b> ${esc(name)}`,
+      `<b>Контакт:</b> ${esc(phone)}`,
+      `<b>Напрям:</b> ${esc(pack)}`,
+      `<b>Сторінка:</b> ${esc(page)}`,
+      `<b>Заголовок:</b> ${esc(pageTitle)}`,
+      '',
+      '<b>Коментар:</b>',
+      esc(message || '—'),
+    ].join('\n')
+    : [
+      '<b>Нова заявка з сайту</b>',
+      '',
+      `<b>Імʼя:</b> ${esc(name)}`,
+      `<b>Телефон:</b> ${esc(phone)}`,
+      `<b>Послуга:</b> ${esc(service)}`,
+      `<b>Формат:</b> ${esc(pack)}`,
+      `<b>Сторінка:</b> ${esc(page)}`,
+      `<b>Заголовок:</b> ${esc(pageTitle)}`,
+      '',
+      '<b>Задача:</b>',
+      esc(message || '—'),
+    ].join('\n');
 
   const tg = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST',

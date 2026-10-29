@@ -37,7 +37,7 @@
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
   <link rel="dns-prefetch" href="https://telegram.org" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20261026c" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20261029d" />
   <script>(function(){var t='light';try{t=localStorage.getItem('kk-theme')||'light'}catch(e){}document.documentElement.dataset.theme=t;var m=document.querySelector('meta[name=theme-color]');if(m)m.content=t==='dark'?'#0B1450':'#F4F6FD';})();</script>
   <script>document.documentElement.classList.add('js');</script>
 
@@ -122,6 +122,7 @@
     <nav class="nav__quick" aria-label="Швидка навігація">
       <a class="nav__talk" href="#leadForm"><i></i>Обговорити</a>
       <a class="nav__hide-sm" href="#work">Портфоліо</a>
+      <a class="nav__hide-sm" href="/partnership">Партнерам</a>
       <a class="nav__hide-sm" href="#news">Новини</a>
       <span class="nav__lang" title="Українська">UA</span>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Перемкнути тему" title="Світла / темна тема">
@@ -139,9 +140,10 @@
     <nav class="nav__links" aria-label="Головна навігація">
       <a href="#solutions"><small>01</small><span>Послуги</span></a>
       <a href="#work"><small>02</small><span>Портфоліо</span></a>
-      <a href="#stories"><small>03</small><span>Історії</span></a>
-      <a href="#news"><small>04</small><span>Новини</span></a>
-      <a href="#contact"><small>05</small><span>Контакти</span></a>
+      <a href="/partnership"><small>03</small><span>Партнерам</span></a>
+      <a href="#stories"><small>04</small><span>Історії</span></a>
+      <a href="#news"><small>05</small><span>Новини</span></a>
+      <a href="#contact"><small>06</small><span>Контакти</span></a>
     </nav>
     <div class="drawer__foot">
       <a href="tel:+380970745767">+380 97 074 57 67</a>
@@ -704,6 +706,7 @@
             <h4>Lab</h4>
             <a href="#solutions">Рішення</a>
             <a href="#work">Портфоліо</a>
+            <a href="/partnership">Партнерам</a>
             <a href="#stories">Історії</a>
             <a href="#news">Новини</a>
           </div>
@@ -725,7 +728,10 @@
       </div>
       <div class="foot__bottom">
         <span>© <span id="year">2026</span> King Kong Lab</span>
-        <a href="/privacy">Політика конфіденційності</a>
+        <span class="foot__legal">
+          <a href="/partnership">Партнерам</a>
+          <a href="/privacy">Політика конфіденційності</a>
+        </span>
       </div>
     </div>
   </footer>
