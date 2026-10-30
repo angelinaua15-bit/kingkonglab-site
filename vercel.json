@@ -14,8 +14,73 @@
   "redirects": [
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "kingkonglab.com" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "kingkonglab.com"
+        }
+      ],
       "destination": "https://www.kingkonglab.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|uk|ua|ru|pl)/contact",
+      "destination": "/#contact",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|uk|ua|ru|pl)/contacts",
+      "destination": "/#contact",
+      "permanent": true
+    },
+    {
+      "source": "/contact",
+      "destination": "/#contact",
+      "permanent": true
+    },
+    {
+      "source": "/contacts",
+      "destination": "/#contact",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|uk|ua|ru|pl)/(about|about-us)",
+      "destination": "/#about",
+      "permanent": true
+    },
+    {
+      "source": "/(about|about-us)",
+      "destination": "/#about",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|uk|ua|ru|pl)/(portfolio|works|projects|cases)",
+      "destination": "/#work",
+      "permanent": true
+    },
+    {
+      "source": "/(portfolio|works|projects|cases)",
+      "destination": "/#work",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|uk|ua|ru|pl)/(services|solutions)",
+      "destination": "/#solutions",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|uk|ua|ru|pl)/faq",
+      "destination": "/#faq",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|uk|ua|ru|pl)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|uk|ua|ru|pl)/:path*",
+      "destination": "/",
       "permanent": true
     }
   ],
@@ -23,16 +88,31 @@
     {
       "source": "/assets/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/((?!api/).*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
       ]
     }
   ]
